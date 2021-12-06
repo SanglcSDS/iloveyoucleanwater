@@ -34,7 +34,7 @@ class LocalizationService extends Translations {
   void changeLocale(String lang) {
     final locale = _getLocaleFromLanguage(lang);
     Get.updateLocale(locale);
-    controller.loadlanguage(lang);
+    // controller.loadlanguage(lang);
   }
 
   // Finds language in `langs` list and returns it as Locale
