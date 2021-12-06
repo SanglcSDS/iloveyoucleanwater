@@ -20,11 +20,13 @@ final refrshKey = const Key('__RIKEY1__');
 //var refrshKey = GlobalKey<RefreshIndicatorState>();
 
 class HomeLoadingViewState extends State<HomeLoadingView> {
+  @override
   Future<void> onRefresh() async {
     // controller.loadingHome;
     setState(() {
-      controller.fetchCarousel;
-      Future.delayed(Duration(seconds: 2));
+      controller.listBanner;
+
+      Future.delayed(Duration(seconds: 2), () => controller.loadingHome);
     });
   }
 
@@ -50,42 +52,31 @@ class HomeLoadingViewState extends State<HomeLoadingView> {
           return RefreshIndicator(
             key: refrshKey,
             onRefresh: onRefresh,
-            child: ListView.builder(
-              itemCount: 1,
+            child: ListView(
               physics: const AlwaysScrollableScrollPhysics(),
-              itemBuilder: (context, index) {
-                var recent = controller.news[index];
-                return Column(
-                  children: [
-                    GetBuilder<HomeController>(
-                      builder: (_c) {
-                        if (_c.isLoading) if (_c.carouselData.length > 0)
-                          return CarouselSliderView(_c.carouselData);
-                        else
-                          return CarouselLoadingView();
-                        else if (_c.carouselData.length > 0)
-                          return CarouselSliderView(_c.carouselData);
-                        else
-                          return CarouselLoadingView();
-                      },
-                    ),
-                    Hero(
-                      tag: "TTCT$index",
-                      child: InkWell(
-                        onTap: () {
-                          Get.to(() => ReadNewsView(news: recent));
-                        },
-                        child: Container(
-                          width: double.infinity,
-                          height: 135.0,
-                          margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                          child: NewWidgetView(news: recent),
-                        ),
-                      ),
-                    ),
-                  ],
-                );
-              },
+              children: <Widget>[
+                Hero(
+                  tag: "img",
+                  child: GetBuilder<HomeController>(
+                    builder: (_c) {
+                      if (_c.isLoading) if (_c.listBanner.length > 0)
+                        return CarouselSliderView(_c.listBanner);
+                      else
+                        return CarouselLoadingView();
+                      else if (_c.listBanner.length > 0)
+                        return CarouselSliderView(_c.listBanner);
+                      else
+                        return CarouselLoadingView();
+                    },
+                  ),
+                ),
+                // Container(
+                //   height: 400.0,
+                //   child: HomeNewsView(
+                //     news: controller.news,
+                //   ),
+                // ),
+              ],
             ),
           );
       }),

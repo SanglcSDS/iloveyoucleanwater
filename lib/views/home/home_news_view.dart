@@ -10,27 +10,25 @@ class HomeNewsView extends StatelessWidget {
   HomeNewsView({required this.news});
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        itemCount: news.length,
-        itemBuilder: (context, index) {
-          var recent = news[index];
-          return Hero(
-            tag: "TTCT$index",
-            child: InkWell(
-              onTap: () {
-                Get.to(() => ReadNewsView(news: recent));
-              },
-              child: Container(
-                width: double.infinity,
-                height: 135.0,
-                margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: NewWidgetView(news: recent),
-              ),
+    return ListView.builder(
+      itemCount: news.length,
+      itemBuilder: (context, index) {
+        var recent = news[index];
+        return Hero(
+          tag: "TTCT$index",
+          child: InkWell(
+            onTap: () {
+              Get.to(() => ReadNewsView(news: recent));
+            },
+            child: Container(
+              width: double.infinity,
+              height: 135.0,
+              margin: const EdgeInsets.symmetric(horizontal: 10.0),
+              child: NewWidgetView(news: recent),
             ),
-          );
-        },
-      ),
+          ),
+        );
+      },
     );
   }
 }

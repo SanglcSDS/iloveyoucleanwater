@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:iloveyoucleanwater/utils/language/dropdown_language.dart';
 import 'package:iloveyoucleanwater/views/home/banner_home_view.dart';
 import 'package:iloveyoucleanwater/views/home/home_loading_view.dart';
 import 'package:iloveyoucleanwater/views/home/slide/carousel_loading_view.dart';
@@ -26,11 +27,13 @@ class DashboardView extends StatelessWidget {
         iconTheme: IconThemeData(
           color: Theme.of(context).primaryColor,
         ),
+        leading: IconButton(
+          icon: const Icon(Icons.settings, color: kGrey1),
+          onPressed: () => Get.to(NewsView()),
+        ),
         actions: <Widget>[
-          IconButton(
-            icon: const Icon(Icons.settings, color: kGrey1),
-            onPressed: () => Get.to(NewsView()),
-          ),
+          DropdownLanguage(),
+          const SizedBox(width: 12),
         ],
         title: Center(
           child: Image.asset(
@@ -41,140 +44,143 @@ class DashboardView extends StatelessWidget {
         ),
       ),
       //  drawer: CustomDrawer(),
-      body: HomeLoadingView(
-        isRelod: true,
+      body:
+
+          // HomeLoadingView(
+          //   isRelod: true,
+          // ),
+
+          ListView(
+        children: <Widget>[
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              GetBuilder<HomeController>(
+                builder: (_c) {
+                  if (_c.isLoading) if (_c.listBanner.length > 0)
+                    return CarouselSliderView(_c.listBanner);
+                  else
+                    return CarouselLoadingView();
+                  else if (_c.listBanner.length > 0)
+                    return CarouselSliderView(_c.listBanner);
+                  else
+                    return CarouselLoadingView();
+                },
+              ),
+              BannerHomeView(),
+              TitleWidgetView(
+                  title: 'news'.tr.toUpperCase(),
+                  onPressed: controller.oClickNews0),
+              ListView.builder(
+                itemCount: 2,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: ScrollPhysics(),
+                itemBuilder: (context, index) {
+                  var recent = recentList[index];
+                  return Hero(
+                    tag: "TTCT$index",
+                    child: InkWell(
+                      onTap: () {
+                        Get.to(() => ReadNewsView(news: recent));
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 135.0,
+                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: NewWidgetView(news: recent),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              TitleWidgetNextView(
+                  title: 'all'.tr, onPressed: controller.oClickNews0),
+              ListView.builder(
+                itemCount: 2,
+                scrollDirection: Axis.vertical,
+                shrinkWrap: true,
+                physics: const ScrollPhysics(),
+                itemBuilder: (context, index) {
+                  var recent = recentList[index];
+                  return Hero(
+                    tag: "TTMT$index",
+                    child: InkWell(
+                      onTap: () => Get.to(() => ReadNewsView(news: recent)),
+                      child: Container(
+                        width: double.infinity,
+                        height: 135.0,
+                        margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                        child: NewWidgetView(news: recent),
+                      ),
+                    ),
+                  );
+                },
+              ),
+              TitleWidgetNextView(
+                  title: 'all'.tr, onPressed: controller.oClickNews1),
+              TitleWidgetView(
+                  title: 'album'.tr.toUpperCase(),
+                  onPressed: controller.oClickLibrary0),
+              Container(
+                width: double.infinity,
+                height: 300.0,
+                padding: const EdgeInsets.only(left: 10.0),
+                child: ListView.builder(
+                  itemCount: popularList.length,
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var news = popularList[index];
+                    return InkWell(
+                      onTap: () => Get.to(() => DetailsLibraryView(news: news)),
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 12.0, top: 5.0),
+                        child: PrimaryCard(news: news),
+                      ),
+                    );
+                  },
+                ),
+              ),
+              const SizedBox(height: 8.0),
+              Container(
+                width: double.infinity,
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      width: 1.0,
+                      color: kGrey3,
+                    ),
+                  ),
+                ),
+              ),
+              TitleWidgetView(
+                  title: 'video'.tr.toUpperCase(),
+                  onPressed: controller.oClickLibrary1),
+              Container(
+                width: double.infinity,
+                height: 300.0,
+                padding: const EdgeInsets.only(left: 10.0),
+                child: ListView.builder(
+                  itemCount: trendingList.length,
+                  scrollDirection: Axis.horizontal,
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) {
+                    var news = trendingList[index];
+                    return InkWell(
+                      onTap: () => Get.to(() => DetailsLibraryView(news: news)),
+                      child: Container(
+                        margin: const EdgeInsets.only(right: 12.0, top: 5),
+                        child: PrimaryCard(news: news),
+                      ),
+                    );
+                  },
+                ),
+              ),
+            ],
+          ),
+        ],
       ),
-
-      // ListView(
-      //   children: <Widget>[
-      //     Column(
-      //       crossAxisAlignment: CrossAxisAlignment.start,
-      //       children: <Widget>[
-
-      //         GetBuilder<HomeController>(
-      //           builder: (_c) {
-      //             if (_c.isLoading) if (_c.carouselData.length > 0)
-      //               return CarouselSliderView(_c.carouselData);
-      //             else
-      //               return CarouselLoadingView();
-      //             else if (_c.carouselData.length > 0)
-      //               return CarouselSliderView(_c.carouselData);
-      //             else
-      //               return CarouselLoadingView();
-      //           },
-      //         ),
-      //         BannerHomeView(),
-      //         TitleWidgetView(
-      //             title: "TIN TỨC", onPressed: controller.oClickNews0),
-      //         ListView.builder(
-      //           itemCount: 2,
-      //           scrollDirection: Axis.vertical,
-      //           shrinkWrap: true,
-      //           physics: ScrollPhysics(),
-      //           itemBuilder: (context, index) {
-      //             var recent = recentList[index];
-      //             return Hero(
-      //               tag: "TTCT$index",
-      //               child: InkWell(
-      //                 onTap: () {
-      //                   Get.to(() => ReadNewsView(news: recent));
-      //                 },
-      //                 child: Container(
-      //                   width: double.infinity,
-      //                   height: 135.0,
-      //                   margin: const EdgeInsets.symmetric(horizontal: 10.0),
-      //                   child: NewWidgetView(news: recent),
-      //                 ),
-      //               ),
-      //             );
-      //           },
-      //         ),
-      //         TitleWidgetNextView(
-      //             title: "Xem thêm", onPressed: controller.oClickNews0),
-      //         ListView.builder(
-      //           itemCount: 2,
-      //           scrollDirection: Axis.vertical,
-      //           shrinkWrap: true,
-      //           physics: const ScrollPhysics(),
-      //           itemBuilder: (context, index) {
-      //             var recent = recentList[index];
-      //             return Hero(
-      //               tag: "TTMT$index",
-      //               child: InkWell(
-      //                 onTap: () => Get.to(() => ReadNewsView(news: recent)),
-      //                 child: Container(
-      //                   width: double.infinity,
-      //                   height: 135.0,
-      //                   margin: const EdgeInsets.symmetric(horizontal: 10.0),
-      //                   child: NewWidgetView(news: recent),
-      //                 ),
-      //               ),
-      //             );
-      //           },
-      //         ),
-      //         TitleWidgetNextView(
-      //             title: "Xem thêm", onPressed: controller.oClickNews1),
-      //         TitleWidgetView(
-      //             title: "THƯ VIỆN ẢNH", onPressed: controller.oClickLibrary0),
-      //         Container(
-      //           width: double.infinity,
-      //           height: 300.0,
-      //           padding: const EdgeInsets.only(left: 10.0),
-      //           child: ListView.builder(
-      //             itemCount: popularList.length,
-      //             scrollDirection: Axis.horizontal,
-      //             shrinkWrap: true,
-      //             itemBuilder: (context, index) {
-      //               var news = popularList[index];
-      //               return InkWell(
-      //                 onTap: () => Get.to(() => DetailsLibraryView(news: news)),
-      //                 child: Container(
-      //                   margin: const EdgeInsets.only(right: 12.0, top: 5.0),
-      //                   child: PrimaryCard(news: news),
-      //                 ),
-      //               );
-      //             },
-      //           ),
-      //         ),
-      //         const SizedBox(height: 8.0),
-      //         Container(
-      //           width: double.infinity,
-      //           decoration: const BoxDecoration(
-      //             border: Border(
-      //               top: BorderSide(
-      //                 width: 1.0,
-      //                 color: kGrey3,
-      //               ),
-      //             ),
-      //           ),
-      //         ),
-      //         TitleWidgetView(
-      //             title: "THƯ VIỆN VIDEO",
-      //             onPressed: controller.oClickLibrary1),
-      //         Container(
-      //           width: double.infinity,
-      //           height: 300.0,
-      //           padding: const EdgeInsets.only(left: 10.0),
-      //           child: ListView.builder(
-      //             itemCount: trendingList.length,
-      //             scrollDirection: Axis.horizontal,
-      //             shrinkWrap: true,
-      //             itemBuilder: (context, index) {
-      //               var news = trendingList[index];
-      //               return InkWell(
-      //                 onTap: () => Get.to(() => DetailsLibraryView(news: news)),
-      //                 child: Container(
-      //                   margin: const EdgeInsets.only(right: 12.0, top: 5),
-      //                   child: PrimaryCard(news: news),
-      //                 ),
-      //               );
-      //             },
-      //           ),
-      //         ),
-      //       ],
-      //     ),
-      //   ],
-      // ),
     );
   }
 }

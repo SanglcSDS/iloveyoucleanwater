@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:get/get.dart';
 
 class BannerHomeView extends StatelessWidget {
   @override
@@ -37,8 +38,8 @@ class BannerHomeView extends StatelessWidget {
                   child: FlatButton(
                     height: 20,
                     color: Colors.blue[300],
-                    child: const Text(
-                      "Xem chi tiết",
+                    child: Text(
+                      'detail'.tr,
                       style: TextStyle(
                         fontSize: 12.0,
                         fontWeight: FontWeight.w600,

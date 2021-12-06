@@ -1,13 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:iloveyoucleanwater/models/home/banner_model.dart';
 
 import 'package:iloveyoucleanwater/models/home/carousel.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class CarouselSliderView extends StatefulWidget {
-  final List<Carousel> carouselList;
-  const CarouselSliderView(this.carouselList);
+  final List<BannerModel> bannerList;
+  const CarouselSliderView(this.bannerList);
 
   @override
   _CarouselSliderViewState createState() => _CarouselSliderViewState();
@@ -19,7 +20,7 @@ class _CarouselSliderViewState extends State<CarouselSliderView> {
 
   @override
   void initState() {
-    imageSlider = widget.carouselList
+    imageSlider = widget.bannerList
         .map((e) => Container(
               margin: const EdgeInsets.all(10),
               child: ClipRRect(
@@ -39,21 +40,21 @@ class _CarouselSliderViewState extends State<CarouselSliderView> {
                       fit: BoxFit.cover,
                       width: 1000,
                     ),
-                    Positioned(
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      child: Container(
-                        padding: const EdgeInsets.all(10),
-                        child: const Text(
-                          '',
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 20,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ),
-                    )
+                    // Positioned(
+                    //   bottom: 0,
+                    //   left: 0,
+                    //   right: 0,
+                    //   child: Container(
+                    //     padding: const EdgeInsets.all(10),
+                    //     child: const Text(
+                    //       '',
+                    //       style: TextStyle(
+                    //           color: Colors.white,
+                    //           fontSize: 20,
+                    //           fontWeight: FontWeight.bold),
+                    //     ),
+                    //   ),
+                    // )
                   ],
                 ),
               ),
@@ -71,9 +72,11 @@ class _CarouselSliderViewState extends State<CarouselSliderView> {
               items: imageSlider,
               options: CarouselOptions(
                   autoPlay: true,
-                  enlargeCenterPage: true,
-                  aspectRatio: 16 / 9,
+                  autoPlayInterval: Duration(seconds: 3),
+                  // enlargeCenterPage: true,
+                  aspectRatio: 16 / 6,
                   viewportFraction: 1,
+                  scrollDirection: Axis.horizontal,
                   onPageChanged: (index, reason) {
                     setState(() {
                       _current = index;
@@ -81,8 +84,8 @@ class _CarouselSliderViewState extends State<CarouselSliderView> {
                   })),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
-            children: widget.carouselList.map((e) {
-              int index = widget.carouselList.indexOf(e);
+            children: widget.bannerList.map((e) {
+              int index = widget.bannerList.indexOf(e);
               return Container(
                 width: 7,
                 height: 7,

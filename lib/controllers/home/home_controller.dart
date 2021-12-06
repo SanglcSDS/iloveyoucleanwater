@@ -6,7 +6,9 @@ import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/models/home/NewsDemo.dart';
 import 'package:iloveyoucleanwater/models/home/NewsDemoModell.dart';
+import 'package:iloveyoucleanwater/models/home/banner_model.dart';
 import 'package:iloveyoucleanwater/models/home/carousel.dart';
+import 'package:iloveyoucleanwater/service/home_Service.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
 
@@ -17,11 +19,13 @@ class HomeController extends GetxController {
   var isloadingHome = false.obs;
   var isLoading = false;
   final NewsService provider = NewsService();
+  final HomeService homeService = HomeService();
+//  getBanners
   var tabIndex = 0;
 
   List<News> news = [];
   RxList listCarousel = <Carousel>[].obs;
-  List<Carousel> carouselData = [];
+  List<BannerModel> listBanner = [];
   List<NewDemo> newsDemo = [];
   // final serialFormKey = GlobalKey<FormState>();
   // final serialController = TextEditingController();
@@ -29,23 +33,21 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     loadingHome();
-    fetchCarousel();
 
     super.onInit();
   }
 
-  Future<void> fetchCarousel() async {
+  void banners() async {
     try {
       isLoading = true;
-
       update();
-      Response<dynamic> _data = await provider.GetAll();
-      carouselData.clear();
+      Response<dynamic> _data = await homeService.getBanners();
+      listBanner.clear();
       if (_data.statusCode == 200) {
-        var jsonString = _data.body;
+        var jsonString = _data.body['data'];
         if (jsonString != null) {
           jsonString.forEach((e) {
-            carouselData.add(Carousel.fromJson(e));
+            listBanner.add(BannerModel.fromJson(e));
           });
         }
       }
@@ -57,11 +59,25 @@ class HomeController extends GetxController {
     }
   }
 
+  void loadlanguage(String language) async {
+    try {
+      String a = language;
+      isloadingHome(true);
+      banners();
+      update();
+
+      news = recentList;
+    } finally {
+      isloadingHome(false);
+      update();
+    }
+  }
+
   void loadingHome() async {
     try {
       isloadingHome(true);
       update();
-      fetchCarousel();
+      banners();
 
       news = recentList;
     } finally {
@@ -79,7 +95,7 @@ class HomeController extends GetxController {
         var jsonString = _data.body["articles"];
         if (jsonString != null) {
           jsonString.forEach((e) {
-            newsDemo.add(NewDemo.fromJson(e));
+            listBanner.add(BannerModel.fromJson(e));
           });
         }
       }
