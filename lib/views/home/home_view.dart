@@ -5,7 +5,8 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/views/home/dashboard_view.dart';
 import 'package:iloveyoucleanwater/views/introduce/Introduce_view.dart';
-import 'package:iloveyoucleanwater/views/learning/learning_view.dart';
+import 'package:iloveyoucleanwater/views/learning/courses.dart';
+import 'package:iloveyoucleanwater/views/learning/tab_bar_lessons.dart';
 import 'package:iloveyoucleanwater/views/library/library_view.dart';
 import 'package:iloveyoucleanwater/views/news/news_view.dart';
 
@@ -56,7 +57,7 @@ class HomeView extends GetView<HomeController> {
               IntroduceView(),
               NewsView(),
               LibraryView(),
-              LearningView(),
+              CourseView(),
             ],
           ),
         ),

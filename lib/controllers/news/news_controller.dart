@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:iloveyoucleanwater/routes/app_pages.dart';
-import 'package:iloveyoucleanwater/views/news/news_view.dart';
 
 class NewsController extends GetxController
     with GetSingleTickerProviderStateMixin {
