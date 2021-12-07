@@ -3,12 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iloveyoucleanwater/service/news.dart';
+import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 
 class ReadNewsView extends StatelessWidget {
-  final News news;
+  final NewModel news;
   ReadNewsView({required this.news});
   @override
   Widget build(BuildContext context) {
@@ -49,16 +49,13 @@ class ReadNewsView extends StatelessWidget {
         child: ListView(
           children: [
             const SizedBox(height: 12.0),
-            Hero(
-              tag: news.seen,
-              child: Container(
-                height: 220.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  image: DecorationImage(
-                    image: NetworkImage(news.image),
-                    fit: BoxFit.fill,
-                  ),
+            Container(
+              height: 220.0,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5.0),
+                image: DecorationImage(
+                  image: NetworkImage(news.image),
+                  fit: BoxFit.fill,
                 ),
               ),
             ),
@@ -82,17 +79,17 @@ class ReadNewsView extends StatelessWidget {
                       ),
                       const SizedBox(width: 6.0),
                       Text(
-                        news.category,
+                        news.categoryTitle,
                         style: kCategoryTitle,
                       ),
                     ],
                   ),
                 ),
                 const Spacer(),
-                Status(
-                  icon: Icons.remove_red_eye,
-                  total: news.seen,
-                ),
+                // Status(
+                //   icon: Icons.remove_red_eye,
+                //   total: news.categoryTitle,
+                // ),
               ],
             ),
             const SizedBox(height: 12.0),
@@ -100,7 +97,7 @@ class ReadNewsView extends StatelessWidget {
             const SizedBox(height: 15.0),
             Row(
               children: [
-                Text(news.time, style: kDetailContent),
+                Text(news.createdAt, style: kDetailContent),
                 const SizedBox(width: 5.0),
                 const SizedBox(
                   width: 10.0,
@@ -111,13 +108,13 @@ class ReadNewsView extends StatelessWidget {
                 ),
                 const SizedBox(width: 5.0),
                 Text(
-                  news.author,
+                  news.language,
                   style: kDetailContent.copyWith(color: Colors.black),
                 ),
               ],
             ),
             const SizedBox(height: 15.0),
-            Html(data: news.content),
+            Html(data: news.description),
             const SizedBox(height: 25.0)
           ],
         ),
@@ -126,18 +123,18 @@ class ReadNewsView extends StatelessWidget {
   }
 }
 
-class Status extends StatelessWidget {
-  final IconData icon;
-  final String total;
-  Status({required this.icon, required this.total});
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      children: [
-        Icon(icon, color: kGrey2),
-        const SizedBox(width: 4.0),
-        Text(total, style: kDetailContent),
-      ],
-    );
-  }
-}
+// class Status extends StatelessWidget {
+//   final IconData icon;
+//   final String total;
+//   Status({required this.icon, required this.total});
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       children: [
+//         Icon(icon, color: kGrey2),
+//         const SizedBox(width: 4.0),
+//         Text(total, style: kDetailContent),
+//       ],
+//     );
+//   }
+// }

@@ -8,9 +8,11 @@ import 'package:iloveyoucleanwater/models/home/NewsDemo.dart';
 import 'package:iloveyoucleanwater/models/home/NewsDemoModell.dart';
 import 'package:iloveyoucleanwater/models/home/banner_model.dart';
 import 'package:iloveyoucleanwater/models/home/carousel.dart';
+import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/service/home_Service.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 final controllerNews = Get.put(NewsController());
 final controllerLibrary = Get.put(LibraryController());
@@ -27,8 +29,40 @@ class HomeController extends GetxController {
   RxList listCarousel = <Carousel>[].obs;
   List<BannerModel> listBanner = [];
   List<NewDemo> newsDemo = [];
-  // final serialFormKey = GlobalKey<FormState>();
-  // final serialController = TextEditingController();
+  final RefreshController refreshController =
+      RefreshController(initialRefresh: true);
+
+  // void getAllNews() async {
+  //   try {
+  //     isLoading = true;
+
+  //     Response<dynamic> _data = await provider.getNewAll(currentPage);
+  //     if (_data.statusCode == 200) {
+  //       var jsonString = _data.body["data"]['data'];
+
+  //       if (jsonString != null) {
+  //         if (isRefresh) {
+  //           passengers.clear();
+  //           jsonString.forEach((e) {
+  //             passengers.add(NewModel.fromJson(e));
+  //           });
+  //         } else {
+  //           jsonString.forEach((e) {
+  //             passengers.add(NewModel.fromJson(e));
+  //           });
+  //         }
+  //         currentPage++;
+
+  //         totalPages = jsonString.body['data']['current_page'];
+  //       }
+  //       update();
+  //     }
+  //   } finally {
+  //     isLoading = false;
+  //     update();
+  //     print('data fetch done');
+  //   }
+  // }
 
   @override
   void onInit() {
@@ -83,26 +117,6 @@ class HomeController extends GetxController {
     } finally {
       isloadingHome(false);
       update();
-    }
-  }
-
-  void getNews() async {
-    try {
-      isLoading = true;
-      update();
-      Response<dynamic> _data = await provider.GetNews();
-      if (_data.statusCode == 200) {
-        var jsonString = _data.body["articles"];
-        if (jsonString != null) {
-          jsonString.forEach((e) {
-            listBanner.add(BannerModel.fromJson(e));
-          });
-        }
-      }
-    } finally {
-      isLoading = false;
-      update();
-      print('data fetch done');
     }
   }
 

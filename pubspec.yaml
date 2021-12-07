@@ -43,12 +43,12 @@ dependencies:
   carousel_slider: ^4.0.0
   cached_network_image: ^3.0.0
   shimmer: ^2.0.0
-  flutter_easyloading: ^3.0.3
-  http: ^0.13.4
+  # http: ^0.13.4
   pull_to_refresh: ^2.0.0
   json_serializable: ^6.1.1
   json_annotation: ^4.4.0
   build_runner: ^2.1.5
+  
 
 
 dev_dependencies:

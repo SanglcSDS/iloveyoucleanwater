@@ -6,7 +6,7 @@ import 'package:iloveyoucleanwater/views/home/home_news_view.dart';
 import 'package:iloveyoucleanwater/views/home/slide/carousel_loading_view.dart';
 import 'package:iloveyoucleanwater/views/home/slide/carousel_slider_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
-import 'package:iloveyoucleanwater/views/shared/widgets/read_news_view.dart';
+import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
 
 class HomeLoadingView extends StatefulWidget {
   bool isRelod;

@@ -6,7 +6,7 @@ import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/home/home_loading_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
-import 'package:iloveyoucleanwater/views/shared/widgets/read_news_view.dart';
+import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
 
 class IntroduceView extends GetView<IntroduceController> {

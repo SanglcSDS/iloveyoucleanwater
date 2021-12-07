@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
-import 'package:iloveyoucleanwater/views/shared/widgets/read_news_view.dart';
+import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
 
 class HomeNewsView extends StatelessWidget {
   final List<News> news;
@@ -18,13 +18,13 @@ class HomeNewsView extends StatelessWidget {
           tag: "TTCT$index",
           child: InkWell(
             onTap: () {
-              Get.to(() => ReadNewsView(news: recent));
+              //  Get.to(() => ReadNewsView(news: recent));
             },
             child: Container(
               width: double.infinity,
               height: 135.0,
               margin: const EdgeInsets.symmetric(horizontal: 10.0),
-              child: NewWidgetView(news: recent),
+              // child: NewWidgetView(news: recent),
             ),
           ),
         );

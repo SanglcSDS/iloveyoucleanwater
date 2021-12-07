@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class NewWidgetView extends StatelessWidget {
-  final News news;
+  final NewModel news;
   NewWidgetView({required this.news});
 
   @override
@@ -27,7 +28,9 @@ class NewWidgetView extends StatelessWidget {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(3.0),
               image: DecorationImage(
-                image: NetworkImage(news.image),
+                image: NetworkImage(news.image.contains(Constants.URL_IMAGE)
+                    ? news.image
+                    : Constants.URL_IMAGE + news.image),
                 fit: BoxFit.cover,
               ),
             ),
@@ -47,7 +50,7 @@ class NewWidgetView extends StatelessWidget {
                   ),
                   const SizedBox(height: 4.0),
                   Text(
-                    news.subtitle,
+                    news.description,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 2,
                     style: kDetailContent,
@@ -56,7 +59,7 @@ class NewWidgetView extends StatelessWidget {
                   Row(
                     children: [
                       Expanded(
-                        child: Text(news.category,
+                        child: Text(news.categoryTitle,
                             style: kDetailContent,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1),
@@ -68,7 +71,7 @@ class NewWidgetView extends StatelessWidget {
                       ),
                       const SizedBox(width: 10.0),
                       Expanded(
-                        child: Text(news.time,
+                        child: Text(news.createdAt,
                             style: kDetailContent,
                             overflow: TextOverflow.ellipsis,
                             maxLines: 1),

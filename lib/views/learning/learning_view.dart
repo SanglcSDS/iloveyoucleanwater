@@ -10,6 +10,6 @@ class LearningView extends GetView<LearningController> {
   // final controller = Get.put(HomeController());
 
   Widget build(BuildContext context) {
-    return HomePage();
+    return Container();
   }
 }
