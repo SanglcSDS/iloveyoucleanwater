@@ -24,9 +24,7 @@ class IntroduceView extends GetView<IntroduceController> {
               centerTitle: true,
               backgroundColor: Colors.white,
             ),
-            body: HomeLoadingView(
-              isRelod: true,
-            )
+            body: HomeLoadingView()
 
             //  DefaultTabController(
             //   length: 2,

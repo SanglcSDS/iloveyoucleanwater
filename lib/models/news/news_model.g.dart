@@ -13,8 +13,8 @@ NewModel _$NewModelFromJson(Map<String, dynamic> json) => NewModel(
       status: json['status'] ?? "" as int,
       image: json['image'] ?? "" as String,
       description: json['description'] ?? "" as String,
-      createdAt: json['createdAt'] ?? "" as String,
-      categoryTitle: json['categoryTitle'] ?? "" as String,
+      createdAt: json['created_at'] ?? "" as String,
+      categoryTitle: json['category_title'] ?? "" as String,
     );
 
 Map<String, dynamic> _$NewModelToJson(NewModel instance) => <String, dynamic>{
@@ -24,6 +24,6 @@ Map<String, dynamic> _$NewModelToJson(NewModel instance) => <String, dynamic>{
       'status': instance.status,
       'image': instance.image,
       'description': instance.description,
-      'createdAt': instance.createdAt,
-      'categoryTitle': instance.categoryTitle,
+      'created_at': instance.createdAt,
+      'category_title': instance.categoryTitle,
     };

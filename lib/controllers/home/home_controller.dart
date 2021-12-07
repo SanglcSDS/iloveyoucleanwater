@@ -18,51 +18,33 @@ final controllerNews = Get.put(NewsController());
 final controllerLibrary = Get.put(LibraryController());
 
 class HomeController extends GetxController {
+  final RefreshController refreshHomeController =
+      RefreshController(initialRefresh: true);
   var isloadingHome = false.obs;
   var isLoading = false;
   final NewsService provider = NewsService();
   final HomeService homeService = HomeService();
-//  getBanners
   var tabIndex = 0;
 
   List<News> news = [];
   RxList listCarousel = <Carousel>[].obs;
   List<BannerModel> listBanner = [];
-  List<NewDemo> newsDemo = [];
-  final RefreshController refreshController =
-      RefreshController(initialRefresh: true);
-
-  // void getAllNews() async {
-  //   try {
-  //     isLoading = true;
-
-  //     Response<dynamic> _data = await provider.getNewAll(currentPage);
-  //     if (_data.statusCode == 200) {
-  //       var jsonString = _data.body["data"]['data'];
-
-  //       if (jsonString != null) {
-  //         if (isRefresh) {
-  //           passengers.clear();
-  //           jsonString.forEach((e) {
-  //             passengers.add(NewModel.fromJson(e));
-  //           });
-  //         } else {
-  //           jsonString.forEach((e) {
-  //             passengers.add(NewModel.fromJson(e));
-  //           });
-  //         }
-  //         currentPage++;
-
-  //         totalPages = jsonString.body['data']['current_page'];
-  //       }
-  //       update();
-  //     }
-  //   } finally {
-  //     isLoading = false;
-  //     update();
-  //     print('data fetch done');
-  //   }
-  // }
+  RxList onRefreshlistBanner = <BannerModel>[].obs;
+  Future<bool> onRefreshHome({bool isRefresh = false}) async {
+    Response<dynamic> _data = await homeService.getBanners();
+    onRefreshlistBanner.clear();
+    if (_data.statusCode == 200) {
+      var jsonString = _data.body['data'];
+      if (jsonString != null) {
+        jsonString.forEach((e) {
+          onRefreshlistBanner.add(BannerModel.fromJson(e));
+        });
+      }
+      return true;
+    } else {
+      return true;
+    }
+  }
 
   @override
   void onInit() {

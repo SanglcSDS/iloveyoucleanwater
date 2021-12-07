@@ -89,7 +89,7 @@ class NewsController extends GetxController
       }
     }
 
-    Response<dynamic> _data = await providerNewsService.getNewAll(currentPage);
+    Response<dynamic> _data = await providerNewsService.getNewAll(currentPageE);
     if (_data.statusCode == 200) {
       var jsonString = _data.body["data"]['data'];
 

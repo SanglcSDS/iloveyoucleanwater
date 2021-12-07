@@ -24,23 +24,23 @@ class HomeView extends GetView<HomeController> {
           elevation: 0,
           items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
+              icon: const Icon(Icons.home),
               label: 'home'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.addressCard),
+              icon: const Icon(FontAwesomeIcons.addressCard),
               label: 'introduce'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.newspaper),
+              icon: const Icon(FontAwesomeIcons.newspaper),
               label: 'news'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.photoVideo),
+              icon: const Icon(FontAwesomeIcons.photoVideo),
               label: 'library'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.graduationCap),
+              icon: const Icon(FontAwesomeIcons.graduationCap),
               label: 'learning'.tr,
             ),
           ],

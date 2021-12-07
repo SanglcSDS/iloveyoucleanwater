@@ -1,85 +1,90 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
-import 'package:iloveyoucleanwater/utils/constants.dart';
-import 'package:iloveyoucleanwater/views/home/home_news_view.dart';
+import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
+import 'package:iloveyoucleanwater/service/news.dart';
+import 'package:iloveyoucleanwater/views/home/banner_home_view.dart';
 import 'package:iloveyoucleanwater/views/home/slide/carousel_loading_view.dart';
 import 'package:iloveyoucleanwater/views/home/slide/carousel_slider_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
 import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/title_widget_view.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class HomeLoadingView extends StatefulWidget {
-  bool isRelod;
-  HomeLoadingView({required this.isRelod});
-  @override
-  HomeLoadingViewState createState() => HomeLoadingViewState();
-}
-
-final controller = Get.put(HomeController());
-final refrshKey = const Key('__RIKEY1__');
-//var refrshKey = GlobalKey<RefreshIndicatorState>();
-
-class HomeLoadingViewState extends State<HomeLoadingView> {
-  @override
-  Future<void> onRefresh() async {
-    // controller.loadingHome;
-    setState(() {
-      controller.listBanner;
-
-      Future.delayed(Duration(seconds: 2), () => controller.loadingHome);
-    });
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(Duration.zero, () async {
-      if (this.widget.isRelod) {
-        await controller.loadingHome;
-      }
-    });
-  }
-
+class HomeLoadingView extends StatelessWidget {
+  final _controller = Get.put(HomeController());
+  final controller = Get.put(NewsController());
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Obx(() {
-        if (controller.isloadingHome.value)
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        else
-          return RefreshIndicator(
-            key: refrshKey,
-            onRefresh: onRefresh,
-            child: ListView(
-              physics: const AlwaysScrollableScrollPhysics(),
-              children: <Widget>[
-                Hero(
-                  tag: "img",
-                  child: GetBuilder<HomeController>(
-                    builder: (_c) {
-                      if (_c.isLoading) if (_c.listBanner.length > 0)
-                        return CarouselSliderView(_c.listBanner);
-                      else
-                        return CarouselLoadingView();
-                      else if (_c.listBanner.length > 0)
-                        return CarouselSliderView(_c.listBanner);
-                      else
-                        return CarouselLoadingView();
-                    },
-                  ),
-                ),
-                // Container(
-                //   height: 400.0,
-                //   child: HomeNewsView(
-                //     news: controller.news,
-                //   ),
-                // ),
-              ],
-            ),
-          );
-      }),
-    );
+    return Text("data");
+
+    // Container(
+    //   child: SmartRefresher(
+    //     controller: _controller.refreshHomeController,
+    //     onRefresh: () async {
+    //       final result = await _controller.onRefreshHome(isRefresh: true);
+    //       if (result) {
+    //         _controller.refreshHomeController.refreshCompleted();
+    //       } else {
+    //         _controller.refreshHomeController.refreshFailed();
+    //       }
+    //     },
+    //     onLoading: () async {
+    //       final result = await _controller.onRefreshHome();
+    //       if (result) {
+    //         _controller.refreshHomeController.loadComplete();
+    //       } else {
+    //         _controller.refreshHomeController.loadFailed();
+    //       }
+    //     },
+    //     child: ListView(
+    //       children: <Widget>[
+    //         Column(
+    //           crossAxisAlignment: CrossAxisAlignment.start,
+    //           children: <Widget>[
+    //             Container(child: GetBuilder<HomeController>(
+    //               builder: (_c) {
+    //                 if (_c.isLoading) if (_c.listBanner.length > 0)
+    //                   return CarouselSliderView(_c.listBanner);
+    //                 else
+    //                   return CarouselLoadingView();
+    //                 else if (_c.listBanner.length > 0)
+    //                   return CarouselSliderView(_c.listBanner);
+    //                 else
+    //                   return CarouselLoadingView();
+    //               },
+    //             )),
+    //             BannerHomeView(),
+    //             TitleWidgetView(
+    //                 title: 'news'.tr.toUpperCase(),
+    //                 onPressed: _controller.oClickNews0),
+    //             ListView.builder(
+    //               itemCount: controller.passengers.length,
+    //               // scrollDirection: Axis.vertical,
+    //               shrinkWrap: true,
+    //               itemBuilder: (context, index) {
+    //                 var recent = controller.passengers[index];
+    //                 return Hero(
+    //                   tag: "TTCT$index",
+    //                   child: InkWell(
+    //                     onTap: () {
+    //                       //  Get.to(() => ReadNewsView(news: recent));
+    //                     },
+    //                     child: Container(
+    //                       width: double.infinity,
+    //                       height: 135.0,
+    //                       margin: const EdgeInsets.symmetric(horizontal: 10.0),
+    //                       child: NewWidgetView(news: recent),
+    //                     ),
+    //                   ),
+    //                 );
+    //               },
+    //             ),
+    //           ],
+    //         ),
+    //       ],
+    //     ),
+    //   ),
+    // );
   }
 }
