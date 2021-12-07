@@ -3,8 +3,6 @@ import 'package:iloveyoucleanwater/models/learning/comment.dart';
 import 'package:intl/intl.dart';
 
 class CommentController extends GetxController {
-  late String comment;
-
   late List<Comment> comments;
 
   @override
@@ -14,7 +12,6 @@ class CommentController extends GetxController {
   }
 
   writeComment(value) {
-    comment = value;
     comments.add(Comment(
         comment: value,
         time: DateFormat('yyyy-MM-dd – kk:mm:ss').format(DateTime.now())));

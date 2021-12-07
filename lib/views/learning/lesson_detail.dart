@@ -9,14 +9,17 @@ class LessonDetailView extends StatelessWidget {
   final controller = Get.put(LessonDetailController());
   LessonDetailView({Key? key, this.lesson}) : super(key: key);
   final Lesson? lesson;
+  bool showBackBtn = false;
 
   @override
   Widget build(BuildContext context) {
     YoutubePlayerController _videoController = YoutubePlayerController(
       initialVideoId: YoutubePlayerController.convertUrlToId(lesson!.url)!,
-      params:
-          const YoutubePlayerParams(autoPlay: true, showFullscreenButton: true),
-    );
+      params: const YoutubePlayerParams(
+        autoPlay: true,
+        showFullscreenButton: true,
+      ),
+    )..onEnterFullscreen;
     return GetBuilder<LessonDetailController>(
       init: LessonDetailController(),
       builder: (_) => Scaffold(

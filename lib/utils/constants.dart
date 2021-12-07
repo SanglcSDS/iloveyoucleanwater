@@ -5,7 +5,7 @@ class Constants {
   Constants._();
   static const double padding = 20;
   static const double avatarRadius = 45;
-  static const String SERVER_URL = '';
+  static const String SERVER_URL = 'http://112.78.4.235/api';
 }
 
 const kGrey1 = Color(0xFF9F9F9F);

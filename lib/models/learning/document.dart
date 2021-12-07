@@ -10,4 +10,10 @@ class Document {
     required this.url,
     required this.fileName,
   });
+
+  Document.fromJson(Map<String, dynamic> json)
+      : type = json["type"],
+        title = json["title"],
+        url = json["url"],
+        fileName = json["fileName"];
 }

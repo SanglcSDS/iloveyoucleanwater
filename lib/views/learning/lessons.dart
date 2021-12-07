@@ -97,10 +97,6 @@ class ListLesson extends StatelessWidget {
                     child: Text(lessons![index].title),
                   ),
                   onTap: () => {
-                    // SystemChrome.setPreferredOrientations([
-                    //   DeviceOrientation.landscapeLeft,
-                    //   DeviceOrientation.landscapeRight
-                    // ]),
                     Get.to(LessonDetailView(
                       lesson: lessons![index],
                     ))

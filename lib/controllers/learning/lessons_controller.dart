@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/learning/course.dart';
 import 'package:iloveyoucleanwater/models/learning/document.dart';
@@ -47,6 +48,13 @@ class LessonController extends GetxController {
   void onInit() {
     title = course.title;
     isComplete = false;
+    setPortrait();
     super.onInit();
+  }
+
+  Future setPortrait() async {
+    await SystemChrome.setPreferredOrientations(
+        [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+    update();
   }
 }

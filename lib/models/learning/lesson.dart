@@ -12,4 +12,11 @@ class Lesson {
     required this.unlocked,
     required this.url,
   });
+
+  Lesson.fromJson(Map<String, dynamic> json)
+      : title = json["title"],
+        time = json["time"],
+        totalStudent = json["totalStudent"],
+        unlocked = json["unlocked"],
+        url = json["url"];
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/account/account_binding.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_binding.dart';
 import 'package:iloveyoucleanwater/controllers/introduce/introduce_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/course_binding.dart';
@@ -7,6 +8,9 @@ import 'package:iloveyoucleanwater/controllers/learning/lessons_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/questions_binding.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_binding.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_binding.dart';
+import 'package:iloveyoucleanwater/views/account/login.dart';
+import 'package:iloveyoucleanwater/views/account/register.dart';
+import 'package:iloveyoucleanwater/views/account/user_info.dart';
 import 'package:iloveyoucleanwater/views/home/home_view.dart';
 import 'package:iloveyoucleanwater/views/introduce/Introduce_view.dart';
 import 'package:iloveyoucleanwater/views/learning/courses.dart';
@@ -19,7 +23,8 @@ import 'package:iloveyoucleanwater/views/welcome/welcome_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
+  // static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -67,6 +72,23 @@ class AppPages {
       name: Routes.QUESTIONS,
       page: () => QuestionView(),
       binding: QuestionBinding(),
+    ),
+
+    // Account
+    GetPage(
+      name: Routes.LOGIN,
+      page: () => LoginScreen(),
+      binding: AccountBinding(),
+    ),
+    GetPage(
+      name: Routes.REGISTER,
+      page: () => RegisterScreen(),
+      binding: AccountBinding(),
+    ),
+    GetPage(
+      name: Routes.USER_INFO,
+      page: () => UserInfoScreen(),
+      binding: AccountBinding(),
     ),
   ];
 }
