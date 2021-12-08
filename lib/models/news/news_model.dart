@@ -1,6 +1,3 @@
-import 'dart:convert';
-
-import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:json_annotation/json_annotation.dart';
 part 'news_model.g.dart';
 

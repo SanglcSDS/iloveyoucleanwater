@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:intl/intl.dart';
 
 class NewWidgetView extends StatelessWidget {
   final NewModel news;
@@ -25,15 +27,29 @@ class NewWidgetView extends StatelessWidget {
           Container(
             width: 90.0,
             height: 135.0,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(3.0),
-              image: DecorationImage(
-                image: NetworkImage(news.image.contains(Constants.URL_IMAGE)
-                    ? news.image
-                    : Constants.URL_IMAGE + news.image),
-                fit: BoxFit.cover,
+            child: CachedNetworkImage(
+              imageUrl: (news.image.contains(Constants.URL_IMAGE)
+                  ? news.image
+                  : Constants.URL_IMAGE + news.image),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  backgroundColor: Colors.cyanAccent,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
+                ),
               ),
+              fit: BoxFit.cover,
+              width: 1000,
             ),
+
+            // DecorationImage(
+            //   image: (news.image.contains(Constants.URL_IMAGE)
+            //       ? news.image
+            //       : Constants.URL_IMAGE + news.image),
+            //   fit: BoxFit.cover,
+            // ),
           ),
           const SizedBox(width: 12.0),
           Expanded(

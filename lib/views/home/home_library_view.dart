@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
-import 'package:iloveyoucleanwater/views/library/details_library_view.dart';
+import 'package:iloveyoucleanwater/views/library/library_details_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 
 class HomeNewsView extends StatelessWidget {
@@ -24,7 +24,7 @@ class HomeNewsView extends StatelessWidget {
             onTap: () => Get.to(() => DetailsLibraryView(news: news)),
             child: Container(
               margin: const EdgeInsets.only(right: 12.0, top: 5.0),
-              child: PrimaryCard(news: news),
+              // child: PrimaryCard(news: news),
             ),
           );
         },

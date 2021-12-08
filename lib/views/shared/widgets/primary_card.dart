@@ -1,9 +1,11 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:iloveyoucleanwater/models/library/library_model.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class PrimaryCard extends StatelessWidget {
-  final News news;
+  final LibraryModel news;
   PrimaryCard({required this.news});
 
   @override
@@ -18,19 +20,33 @@ class PrimaryCard extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Expanded(
-            child: Hero(
-              tag: news.seen,
+              // child: Container(
+              //   decoration: BoxDecoration(
+              //     borderRadius: BorderRadius.circular(5.0),
+              //     image: DecorationImage(
+              //       image: NetworkImage(news.image),
+              //       fit: BoxFit.cover,
+              //     ),
+              //   ),
+              // ),
               child: Container(
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  image: DecorationImage(
-                    image: NetworkImage(news.image),
-                    fit: BoxFit.cover,
-                  ),
+            height: 220.0,
+            child: CachedNetworkImage(
+              imageUrl: (news.image.contains(Constants.URL_IMAGE)
+                  ? news.image
+                  : Constants.URL_IMAGE + news.image),
+              errorWidget: (context, url, error) => const Icon(Icons.error),
+              progressIndicatorBuilder: (context, url, downloadProgress) =>
+                  Center(
+                child: CircularProgressIndicator(
+                  value: downloadProgress.progress,
+                  backgroundColor: Colors.cyanAccent,
+                  valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
                 ),
               ),
+              fit: BoxFit.cover,
             ),
-          ),
+          )),
           const SizedBox(height: 5.0),
           Container(
             padding:
@@ -49,7 +65,7 @@ class PrimaryCard extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(
-                  child: Text(news.category,
+                  child: Text("news.category",
                       style: kDetailContent,
                       overflow: TextOverflow.ellipsis,
                       maxLines: 1),
@@ -61,7 +77,7 @@ class PrimaryCard extends StatelessWidget {
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
-                    child: Text(news.time,
+                    child: Text("news.time",
                         style: kDetailContent,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1))
