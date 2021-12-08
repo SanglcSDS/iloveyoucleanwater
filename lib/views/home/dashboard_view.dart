@@ -13,6 +13,7 @@ import 'package:iloveyoucleanwater/views/home/slide/carousel_loading_view.dart';
 import 'package:iloveyoucleanwater/views/home/slide/carousel_slider_view.dart';
 import 'package:iloveyoucleanwater/views/library/library_details_view.dart';
 import 'package:iloveyoucleanwater/views/news/news_view.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/home_item_news_widget_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
@@ -60,14 +61,14 @@ class DashboardView extends StatelessWidget {
               _controller.refreshHomeController.refreshFailed();
             }
           },
-          onLoading: () async {
-            final result = await _controller.onRefreshHome();
-            if (result) {
-              _controller.refreshHomeController.loadComplete();
-            } else {
-              _controller.refreshHomeController.loadFailed();
-            }
-          },
+          // onLoading: () async {
+          //   final result = await _controller.onRefreshHome();
+          //   if (result) {
+          //     _controller.refreshHomeController.loadComplete();
+          //   } else {
+          //     _controller.refreshHomeController.loadFailed();
+          //   }
+          // },
           child:
               // ListView(
               //   children: <Widget>[
@@ -90,6 +91,36 @@ class DashboardView extends StatelessWidget {
                 TitleWidgetView(
                     title: 'news'.tr.toUpperCase(),
                     onPressed: _controller.oClickNews0),
+                // Obx(
+                //   () => Column(
+                //     children: List.generate(
+                //         _controller.listEnvironmentalNews.length == null
+                //             ? _controller.listEnvironmentalNews.length
+                //             : 1, (index) {
+                //       if (_controller.listEnvironmentalNews.length > 0) {
+                //         var news = _controller.listEnvironmentalNews[index];
+
+                //         return Hero(
+                //           tag: "Imgarsssz$index",
+                //           child: InkWell(
+                //             // onTap: () {
+                //             //   _controller.getDetailPhotoHome(news);
+                //             // },
+                //             child: Container(
+                //               width: double.infinity,
+                //               height: 300.0,
+                //               margin: const EdgeInsets.symmetric(
+                //                   horizontal: 10.0, vertical: 7.0),
+                //               child: HomeItemNewsWidgetView(news: news),
+                //             ),
+                //           ),
+                //         );
+                //       } else {
+                //         return Container();
+                //       }
+                //     }),
+                //   ),
+                // ),
                 Obx(
                   () => Column(
                     children: List.generate(
@@ -116,6 +147,36 @@ class DashboardView extends StatelessWidget {
                 ),
                 TitleWidgetNextView(
                     title: 'all'.tr, onPressed: _controller.oClickNews0),
+                // Obx(
+                //   () => Column(
+                //     children: List.generate(
+                //         _controller.listProgramNew.length == null
+                //             ? _controller.listProgramNew.length
+                //             : 1, (index) {
+                //       if (_controller.listProgramNew.length > 0) {
+                //         var news = _controller.listProgramNew[index];
+
+                //         return Hero(
+                //           tag: "Imgarsssz$index",
+                //           child: InkWell(
+                //             onTap: () {
+                //               _controller.getNewsDetailsModel(news);
+                //             },
+                //             child: Container(
+                //               width: double.infinity,
+                //               height: 300.0,
+                //               margin: const EdgeInsets.symmetric(
+                //                   horizontal: 10.0, vertical: 7.0),
+                //               child: HomeItemNewsWidgetView(news: news),
+                //             ),
+                //           ),
+                //         );
+                //       } else {
+                //         return Container();
+                //       }
+                //     }),
+                //   ),
+                // ),
                 Obx(
                   () => Column(
                     children: List.generate(_controller.listProgramNew.length,
@@ -145,13 +206,13 @@ class DashboardView extends StatelessWidget {
                 TitleWidgetView(
                     title: 'album'.tr.toUpperCase(),
                     onPressed: _controller.oClickLibrary0),
-                Obx(
-                  () => Container(
-                    width: double.infinity,
-                    height: 300.0,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
+                Container(
+                  width: double.infinity,
+                  height: 300.0,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Obx(
+                      () => Row(
                         children: List.generate(_controller.listPhoto.length,
                             (index) {
                           var news = _controller.listPhoto[index];
@@ -189,13 +250,13 @@ class DashboardView extends StatelessWidget {
                 TitleWidgetView(
                     title: 'video'.tr.toUpperCase(),
                     onPressed: _controller.oClickLibrary1),
-                Obx(
-                  () => Container(
-                    width: double.infinity,
-                    height: 300.0,
-                    child: SingleChildScrollView(
-                      scrollDirection: Axis.horizontal,
-                      child: Row(
+                Container(
+                  width: double.infinity,
+                  height: 300.0,
+                  child: SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Obx(
+                      () => Row(
                         children: List.generate(_controller.listVideo.length,
                             (index) {
                           var news = _controller.listVideo[index];

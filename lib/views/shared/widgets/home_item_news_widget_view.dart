@@ -1,18 +1,18 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iloveyoucleanwater/models/library/library_model.dart';
+import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
-class PrimaryCard extends StatelessWidget {
-  final LibraryModel news;
-  PrimaryCard({required this.news});
+class HomeItemNewsWidgetView extends StatelessWidget {
+  final NewModel news;
+  HomeItemNewsWidgetView({required this.news});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 300.0,
-      // padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+      //padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           border: Border.all(color: kGrey3, width: 1.0)),
@@ -21,7 +21,7 @@ class PrimaryCard extends StatelessWidget {
         children: [
           Expanded(
               child: Container(
-            height: 220.0,
+            height: 135.0,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(5), topLeft: Radius.circular(5)),
@@ -39,6 +39,7 @@ class PrimaryCard extends StatelessWidget {
                   ),
                 ),
                 fit: BoxFit.cover,
+                width: 1000,
               ),
             ),
           )),

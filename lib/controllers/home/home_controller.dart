@@ -33,10 +33,11 @@ class HomeController extends GetxController {
   List<News> news = [];
   RxList listProgramNew = <NewModel>[].obs;
   RxList listEnvironmentalNews = <NewModel>[].obs;
+
   List<BannerModel> listBanner = [];
   List<CategoryModel> listCategory = [];
-  List<LibraryModel> listPhoto = <LibraryModel>[].obs;
-  List<LibraryModel> listVideo = <LibraryModel>[].obs;
+  RxList listPhoto = <LibraryModel>[].obs;
+  RxList listVideo = <LibraryModel>[].obs;
   Rx<LibraryDetailPhotoModel>? detailPhoto;
   RxList onRefreshlistBanner = <BannerModel>[].obs;
   Future<bool> onRefreshHome({bool isRefresh = false}) async {
@@ -57,10 +58,10 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
-    loadingHome();
     getCategory();
     getPhotoHome();
     getVideoHome();
+
     super.onInit();
   }
 
