@@ -1,17 +1,22 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/learning/document_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/document.dart';
 
 class DocumentView extends StatelessWidget {
-  List<Document>? documents;
-  DocumentView({Key? key, this.documents}) : super(key: key);
+  DocumentView({Key? key}) : super(key: key);
+  final DocumentController controller = Get.put(DocumentController());
+
   @override
   Widget build(BuildContext context) {
-    return (documents != null && documents!.isNotEmpty)
+    return (controller.documents != null && controller.documents!.isNotEmpty)
         ? ListView.builder(
-            itemCount: documents!.length,
+            itemCount: controller.documents!.length,
             itemBuilder: (context, index) {
-              return _fileItem(documents![index], index);
+              RxObjectMixin<Document> document =
+                  controller.documents![index].obs;
+              return Obx(() => _fileItem(document.value, index));
             })
         : const Center(
             child: Text('Không có tài liệu'),
@@ -25,16 +30,22 @@ class DocumentView extends StatelessWidget {
           : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       child: Card(
         child: ListTile(
-            leading: const Image(
-              image: AssetImage('assets/images/pdf_file_icon.png'),
+          leading: const Image(
+            image: AssetImage('assets/images/pdf_file_icon.png'),
+          ),
+          title: Container(
+              padding: const EdgeInsets.only(top: 5),
+              child: Text(document.title)),
+          subtitle: Container(
+            alignment: Alignment.bottomLeft,
+            child: TextButton(
+              onPressed: () {
+                controller.downloadFile(document);
+              },
+              child: const Text('Tải xuống'),
             ),
-            title: Container(
-                padding: const EdgeInsets.only(top: 5),
-                child: Text(document.title)),
-            subtitle: Container(
-                alignment: Alignment.bottomLeft,
-                child: TextButton(
-                    onPressed: () {}, child: const Text('Tải xuống')))),
+          ),
+        ),
       ),
     );
   }

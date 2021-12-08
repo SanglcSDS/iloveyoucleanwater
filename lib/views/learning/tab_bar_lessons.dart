@@ -17,42 +17,50 @@ class LearningView extends StatelessWidget {
       theme: ThemeData(
         primaryColor: Colors.blue,
       ),
-      home: DefaultTabController(
-        length: 3,
-        child: Scaffold(
-          appBar: AppBar(
-            leading: IconButton(
-              icon: const Icon(
-                Icons.arrow_back,
-                color: kGrey1,
+      home: SingleChildScrollView(
+        child: Column(
+          children: [
+            Container(
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 4,
+            ),
+            DefaultTabController(
+              length: 3,
+              child: Scaffold(
+                appBar: AppBar(
+                  leading: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back,
+                      color: kGrey1,
+                    ),
+                    onPressed: () => Get.back(result: LearningView()),
+                  ),
+                  backgroundColor: Colors.white,
+                  title: const Text(
+                    'Giới thiệu chung về E-learning',
+                    style: TextStyle(color: kGrey1),
+                  ),
+                  bottom: const TabBar(
+                    labelColor: Colors.lightBlue,
+                    unselectedLabelColor: kGrey1,
+                    tabs: [
+                      Tab(text: 'Bài học'),
+                      Tab(text: 'Bình luận'),
+                      Tab(text: 'Tài liệu'),
+                    ],
+                  ),
+                ),
+                backgroundColor: kDirtyWhite,
+                body: TabBarView(
+                  children: [
+                    LessonView(),
+                    CommentView(),
+                    DocumentView(),
+                  ],
+                ),
               ),
-              onPressed: () => Get.back(result: LearningView()),
             ),
-            backgroundColor: Colors.white,
-            title: const Text(
-              'Giới thiệu chung về E-learning',
-              style: TextStyle(color: kGrey1),
-            ),
-            bottom: const TabBar(
-              labelColor: Colors.lightBlue,
-              unselectedLabelColor: kGrey1,
-              tabs: [
-                Tab(text: 'Bài học'),
-                Tab(text: 'Bình luận'),
-                Tab(text: 'Tài liệu'),
-              ],
-            ),
-          ),
-          backgroundColor: kDirtyWhite,
-          body: TabBarView(
-            children: [
-              LessonView(items: controller.items),
-              CommentView(),
-              DocumentView(
-                documents: controller.documents,
-              ),
-            ],
-          ),
+          ],
         ),
       ),
     );

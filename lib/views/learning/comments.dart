@@ -6,7 +6,7 @@ import 'package:iloveyoucleanwater/models/learning/comment.dart';
 
 class CommentView extends StatelessWidget {
   final commentController = Get.put(CommentController());
-  TextEditingController textController = new TextEditingController();
+  TextEditingController textController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

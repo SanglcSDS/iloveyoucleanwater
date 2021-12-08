@@ -17,10 +17,4 @@ class LessonDetailController extends GetxController {
     await SystemChrome.setPreferredOrientations(
         [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   }
-
-  @override
-  void onClose() {
-    setPortrait();
-    super.onClose();
-  }
 }

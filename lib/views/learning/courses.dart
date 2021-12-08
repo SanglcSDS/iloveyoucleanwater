@@ -4,13 +4,15 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/learning/course_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
-import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class CourseView extends StatelessWidget {
   final controller = Get.put(CourseController());
   CourseView({Key? key}) : super(key: key);
+  RxBool isLogged = false.obs;
+
   @override
   Widget build(BuildContext context) {
+    isLogged = controller.isLogged.value.obs;
     return GetBuilder<CourseController>(
       init: CourseController(),
       initState: (_) => controller.readJson(),
@@ -22,66 +24,131 @@ class CourseView extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
         backgroundColor: kDirtyWhite,
-        body: Obx(() => ListView.builder(
-              itemCount: (controller.courses.length),
-              itemBuilder: (contex, index) {
-                return Container(
-                  margin: index == 0
-                      ? const EdgeInsets.only(
-                          top: 5, bottom: 2, left: 5, right: 5)
-                      : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-                  child: Card(
-                    elevation: 3,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(3),
-                    ),
-                    child: ListTile(
-                      onTap: () => Get.toNamed(Routes.LEARNING),
-                      // leading: const Icon(Icons.ac_unit),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios,
-                        color: kGrey1,
+        body: Obx(() =>
+            !isLogged.value ? _beforeLogin(context) : _afterLogin(context)),
+        // Stack(
+        //   children: [
+        //     SizedBox(
+        //       width: MediaQuery.of(context).size.width,
+        //       height: MediaQuery.of(context).size.height,
+        //       child: Align(
+        //           alignment: Alignment.bottomCenter,
+        //           child: Image.asset("assets/images/bgmain.png")),
+        //     ),
+        //     Obx(() =>
+        //         !isLogged.value ? _beforeLogin(context) : _afterLogin(context)),
+        //   ],
+        // ),
+      ),
+    );
+  }
+
+  Widget _beforeLogin(BuildContext context) {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            SizedBox(
+              height: 1.4 * (MediaQuery.of(context).size.height / 20),
+              width: 5 * (MediaQuery.of(context).size.width / 10),
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  elevation: 5.0,
+                  primary: kBlue1,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30.0),
+                  ),
+                ),
+                onPressed: () => Get.toNamed(Routes.LOGIN),
+                child: Text(
+                  "Login",
+                  style: TextStyle(
+                    color: Colors.white,
+                    letterSpacing: 1.5,
+                    fontSize: MediaQuery.of(context).size.height / 40,
+                  ),
+                ),
+              ),
+            )
+          ],
+        ),
+        Container(
+          padding: const EdgeInsets.symmetric(vertical: 20),
+          child: Text(
+            'Bạn phải đăng nhập để tham gia các khóa học.',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: MediaQuery.of(context).size.height / 45,
+              fontWeight: FontWeight.w400,
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _afterLogin(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
+        children: List.generate(
+          controller.courses.length,
+          (index) {
+            int lessonCount = controller.courses[index].lessons!.length;
+            return Container(
+              margin: index == 0
+                  ? const EdgeInsets.only(top: 5, bottom: 2, left: 5, right: 5)
+                  : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+              width: MediaQuery.of(context).size.width,
+              height: MediaQuery.of(context).size.height / 4,
+              child: Stack(
+                children: [
+                  GestureDetector(
+                    onTap: () =>
+                        controller.popToLessonViews(controller.courses[index]),
+                    child: Card(
+                      color: controller.randomColor(),
+                      elevation: 3,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
                       ),
-                      title: Column(
+                      child: Column(
                         children: [
                           Container(
-                            alignment: Alignment.centerLeft,
                             padding: const EdgeInsets.symmetric(
-                                horizontal: 10, vertical: 10),
+                                vertical: 15, horizontal: 15),
+                            alignment: Alignment.topLeft,
                             child: Text(
                               controller.courses[index].title,
                               style: const TextStyle(
                                   color: kBlack,
-                                  fontSize: 16,
+                                  fontSize: 20,
                                   fontWeight: FontWeight.w600),
                             ),
                           ),
-                          Container(
-                            alignment: Alignment.centerLeft,
-                            padding: const EdgeInsets.only(top: 5, right: 10),
-                            child: LinearPercentIndicator(
-                              // width: MediaQuery.of(context).size.width * 2 / 3,
-                              lineHeight: 5.0,
-                              percent: 0.5,
-                              backgroundColor: Colors.grey,
-                              progressColor: Colors.lightBlue,
-                            ),
-                          ),
-                          Container(
-                            alignment: Alignment.topLeft,
-                            margin: const EdgeInsets.only(
-                                left: 10, right: 10, bottom: 10, top: 2),
-                            child: Text("50% Hoàn thành",
-                                style: const TextStyle(
-                                    color: kGrey1, fontSize: 12)),
+                          Expanded(
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 15, horizontal: 15),
+                                alignment: Alignment.bottomLeft,
+                                child: Text(
+                                  lessonCount.toString() + ' bài học',
+                                  style: const TextStyle(
+                                      color: kBlack,
+                                      fontSize: 18,
+                                      fontWeight: FontWeight.w300),
+                                )),
                           ),
                         ],
                       ),
                     ),
                   ),
-                );
-              },
-            )),
+                ],
+              ),
+            );
+          },
+        ),
       ),
     );
   }

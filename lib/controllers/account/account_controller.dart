@@ -1,14 +1,18 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:iloveyoucleanwater/controllers/learning/course_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/service/account/account_service.dart';
 
 class AccountController extends GetxController {
-  AccountProvider _accountProvider = AccountProvider();
-  @override
-  void onInit() {
-    super.onInit();
-  }
+  final AccountProvider _accountProvider = Get.put(AccountProvider());
+  final CourseController _courseController = Get.put(CourseController());
+  final GetStorage box = GetStorage();
+  // @override
+  // void onInit() {
+  //   super.onInit();
+  // }
 
   Future<void> onLogin(String email, String password) async {
     // bool isValid = authBloc.isValidLogin(
@@ -37,10 +41,12 @@ class AccountController extends GetxController {
     debugPrint("email: " + email + " / password: " + password);
     debugPrint("response: " + response.statusCode.toString());
     int statusCode = response.statusCode!;
-    if (statusCode != 200) {
+    if (statusCode == 200) {
       // MsgDia
-    }
+      await box.write("token", "logged");
 
-    Get.offNamed(Routes.HOME);
+      _courseController.setLogged();
+      Get.offNamed(Routes.HOME);
+    }
   }
 }

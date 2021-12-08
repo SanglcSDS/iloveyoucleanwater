@@ -9,7 +9,6 @@ class LessonDetailView extends StatelessWidget {
   final controller = Get.put(LessonDetailController());
   LessonDetailView({Key? key, this.lesson}) : super(key: key);
   final Lesson? lesson;
-  bool showBackBtn = false;
 
   @override
   Widget build(BuildContext context) {
@@ -22,20 +21,27 @@ class LessonDetailView extends StatelessWidget {
     )..onEnterFullscreen;
     return GetBuilder<LessonDetailController>(
       init: LessonDetailController(),
-      builder: (_) => Scaffold(
-        body: Stack(
-          children: [
-            SizedBox(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-              child: YoutubePlayerControllerProvider(
-                controller: _videoController,
-                child: YoutubePlayerIFrame(
+      builder: (_) => WillPopScope(
+        onWillPop: () async {
+          debugPrint("Back button on click");
+          await controller.setPortrait();
+          return true;
+        },
+        child: Scaffold(
+          body: Stack(
+            children: [
+              SizedBox(
+                width: MediaQuery.of(context).size.width,
+                height: MediaQuery.of(context).size.height,
+                child: YoutubePlayerControllerProvider(
                   controller: _videoController,
+                  child: YoutubePlayerIFrame(
+                    controller: _videoController,
+                  ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );

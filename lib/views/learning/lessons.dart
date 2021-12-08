@@ -8,59 +8,60 @@ import 'package:iloveyoucleanwater/views/learning/lesson_detail.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class LessonView extends StatelessWidget {
-  List<Lesson>? items;
-  LessonController controller = LessonController();
-  LessonView({Key? key, this.items}) : super(key: key);
+  LessonView({Key? key}) : super(key: key);
+  LessonController controller = Get.put(LessonController());
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        Container(
-          height: 40,
-          width: MediaQuery.of(context).size.width,
-          margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
-          child: Row(
-            children: [
-              Container(
-                child: const Text(
-                  'Tiến độ:',
-                  style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+    return Obx(
+      () => Column(
+        children: [
+          Container(
+            height: 40,
+            width: MediaQuery.of(context).size.width,
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            child: Row(
+              children: [
+                Container(
+                  child: const Text(
+                    'Tiến độ:',
+                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                  ),
+                  margin: const EdgeInsets.only(right: 10),
                 ),
-                margin: const EdgeInsets.only(right: 10),
-              ),
-              Expanded(
-                child: LinearPercentIndicator(
-                  // width: MediaQuery.of(context).size.width - 100,
-                  animation: true,
-                  lineHeight: 20.0,
-                  animationDuration: 2000,
-                  percent: 0.5,
-                  center: const Text("50.0%"),
-                  linearStrokeCap: LinearStrokeCap.roundAll,
-                  progressColor: Colors.greenAccent,
-                ),
-              ),
-            ],
-          ),
-        ),
-        Expanded(child: ListLesson(lessons: items!)),
-        controller.isComplete
-            ? OutlinedButton(
-                style: ButtonStyle(
-                  backgroundColor:
-                      MaterialStateProperty.all<Color>(Colors.blue),
-                ),
-                onPressed: () => Get.toNamed(Routes.QUESTIONS),
-                child: const Text(
-                  'Đánh giá khóa học',
-                  style: TextStyle(
-                    color: Colors.white,
+                Expanded(
+                  child: LinearPercentIndicator(
+                    // width: MediaQuery.of(context).size.width - 100,
+                    animation: true,
+                    lineHeight: 20.0,
+                    animationDuration: 2000,
+                    percent: controller.percent!.value,
+                    center: Text(controller.percentStr!.value),
+                    linearStrokeCap: LinearStrokeCap.roundAll,
+                    progressColor: Colors.greenAccent,
                   ),
                 ),
-              )
-            : const SizedBox()
-      ],
+              ],
+            ),
+          ),
+          Expanded(child: ListLesson(lessons: controller.lessons!)),
+          controller.isComplete.value
+              ? OutlinedButton(
+                  style: ButtonStyle(
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.blue),
+                  ),
+                  onPressed: () => Get.toNamed(Routes.QUESTIONS),
+                  child: const Text(
+                    'Đánh giá khóa học',
+                    style: TextStyle(
+                      color: Colors.white,
+                    ),
+                  ),
+                )
+              : const SizedBox()
+        ],
+      ),
     );
   }
 }

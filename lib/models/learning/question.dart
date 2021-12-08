@@ -1,7 +1,7 @@
 class Question {
-  String text;
-  List<Answer> answers;
-  bool hasOther;
+  late String text;
+  late List<Answer> answers;
+  late bool hasOther;
 
   Question({
     required this.text,
@@ -9,10 +9,12 @@ class Question {
     required this.hasOther,
   });
 
-  Question.fromJson(Map<String, dynamic> json)
-      : text = json["text"],
-        answers = json["answers"].map((e) => Answer.fromJson(e)).toList(),
-        hasOther = json["hasOther"];
+  Question.fromJson(Map<String, dynamic> json) {
+    text = json["text"];
+    var answerJson = json["answers"] as List;
+    answers = answerJson.map((e) => Answer.fromJson(e)).toList();
+    hasOther = json["hasOther"];
+  }
 }
 
 class Answer {
