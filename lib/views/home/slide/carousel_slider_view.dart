@@ -35,9 +35,10 @@ class _CarouselSliderViewState extends State<CarouselSliderView> {
                           value: downloadProgress.progress,
                         ),
                       ),
-                      fit: BoxFit.cover,
-                      width: 1000,
+                      fit: BoxFit.fill,
+                      height: 350,
                     ),
+
                     // Positioned(
                     //   bottom: 0,
                     //   left: 0,
@@ -72,7 +73,7 @@ class _CarouselSliderViewState extends State<CarouselSliderView> {
                   autoPlay: true,
                   autoPlayInterval: Duration(seconds: 3),
                   // enlargeCenterPage: true,
-                  aspectRatio: 16 / 6,
+                  aspectRatio: 16 / 9,
                   viewportFraction: 1,
                   scrollDirection: Axis.horizontal,
                   onPageChanged: (index, reason) {

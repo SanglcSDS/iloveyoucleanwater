@@ -32,8 +32,9 @@ class HomeController extends GetxController {
 
   List<News> news = [];
   RxList listProgramNew = <NewModel>[].obs;
+  RxList listProgramNewitem = <NewModel>[].obs;
   RxList listEnvironmentalNews = <NewModel>[].obs;
-
+  RxList listEnvironmentalNewsitem = <NewModel>[].obs;
   List<BannerModel> listBanner = [];
   List<CategoryModel> listCategory = [];
   RxList listPhoto = <LibraryModel>[].obs;
@@ -58,6 +59,7 @@ class HomeController extends GetxController {
 
   @override
   void onInit() {
+    banners();
     getCategory();
     getPhotoHome();
     getVideoHome();
@@ -66,19 +68,44 @@ class HomeController extends GetxController {
   }
 
   void getNewsHomes() async {
-    await getNewsHome(listCategory[0].id, listProgramNew);
-    await getNewsHome(listCategory[1].id, listEnvironmentalNews);
+    await getNewsHome(listCategory[1].id, listProgramNew);
+    await getNewsHome1(listCategory[0].id, listEnvironmentalNews);
   }
 
   Future<void> getNewsHome(int id, RxList list) async {
+    List<NewModel> listItem = [];
     Response _data = await homeService.getNewsHome(id);
 
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data']['data'];
       if (jsonString != null) {
         jsonString.forEach((e) {
-          list.add(NewModel.fromJson(e));
+          listItem.add(NewModel.fromJson(e));
         });
+        listProgramNewitem.assignAll(listItem);
+        if (listItem.length > 0) {
+          listItem.removeAt(0);
+        }
+        listProgramNew.assignAll(listItem);
+      }
+    }
+  }
+
+  Future<void> getNewsHome1(int id, RxList list) async {
+    List<NewModel> listItem = [];
+    Response _data = await homeService.getNewsHome(id);
+
+    if (_data.statusCode == 200) {
+      var jsonString = _data.body['data']['data'];
+      if (jsonString != null) {
+        jsonString.forEach((e) {
+          listItem.add(NewModel.fromJson(e));
+        });
+        listEnvironmentalNewsitem.assignAll(listItem);
+        if (listItem.length > 0) {
+          listItem.removeAt(0);
+        }
+        listEnvironmentalNews.assignAll(listItem);
       }
     }
   }
