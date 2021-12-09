@@ -15,7 +15,7 @@ class CourseView extends StatelessWidget {
     isLogged = controller.isLogged.value.obs;
     return GetBuilder<CourseController>(
       init: CourseController(),
-      initState: (_) => controller.readJson(),
+      initState: (_) => controller.initData(),
       builder: (_) => Scaffold(
         appBar: AppBar(
           title:
