@@ -20,7 +20,7 @@ class CourseController extends GetxController
     Colors.grey,
     Color(Colors.blueGrey[200]!.value),
     Colors.blueAccent,
-    Colors.yellowAccent,
+    Colors.lime,
     Color(Colors.green[200]!.value),
     Color(Colors.brown[300]!.value),
   ];
@@ -29,16 +29,15 @@ class CourseController extends GetxController
 
   @override
   void onInit() {
-    // box.write("token", "");
     checkLogged();
     if (isLogged.value) {
-      readJson();
+      initData();
     }
     update();
     super.onInit();
   }
 
-  Future<void> readJson() async {
+  Future<void> initData() async {
     final String response =
         await rootBundle.loadString('assets/json/data.json');
     final data = await json.decode(response);
@@ -51,7 +50,6 @@ class CourseController extends GetxController
     try {
       if (box.hasData("token")) {
         String token = box.read("token");
-        debugPrint(token);
         isLogged = token.isNotEmpty ? true.obs : false.obs;
       }
     } catch (e) {
@@ -64,7 +62,7 @@ class CourseController extends GetxController
   void setLogged() {
     isLogged = true.obs;
     debugPrint("isLogged: " + isLogged.value.toString());
-    readJson();
+    initData();
     update();
   }
 
@@ -75,8 +73,7 @@ class CourseController extends GetxController
   }
 
   void popToLessonViews(Course course) {
-    _lessonController.lessons = course.lessons!.obs;
-    // debugPrint();
+    _lessonController.onInitLesson(course.lessons!.obs);
     _documentController.documents = course.documents!.obs;
     update();
     Get.toNamed(Routes.LEARNING);

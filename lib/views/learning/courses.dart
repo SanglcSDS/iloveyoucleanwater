@@ -91,63 +91,84 @@ class CourseView extends StatelessWidget {
 
   Widget _afterLogin(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
-        children: List.generate(
-          controller.courses.length,
-          (index) {
-            int lessonCount = controller.courses[index].lessons!.length;
-            return Container(
-              margin: index == 0
-                  ? const EdgeInsets.only(top: 5, bottom: 2, left: 5, right: 5)
-                  : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height / 4,
-              child: Stack(
-                children: [
-                  GestureDetector(
-                    onTap: () =>
-                        controller.popToLessonViews(controller.courses[index]),
-                    child: Card(
-                      color: controller.randomColor(),
-                      elevation: 3,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Column(
-                        children: [
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 15, horizontal: 15),
-                            alignment: Alignment.topLeft,
-                            child: Text(
-                              controller.courses[index].title,
-                              style: const TextStyle(
-                                  color: kBlack,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w600),
+      child: Container(
+        width: double.infinity,
+        alignment: Alignment.topCenter,
+        child: Wrap(
+          children: List.generate(
+            controller.courses.length,
+            (index) {
+              int lessonCount = controller.courses[index].lessons!.length;
+              return Container(
+                margin: index <= 1
+                    ? const EdgeInsets.only(
+                        top: 10, bottom: 2, left: 5, right: 5)
+                    : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                width: MediaQuery.of(context).size.width / 2.2,
+                height: MediaQuery.of(context).size.height / 3,
+                child: Stack(
+                  children: [
+                    GestureDetector(
+                      onTap: () => controller
+                          .popToLessonViews(controller.courses[index]),
+                      child: Card(
+                        color: controller.randomColor(),
+                        elevation: 3,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.symmetric(
+                                  vertical: 15, horizontal: 15),
+                              alignment: Alignment.topLeft,
+                              child: Text(
+                                controller.courses[index].title,
+                                style: const TextStyle(
+                                    color: kBlack,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600),
+                              ),
                             ),
-                          ),
-                          Expanded(
-                            child: Container(
-                                padding: const EdgeInsets.symmetric(
-                                    vertical: 15, horizontal: 15),
-                                alignment: Alignment.bottomLeft,
-                                child: Text(
-                                  lessonCount.toString() + ' bài học',
-                                  style: const TextStyle(
-                                      color: kBlack,
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w300),
-                                )),
-                          ),
-                        ],
+                            Expanded(
+                              child: Row(
+                                children: [
+                                  Container(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 20, left: 15),
+                                      alignment: Alignment.bottomLeft,
+                                      child: Text(
+                                        lessonCount.toString() + ' bài học',
+                                        style: const TextStyle(
+                                            color: kBlack,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.w300),
+                                      )),
+                                  Expanded(
+                                    child: Container(
+                                      padding: const EdgeInsets.only(
+                                          bottom: 15, right: 15),
+                                      alignment: Alignment.bottomRight,
+                                      child: const Icon(
+                                        Icons.menu_book_outlined,
+                                        size: 45,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          },
+                  ],
+                ),
+              );
+            },
+          ),
         ),
       ),
     );

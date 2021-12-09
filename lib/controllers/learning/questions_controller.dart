@@ -10,9 +10,11 @@ class QuestionController extends GetxController {
   RxList<Question>? questions;
   RxInt? currentAnswer;
   int answerCount = 0;
+  RxList<Map<String, dynamic>>? _values;
 
   @override
   void onInit() {
+    _values = <Map<String, dynamic>>[].obs;
     loadQuestions();
     super.onInit();
   }

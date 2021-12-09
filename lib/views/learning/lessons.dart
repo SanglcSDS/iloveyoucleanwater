@@ -4,17 +4,16 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/learning/lessons_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/lesson.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
-import 'package:iloveyoucleanwater/views/learning/lesson_detail.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class LessonView extends StatelessWidget {
   LessonView({Key? key}) : super(key: key);
-  LessonController controller = Get.put(LessonController());
+  final LessonController controller = Get.put(LessonController());
 
   @override
   Widget build(BuildContext context) {
-    return Obx(
-      () => Column(
+    return SingleChildScrollView(
+      child: Column(
         children: [
           Container(
             height: 40,
@@ -38,28 +37,70 @@ class LessonView extends StatelessWidget {
                     percent: controller.percent!.value,
                     center: Text(controller.percentStr!.value),
                     linearStrokeCap: LinearStrokeCap.roundAll,
-                    progressColor: Colors.greenAccent,
+                    progressColor: Colors.lightBlue[300],
                   ),
                 ),
               ],
             ),
           ),
-          Expanded(child: ListLesson(lessons: controller.lessons!)),
-          controller.isComplete.value
-              ? OutlinedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                  ),
-                  onPressed: () => Get.toNamed(Routes.QUESTIONS),
-                  child: const Text(
-                    'Đánh giá khóa học',
-                    style: TextStyle(
-                      color: Colors.white,
-                    ),
-                  ),
-                )
-              : const SizedBox()
+          Obx(
+            () => ListLesson(
+              lessons: controller.lessons!,
+              activeIndex: controller.activeIndex!.value,
+            ),
+          ),
+          Obx(
+            () => Container(
+              child: controller.isComplete.value
+                  ? Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
+                            alignment: Alignment.center,
+                            child: OutlinedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue),
+                              ),
+                              onPressed: () => Get.toNamed(Routes.QUESTIONS),
+                              child: const Text(
+                                'Kiểm tra kiến thức',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 5),
+                            alignment: Alignment.center,
+                            child: OutlinedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all<Color>(
+                                        Colors.blue),
+                              ),
+                              onPressed: () => Get.toNamed(Routes.QUESTIONS),
+                              child: const Text(
+                                'Đánh giá khóa học',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
+                  : const SizedBox(),
+            ),
+          )
         ],
       ),
     );
@@ -68,103 +109,112 @@ class LessonView extends StatelessWidget {
 
 class ListLesson extends StatelessWidget {
   List<Lesson>? lessons;
-  // bool isDetail;
-  ListLesson({Key? key, this.lessons}) : super(key: key);
+  int? activeIndex;
+  ListLesson({Key? key, this.lessons, this.activeIndex}) : super(key: key);
+  final LessonController _controller = Get.put(LessonController());
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: lessons!.length,
-      itemBuilder: (context, index) {
-        Icon _lock = const Icon(Icons.lock, size: 16);
-        if (lessons![index].unlocked) {
-          _lock = const Icon(Icons.lock_open, size: 16);
-        }
-        return Container(
-          margin: index == 0
-              ? const EdgeInsets.only(bottom: 2, left: 5, right: 5)
-              : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
-          child: Card(
-            elevation: 3,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(3),
-            ),
-            child: Column(
-              children: [
-                ListTile(
-                  leading: const Icon(Icons.play_circle),
-                  title: Container(
-                    padding: const EdgeInsets.only(top: 10),
-                    child: Text(lessons![index].title),
-                  ),
-                  onTap: () => {
-                    Get.to(LessonDetailView(
-                      lesson: lessons![index],
-                    ))
-                  },
-                  subtitle: Container(
-                    margin: const EdgeInsets.only(top: 5),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.symmetric(vertical: 10),
-                          child: Row(
+    return Column(
+      children: List.generate(
+        lessons!.length,
+        (index) {
+          Icon _lock = const Icon(Icons.lock, size: 16);
+          if (lessons![index].unlocked) {
+            _lock = const Icon(Icons.lock_open, size: 16);
+          }
+          return Container(
+            margin: index == 0
+                ? const EdgeInsets.only(bottom: 2, left: 5, right: 5)
+                : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+            child: Card(
+              color:
+                  activeIndex == index ? Colors.lightBlue[200] : Colors.white,
+              elevation: 3,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+              child: Column(
+                children: [
+                  ListTile(
+                    leading: const Padding(
+                      padding: EdgeInsets.only(top: 10),
+                      child: Icon(
+                        Icons.play_circle,
+                        size: 40,
+                      ),
+                    ),
+                    title: Container(
+                      padding: const EdgeInsets.only(top: 10),
+                      child: Text(lessons![index].title),
+                    ),
+                    onTap: () =>
+                        _controller.changeLesson(lessons![index], index),
+                    subtitle: Container(
+                      margin: const EdgeInsets.only(top: 5),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Container(
+                            padding: const EdgeInsets.symmetric(vertical: 10),
+                            child: Row(
+                              children: [
+                                const Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Icon(
+                                    Icons.timer,
+                                    size: 16,
+                                  ),
+                                ),
+                                Align(
+                                  alignment: Alignment.bottomLeft,
+                                  child: Text(
+                                    lessons![index].time,
+                                    style: const TextStyle(fontSize: 14),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ),
+                          Row(
                             children: [
                               const Align(
-                                alignment: Alignment.bottomLeft,
                                 child: Icon(
-                                  Icons.timer,
+                                  Icons.person,
                                   size: 16,
                                 ),
                               ),
-                              Align(
-                                alignment: Alignment.bottomLeft,
+                              Container(
+                                alignment: Alignment.bottomCenter,
+                                margin:
+                                    const EdgeInsets.only(left: 5, right: 10),
                                 child: Text(
-                                  lessons![index].time,
+                                  'Đã học: ' +
+                                      lessons![index].totalStudent.toString() +
+                                      ' học viên',
                                   style: const TextStyle(fontSize: 14),
                                 ),
                               ),
                             ],
                           ),
-                        ),
-                        Row(
-                          children: [
-                            const Align(
-                              child: Icon(
-                                Icons.person,
-                                size: 16,
-                              ),
-                            ),
-                            Container(
-                              alignment: Alignment.bottomCenter,
-                              margin: const EdgeInsets.only(left: 5, right: 10),
-                              child: Text(
-                                'Đã học: ' +
-                                    lessons![index].totalStudent.toString() +
-                                    ' học viên',
-                                style: const TextStyle(fontSize: 14),
-                              ),
-                            ),
-                          ],
-                        ),
-                        Row(
-                          children: [
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: _lock,
-                            )
-                          ],
-                        ),
-                      ],
+                          Row(
+                            children: [
+                              Align(
+                                alignment: Alignment.bottomRight,
+                                child: _lock,
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                )
-              ],
+                  )
+                ],
+              ),
             ),
-          ),
-        );
-      },
+          );
+        },
+      ),
     );
   }
 }

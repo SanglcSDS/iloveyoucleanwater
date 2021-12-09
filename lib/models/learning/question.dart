@@ -1,3 +1,15 @@
+// class Question {
+//   late dynamic value;
+//   late int type;
+
+//   Question({required this.value, required this.type});
+
+//   Question.fromJson(Map<String, dynamic> json) {
+//     value = json["value"];
+//     type = json["type"];
+//   }
+// }
+
 class Question {
   late String text;
   late List<Answer> answers;

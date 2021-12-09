@@ -46,6 +46,7 @@ class QuestionView extends StatelessWidget {
                     // return _questionItem(index, controller.questions[index]);
                     Question question = controller.questions![index];
                     return Obx(() => _buildQuestion(question, index));
+                    // return SizedBox();
                   },
                 ),
               ),
@@ -93,4 +94,8 @@ class QuestionView extends StatelessWidget {
       ],
     );
   }
+
+  // Widget _buildQuestion(Question question, int index) {
+  //   return Container();
+  // }
 }
