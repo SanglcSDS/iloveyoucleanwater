@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
 import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
@@ -8,7 +9,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 class NewsEnvironmentalView extends StatelessWidget {
   final String tag;
   NewsEnvironmentalView({required this.tag});
-
+  final _Homecontroller = Get.put(HomeController());
   final _controller = Get.put(NewsController());
   @override
   Widget build(BuildContext context) {
@@ -42,7 +43,7 @@ class NewsEnvironmentalView extends StatelessWidget {
                 tag: "$tag$index",
                 child: InkWell(
                   onTap: () {
-                    Get.to(() => ReadNewsView(news: recent));
+                    _Homecontroller.getNewsDetailsModel(recent);
                   },
                   child: Container(
                     width: double.infinity,

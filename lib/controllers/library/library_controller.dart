@@ -98,7 +98,7 @@ class LibraryController extends GetxController
       }
     }
 
-    Response<dynamic> _data = await libraryService.getVideo(currentPagsP);
+    Response<dynamic> _data = await libraryService.getPhoto(currentPagsP);
     if (_data.statusCode == 200) {
       var jsonString = _data.body["data"]['data'];
 
