@@ -6,6 +6,7 @@ class Constants {
   static const double padding = 20;
   static const double avatarRadius = 45;
   static const String SERVER_URL = 'http://112.78.4.235/api';
+  static const String URL_IMAGE = 'http://112.78.4.235';
 }
 
 const kGrey1 = Color(0xFF9F9F9F);

@@ -18,34 +18,31 @@ class HomeView extends GetView<HomeController> {
         resizeToAvoidBottomInset: false,
 
         bottomNavigationBar: BottomNavigationBar(
-          //unselectedItemColor: Colors.black,
-          //selectedItemColor: Colors.redAccent,
-
           onTap: controller.changeTabIndex,
           currentIndex: controller.tabIndex,
           type: BottomNavigationBarType.fixed,
           backgroundColor: Colors.white,
           elevation: 0,
-          items: const <BottomNavigationBarItem>[
+          items: <BottomNavigationBarItem>[
             BottomNavigationBarItem(
-              icon: Icon(Icons.home),
-              label: 'Trang Chủ',
+              icon: const Icon(Icons.home),
+              label: 'home'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.addressCard),
-              label: 'Giới Thiệu',
+              icon: const Icon(FontAwesomeIcons.addressCard),
+              label: 'introduce'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.newspaper),
-              label: 'Tin Tức',
+              icon: const Icon(FontAwesomeIcons.newspaper),
+              label: 'news'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.photoVideo),
-              label: 'Thư Viện',
+              icon: const Icon(FontAwesomeIcons.photoVideo),
+              label: 'library'.tr,
             ),
             BottomNavigationBarItem(
-              icon: Icon(FontAwesomeIcons.graduationCap),
-              label: 'E-Learning',
+              icon: const Icon(FontAwesomeIcons.graduationCap),
+              label: 'learning'.tr,
             ),
           ],
         ),

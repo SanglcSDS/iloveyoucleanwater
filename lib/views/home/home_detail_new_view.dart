@@ -1,15 +1,19 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iloveyoucleanwater/service/news.dart';
+import 'package:iloveyoucleanwater/models/news/news_%20details_model.dart';
+
+import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 
-class ReadNewsView extends StatelessWidget {
-  final News news;
-  ReadNewsView({required this.news});
+class HomeDetailNewsView extends StatelessWidget {
+  final NewsDetailsModel news;
+  final String title;
+  HomeDetailNewsView({required this.news, required this.title});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,18 +53,48 @@ class ReadNewsView extends StatelessWidget {
         child: ListView(
           children: [
             const SizedBox(height: 12.0),
-            Hero(
-              tag: news.seen,
-              child: Container(
-                height: 220.0,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5.0),
-                  image: DecorationImage(
-                    image: NetworkImage(news.image),
-                    fit: BoxFit.fill,
+            // Container(
+            //   height: 220.0,
+            //   decoration: BoxDecoration(
+            //     borderRadius: BorderRadius.circular(5.0),
+            //     image: DecorationImage(
+            //       image: NetworkImage(news.image),
+            //       fit: BoxFit.fill,
+            //     ),
+            //   ),
+            // ),
+            Container(
+              height: 220.0,
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(5),
+                    topLeft: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5)),
+                child: CachedNetworkImage(
+                  imageUrl: (news.image.contains(Constants.URL_IMAGE)
+                      ? news.image
+                      : Constants.URL_IMAGE + news.image),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      backgroundColor: Colors.cyanAccent,
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.red),
+                    ),
                   ),
+                  fit: BoxFit.cover,
                 ),
               ),
+
+              // DecorationImage(
+              //   image: (news.image.contains(Constants.URL_IMAGE)
+              //       ? news.image
+              //       : Constants.URL_IMAGE + news.image),
+              //   fit: BoxFit.cover,
+              // ),
             ),
             const SizedBox(height: 15.0),
             Row(
@@ -82,7 +116,7 @@ class ReadNewsView extends StatelessWidget {
                       ),
                       const SizedBox(width: 6.0),
                       Text(
-                        news.category,
+                        title,
                         style: kCategoryTitle,
                       ),
                     ],
@@ -91,7 +125,7 @@ class ReadNewsView extends StatelessWidget {
                 const Spacer(),
                 Status(
                   icon: Icons.remove_red_eye,
-                  total: news.seen,
+                  total: news.view.toString(),
                 ),
               ],
             ),
@@ -99,8 +133,8 @@ class ReadNewsView extends StatelessWidget {
             Text(news.title, style: kTitleCard.copyWith(fontSize: 28.0)),
             const SizedBox(height: 15.0),
             Row(
-              children: [
-                Text(news.time, style: kDetailContent),
+              children: <Widget>[
+                Text(news.createdAt, style: kDetailContent),
                 const SizedBox(width: 5.0),
                 const SizedBox(
                   width: 10.0,
@@ -111,12 +145,13 @@ class ReadNewsView extends StatelessWidget {
                 ),
                 const SizedBox(width: 5.0),
                 Text(
-                  news.author,
+                  news.language,
                   style: kDetailContent.copyWith(color: Colors.black),
                 ),
               ],
             ),
             const SizedBox(height: 15.0),
+
             Html(data: news.content),
             const SizedBox(height: 25.0)
           ],
