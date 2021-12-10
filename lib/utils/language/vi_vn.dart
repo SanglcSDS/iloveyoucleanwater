@@ -8,4 +8,6 @@ const Map<String, String> vi = {
   'all': 'Tất Cả',
   'album': 'Thư viện ảnh',
   'video': 'Videos',
+  'programNews': 'Tin tức chương trình',
+  'environmentalNews': 'Tin tức môi trường',
 };

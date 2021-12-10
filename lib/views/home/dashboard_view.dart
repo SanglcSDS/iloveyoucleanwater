@@ -96,6 +96,7 @@ class DashboardView extends StatelessWidget {
                   _controller.refreshHomeController.refreshFailed();
                 }
               },
+
               // onLoading: () async {
               //   final result = await _controller.onRefreshHome();
               //   if (result) {
@@ -105,8 +106,7 @@ class DashboardView extends StatelessWidget {
               //   }
               // },
               child:
-                  // ListView(
-                  //   children: <Widget>[
+                  //isRefresh==true?CircularProgressIndicator():
                   SingleChildScrollView(
                 child: Column(
                   children: <Widget>[

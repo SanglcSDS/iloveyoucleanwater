@@ -12,7 +12,6 @@ class PrimaryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 300.0,
-      // padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.0),
           border: Border.all(color: kGrey3, width: 1.0)),
@@ -21,6 +20,7 @@ class PrimaryCard extends StatelessWidget {
         children: [
           Expanded(
               child: Container(
+            width: double.infinity,
             height: 220.0,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
@@ -38,7 +38,7 @@ class PrimaryCard extends StatelessWidget {
                     valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
                   ),
                 ),
-                fit: BoxFit.cover,
+                fit: BoxFit.fill,
               ),
             ),
           )),

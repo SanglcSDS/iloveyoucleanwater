@@ -26,7 +26,8 @@ class HomeController extends GetxController {
   var isloadingHome = false.obs;
   var isLoading = false;
   final NewsService provider = NewsService();
-  final HomeService homeService = Get.put(HomeService());
+  final HomeService homeService = HomeService();
+
   var tabIndex = 0;
   Rx<NewsDetailsModel>? detail;
 
@@ -42,19 +43,16 @@ class HomeController extends GetxController {
   Rx<LibraryDetailPhotoModel>? detailPhoto;
   RxList onRefreshlistBanner = <BannerModel>[].obs;
   Future<bool> onRefreshHome({bool isRefresh = false}) async {
-    Response<dynamic> _data = await homeService.getBanners();
     onRefreshlistBanner.clear();
-    if (_data.statusCode == 200) {
-      var jsonString = _data.body['data'];
-      if (jsonString != null) {
-        jsonString.forEach((e) {
-          onRefreshlistBanner.add(BannerModel.fromJson(e));
-        });
-      }
-      return true;
-    } else {
-      return true;
-    }
+    listProgramNewitem.clear();
+    listEnvironmentalNews.clear();
+    listEnvironmentalNewsitem.clear();
+    listProgramNew.clear();
+    banners();
+    getCategory();
+    getPhotoHome();
+    getVideoHome();
+    return true;
   }
 
   @override
