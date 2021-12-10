@@ -15,6 +15,10 @@ const kGrey3 = Color(0xFFEAEAEA);
 const kBlack = Color(0xFF1C1C1C);
 const kBlue1 = Color(0xff339AFF);
 
+const kDarkGrey = Color(0xFF9fa1a6);
+const kLightBlue = Color(0xFFe1f5fe);
+const kDirtyWhite = Color(0xFFEFEFEF);
+
 var kNonActiveTabStyle = GoogleFonts.roboto(
   textStyle: const TextStyle(fontSize: 14.0, color: kGrey1),
 );
