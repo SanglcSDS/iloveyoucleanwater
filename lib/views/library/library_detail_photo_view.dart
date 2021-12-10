@@ -1,4 +1,3 @@
-// library_detail_photo_View
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -67,20 +66,28 @@ class LibraryDetailPhotoView extends StatelessWidget {
             // ),
             Container(
               height: 220.0,
-              child: CachedNetworkImage(
-                imageUrl: (news.image.contains(Constants.URL_IMAGE)
-                    ? news.image
-                    : Constants.URL_IMAGE + news.image),
-                errorWidget: (context, url, error) => const Icon(Icons.error),
-                progressIndicatorBuilder: (context, url, downloadProgress) =>
-                    Center(
-                  child: CircularProgressIndicator(
-                    value: downloadProgress.progress,
-                    backgroundColor: Colors.cyanAccent,
-                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
+              child: ClipRRect(
+                borderRadius: const BorderRadius.only(
+                    topRight: Radius.circular(5),
+                    topLeft: Radius.circular(5),
+                    bottomLeft: Radius.circular(5),
+                    bottomRight: Radius.circular(5)),
+                child: CachedNetworkImage(
+                  imageUrl: (news.image.contains(Constants.URL_IMAGE)
+                      ? news.image
+                      : Constants.URL_IMAGE + news.image),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
+                  progressIndicatorBuilder: (context, url, downloadProgress) =>
+                      Center(
+                    child: CircularProgressIndicator(
+                      value: downloadProgress.progress,
+                      backgroundColor: Colors.cyanAccent,
+                      valueColor:
+                          const AlwaysStoppedAnimation<Color>(Colors.red),
+                    ),
                   ),
+                  fit: BoxFit.cover,
                 ),
-                fit: BoxFit.cover,
               ),
 
               // DecorationImage(

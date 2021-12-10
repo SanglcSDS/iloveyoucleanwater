@@ -2,19 +2,11 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
-import 'package:iloveyoucleanwater/controllers/introduce/introduce_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
-import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
-import 'package:iloveyoucleanwater/views/home/dashboard_view.dart';
-import 'package:iloveyoucleanwater/views/home/home_view.dart';
-import 'package:iloveyoucleanwater/views/news/detail_new_view.dart';
-import 'package:iloveyoucleanwater/views/news/environmental_news_view.dart';
-import 'package:iloveyoucleanwater/views/news/list_news_view.dart';
+import 'package:iloveyoucleanwater/views/news/news_environmental_view.dart';
+import 'package:iloveyoucleanwater/views/news/news_program_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
-import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
-import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NewsView extends GetView<NewsController> {
   final HomeController homeController = Get.put(HomeController());
@@ -68,9 +60,9 @@ class NewsView extends GetView<NewsController> {
                   controller: _newsController.controller,
                   children: _newsController.myTabs.map((Tab tab) {
                     if (tab.key == const Key('news1')) {
-                      return ListNewsView(tag: "new1");
+                      return NewsProgram(tag: "new1");
                     } else {
-                      return EnvironmentalNewsView(tag: "new2");
+                      return NewsEnvironmentalView(tag: "new2");
                     }
                   }).toList(),
                 ),

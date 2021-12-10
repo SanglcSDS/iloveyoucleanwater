@@ -5,9 +5,9 @@ import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
 import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class EnvironmentalNewsView extends StatelessWidget {
+class NewsEnvironmentalView extends StatelessWidget {
   final String tag;
-  EnvironmentalNewsView({required this.tag});
+  NewsEnvironmentalView({required this.tag});
 
   final _controller = Get.put(NewsController());
   @override
@@ -35,9 +35,9 @@ class EnvironmentalNewsView extends StatelessWidget {
             }
           },
           child: ListView.builder(
-            itemCount: _controller.environmentalNews.length,
+            itemCount: _controller.listEnvironmentalNews.length,
             itemBuilder: (context, index) {
-              var recent = _controller.environmentalNews[index];
+              var recent = _controller.listEnvironmentalNews[index];
               return Hero(
                 tag: "$tag$index",
                 child: InkWell(

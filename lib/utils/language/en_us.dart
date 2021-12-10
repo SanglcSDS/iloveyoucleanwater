@@ -8,4 +8,6 @@ const Map<String, String> en = {
   'all': 'All',
   'album': 'Album',
   'video': 'Videos',
+  'programNews': 'Program News',
+  'environmentalNews': 'Environmental news',
 };
