@@ -1,50 +1,61 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:iloveyoucleanwater/controllers/account/account_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:iloveyoucleanwater/views/home/home_view.dart';
 
 class LoginScreen extends GetView<AccountController> {
+  final GlobalKey<FormState> _loginForm = GlobalKey<FormState>();
   LoginScreen({Key? key}) : super(key: key);
-  static Color mainColor = Color(0xff4980ff);
+  static Color mainColor = const Color(0xff4980ff);
   final AccountController _accountController = AccountController();
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _pwdController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<AccountController>(
-      init: AccountController(),
-      builder: (_) => SafeArea(
-        child: Scaffold(
-          resizeToAvoidBottomInset: false,
-          backgroundColor: const Color(0xfff2f3f7),
-          body: Stack(
-            children: <Widget>[
-              SizedBox(
-                height: MediaQuery.of(context).size.height,
-                width: MediaQuery.of(context).size.width,
-                child: Container(
-                  decoration: BoxDecoration(
-                    color: mainColor,
-                    borderRadius: const BorderRadius.only(
-                      bottomLeft: Radius.circular(70),
-                      bottomRight: Radius.circular(70),
+    return Form(
+      key: _loginForm,
+      child: GetBuilder<AccountController>(
+        init: AccountController(),
+        builder: (_) => SafeArea(
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: const Color(0xfff2f3f7),
+            body: Stack(
+              children: <Widget>[
+                SizedBox(
+                  height: MediaQuery.of(context).size.height,
+                  width: MediaQuery.of(context).size.width,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: mainColor,
+                      borderRadius: const BorderRadius.only(
+                        bottomLeft: Radius.circular(70),
+                        bottomRight: Radius.circular(70),
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SingleChildScrollView(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: <Widget>[
-                    _buildLogo(context),
-                    _buildContainer(context),
-                  ],
-                ),
-              )
-            ],
+                SingleChildScrollView(
+                  reverse: true,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      _buildLogo(context),
+                      _buildContainer(context),
+                      Padding(
+                        padding: EdgeInsets.only(
+                            bottom: MediaQuery.of(context).viewInsets.bottom),
+                      ),
+                    ],
+                  ),
+                )
+              ],
+            ),
           ),
         ),
       ),
@@ -53,16 +64,15 @@ class LoginScreen extends GetView<AccountController> {
 
   Widget _buildLogo(BuildContext context) {
     return Row(
-      // mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         IconButton(
-            onPressed: () => Get.back(),
+            onPressed: () => Get.offNamed(Routes.HOME),
             icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
         Padding(
           padding: const EdgeInsets.symmetric(vertical: 20),
           child: Text(
-            'Log in.',
-            style: TextStyle(
+            'Đăng nhập',
+            style: GoogleFonts.oswald(
               fontSize: MediaQuery.of(context).size.height / 25,
               fontWeight: FontWeight.bold,
               color: Colors.white,
@@ -79,13 +89,20 @@ class LoginScreen extends GetView<AccountController> {
       child: TextFormField(
         controller: _emailController,
         keyboardType: TextInputType.emailAddress,
-        onChanged: (value) {},
         decoration: InputDecoration(
             prefixIcon: Icon(
               Icons.email,
               color: mainColor,
             ),
             labelText: 'E-mail'),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Bạn chưa nhập email.';
+          } else if (!value.isEmail) {
+            return 'Email chưa đúng định dạng.';
+          }
+          return null;
+        },
       ),
     );
   }
@@ -97,11 +114,6 @@ class LoginScreen extends GetView<AccountController> {
         keyboardType: TextInputType.text,
         obscureText: true,
         controller: _pwdController,
-        onChanged: (value) {
-          // setState(() {
-          //   password = value;
-          // });
-        },
         decoration: InputDecoration(
           prefixIcon: Icon(
             Icons.lock,
@@ -132,7 +144,7 @@ class LoginScreen extends GetView<AccountController> {
           TextButton(
             onPressed: () {},
             child: const Text(
-              "Forgot Password ?",
+              "Quên mật khẩu?",
               style: TextStyle(
                 color: kBlack,
               ),
@@ -159,12 +171,20 @@ class LoginScreen extends GetView<AccountController> {
                 borderRadius: BorderRadius.circular(30.0),
               ),
             ),
-            onPressed: () {
-              _accountController.onLogin(
-                  _emailController.text, _pwdController.text);
+            onPressed: () async {
+              if (_loginForm.currentState!.validate()) {
+                bool _isLogged = await _accountController.onLogin(
+                    context, _emailController.text, _pwdController.text);
+                if (_isLogged) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Đăng nhập thành công!')),
+                  );
+                  Get.offNamed(Routes.HOME);
+                }
+              }
             },
             child: Text(
-              "Login",
+              "Đăng nhập",
               style: TextStyle(
                 color: Colors.white,
                 letterSpacing: 1.5,
@@ -182,11 +202,12 @@ class LoginScreen extends GetView<AccountController> {
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(30),
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(30),
+            topRight: Radius.circular(30),
           ),
           child: Container(
-            height: MediaQuery.of(context).size.height - 40,
+            height: MediaQuery.of(context).size.height - 95,
             width: MediaQuery.of(context).size.width,
             decoration: const BoxDecoration(
               color: Colors.white,
@@ -219,31 +240,27 @@ class LoginScreen extends GetView<AccountController> {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        Padding(
-          padding: const EdgeInsets.only(top: 40),
-          // padding: EdgeInsets.zero,
-          child: TextButton(
-            onPressed: () => Get.toNamed(Routes.REGISTER),
-            child: RichText(
-              text: TextSpan(children: [
-                TextSpan(
-                  text: 'Bạn chưa có tài khoản? ',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: MediaQuery.of(context).size.height / 45,
-                    fontWeight: FontWeight.w400,
-                  ),
+        TextButton(
+          onPressed: () => Get.offNamed(Routes.REGISTER),
+          child: RichText(
+            text: TextSpan(children: [
+              TextSpan(
+                text: 'Bạn chưa có tài khoản? ',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: MediaQuery.of(context).size.height / 45,
+                  fontWeight: FontWeight.w400,
                 ),
-                TextSpan(
-                  text: 'Đăng ký ngay',
-                  style: TextStyle(
-                    color: mainColor,
-                    fontSize: MediaQuery.of(context).size.height / 45,
-                    fontWeight: FontWeight.bold,
-                  ),
-                )
-              ]),
-            ),
+              ),
+              TextSpan(
+                text: 'Đăng ký ngay',
+                style: TextStyle(
+                  color: mainColor,
+                  fontSize: MediaQuery.of(context).size.height / 45,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ]),
           ),
         ),
       ],

@@ -1,85 +1,81 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:iloveyoucleanwater/controllers/account/register_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class RegisterScreen extends StatelessWidget {
+  final GlobalKey<FormState> _registerForm = GlobalKey<FormState>();
   RegisterScreen({Key? key}) : super(key: key);
-  static Color mainColor = Color(0xff4980ff);
-  int policyRadio = 0;
-  List<int> genderValues = [0, 1, 2, 3];
-  List<String> genderNames = ['Giới tính', 'Nam', 'Nữ', 'Khác'];
-  int gender = 0;
+  final RegisterController _controller = Get.put(RegisterController());
+  static Color mainColor = const Color(0xff4980ff);
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _pwdController = TextEditingController();
+  final TextEditingController _nameController = TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    return SafeArea(
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: const Color(0xfff2f3f7),
-        body: Stack(
-          children: <Widget>[
-            SizedBox(
-              height: MediaQuery.of(context).size.height,
-              width: MediaQuery.of(context).size.width,
-              child: Container(
-                decoration: BoxDecoration(
-                  color: mainColor,
-                  borderRadius: const BorderRadius.only(
-                    bottomLeft: Radius.circular(70),
-                    bottomRight: Radius.circular(70),
-                  ),
-                ),
-              ),
-            ),
-            SingleChildScrollView(
+    return Form(
+      key: _registerForm,
+      child: GetBuilder<RegisterController>(
+        init: RegisterController(),
+        builder: (_) => SafeArea(
+          child: Scaffold(
+            resizeToAvoidBottomInset: false,
+            backgroundColor: const Color(0xfff2f3f7),
+            body: SingleChildScrollView(
               child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
+                // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  _buildLogo(context),
+                  // _buildLogo(context),
                   _buildContainer(context),
                 ],
               ),
-            )
-          ],
+            ),
+          ),
         ),
       ),
     );
   }
 
-  Widget _buildLogo(BuildContext context) {
-    return Row(
-      // mainAxisAlignment: MainAxisAlignment.center,
-      children: <Widget>[
-        IconButton(
-            onPressed: () => Get.back(),
-            icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
-        Padding(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Text(
-            'Sign up.',
-            style: TextStyle(
-              fontSize: MediaQuery.of(context).size.height / 25,
-              fontWeight: FontWeight.bold,
-              color: Colors.white,
-            ),
-          ),
-        )
-      ],
-    );
-  }
+  // Widget _buildLogo(BuildContext context) {
+  //   return Row(
+  //     children: <Widget>[
+  //       IconButton(
+  //           onPressed: () => Get.back(),
+  //           icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
+  //       Padding(
+  //         padding: const EdgeInsets.symmetric(vertical: 20),
+  //         child: Text(
+  //           'Đăng ký',
+  //           style: GoogleFonts.oswald(
+  //             fontSize: MediaQuery.of(context).size.height / 25,
+  //             fontWeight: FontWeight.bold,
+  //             color: Colors.white,
+  //           ),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   Widget _buildEmailRow() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
-        keyboardType: TextInputType.emailAddress,
-        onChanged: (value) {
-          // setState(() {
-          //   email = value;
-          // });
+        controller: _emailController,
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Vui lòng nhập email.';
+          } else if (!value.isEmail) {
+            return 'Email không đúng định dạng.';
+          }
+          return null;
         },
+        keyboardType: TextInputType.emailAddress,
         decoration: const InputDecoration(labelText: 'E-mail *'),
       ),
     );
@@ -87,55 +83,50 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _buildPasswordRow() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
-        keyboardType: TextInputType.text,
-        obscureText: true,
-        onChanged: (value) {
-          // setState(() {
-          //   password = value;
-          // });
-        },
-        decoration: InputDecoration(
-          labelText: 'Mật khẩu *',
-          suffixIcon: GestureDetector(
-            onTap: () {},
-            child: const Icon(Icons.remove_red_eye_outlined, color: kGrey1),
+          controller: _pwdController,
+          keyboardType: TextInputType.text,
+          obscureText: true,
+          decoration: const InputDecoration(
+            labelText: 'Mật khẩu *',
           ),
-        ),
-      ),
+          validator: (value) {
+            if (value == null || value.isEmpty) {
+              return 'Vui lòng nhập mật khẩu.';
+            } else if (value.length < 8) {
+              return 'Mật khẩu cần có ít nhất 8 ký tự Ví dụ: Mizuiku123';
+            }
+            return null;
+          }),
     );
   }
 
   Widget _buildNameRow() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
+        controller: _nameController,
         keyboardType: TextInputType.text,
-        obscureText: false,
-        onChanged: (value) {
-          // setState(() {
-          //   password = value;
-          // });
-        },
         decoration: const InputDecoration(
           labelText: 'Họ và tên *',
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return 'Vui lòng nhập tên (ghi tiếng Việt có dấu).';
+          }
+          return null;
+        },
       ),
     );
   }
 
   Widget _buildPhoneNumberRow() {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: TextFormField(
         keyboardType: TextInputType.phone,
-        obscureText: false,
-        onChanged: (value) {
-          // setState(() {
-          //   password = value;
-          // });
-        },
+        controller: _phoneController,
         decoration: const InputDecoration(
           labelText: 'Số điện thoại',
         ),
@@ -143,24 +134,24 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildDropDownRow(
-      List<int> values, List<String> names, int dropdownItem) {
+  Widget _buildGenderDropdown(List<Map<String, dynamic>> _values) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 20),
+      padding: const EdgeInsets.symmetric(horizontal: 20),
       child: DropdownButton<int>(
-          value: dropdownItem,
+          value: _controller.gender.value,
           underline: Container(
             height: 1,
             color: kBlack,
           ),
           onChanged: (int? newValue) {
-            // setState(() {
-            //   dropdownValue = newValue!;
-            // });
+            _controller.gender = newValue!.obs;
+            _controller.update();
           },
-          items: List.generate(values.length, (index) {
+          items: List.generate(_values.length, (index) {
             return DropdownMenuItem(
-                value: values[index], child: Text(names[index]));
+              value: _values[index]["id"],
+              child: Text(_values[index]["value"]),
+            );
           })),
     );
   }
@@ -169,11 +160,11 @@ class RegisterScreen extends StatelessWidget {
     return Padding(
       padding: EdgeInsets.zero,
       child: Row(children: [
-        Radio(
-          value: policyRadio,
-          groupValue: 1,
-          onChanged: (value) {
-            value == 0 ? value = 1 : policyRadio = 0;
+        Checkbox(
+          value: _controller.policyRadio.value,
+          onChanged: (bool? value) {
+            _controller.policyRadio = value!.obs;
+            _controller.update();
           },
         ),
         Expanded(
@@ -204,7 +195,7 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildLoginButton(BuildContext context) {
+  Widget _buildRegisterButton(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
@@ -220,9 +211,23 @@ class RegisterScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30.0),
               ),
             ),
-            onPressed: () {},
+            onPressed: () async {
+              if (_registerForm.currentState!.validate()) {
+                bool isRegisted = await _controller.onRegister(context);
+                if (isRegisted == true) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Đăng ký thành công!')),
+                  );
+                  Get.toNamed(Routes.LOGIN);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(content: Text('Đăng ký không thành công')),
+                  );
+                }
+              }
+            },
             child: Text(
-              "Login",
+              "Đăng ký",
               style: TextStyle(
                 color: Colors.white,
                 letterSpacing: 1.5,
@@ -236,62 +241,40 @@ class RegisterScreen extends StatelessWidget {
   }
 
   Widget _buildContainer(BuildContext context) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Column(
+      // mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
-        ClipRRect(
-          borderRadius: const BorderRadius.all(
-            Radius.circular(30),
-          ),
-          child: Container(
-            height: MediaQuery.of(context).size.height * 0.9,
-            width: MediaQuery.of(context).size.width,
-            decoration: const BoxDecoration(
-              color: Colors.white,
-            ),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Container(
-                  // padding: const EdgeInsets.symmetric(vertical: 30),
-                  padding: EdgeInsets.zero,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[Image.asset("assets/images/logo.png")],
-                  ),
-                ),
-                _buildEmailRow(),
-                _buildPasswordRow(),
-                _buildNameRow(),
-                _buildPhoneNumberRow(),
-                // Row(
-                //   children: [
-                //     Expanded(
-                //       child: _buildPhoneNumberRow(),
-                //     ),
-                //     _buildDropDownRow(genderValues, genderNames, gender),
-                //   ],
-                // ),
-                _buildPolicyRow(),
-                _buildLoginButton(context),
-                _buildSignUpBtn(context),
-              ],
-            ),
+        Container(
+          padding: const EdgeInsets.only(top: 50, bottom: 30),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[Image.asset("assets/images/logo.png")],
           ),
         ),
+        _buildEmailRow(),
+        _buildPasswordRow(),
+        _buildNameRow(),
+        _buildPhoneNumberRow(),
+        Row(
+          children: [
+            Obx(() => _buildGenderDropdown(_controller.genders)),
+          ],
+        ),
+        Obx(() => _buildPolicyRow()),
+        _buildRegisterButton(context),
+        _buildLoginBtn(context),
       ],
     );
   }
 
-  Widget _buildSignUpBtn(BuildContext context) {
+  Widget _buildLoginBtn(BuildContext context) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Padding(
           padding: const EdgeInsets.only(top: 20),
-          // padding: EdgeInsets.zero,
           child: TextButton(
-            onPressed: () => Get.toNamed(Routes.LOGIN),
+            onPressed: () => Get.offNamed(Routes.LOGIN),
             child: RichText(
               text: TextSpan(children: [
                 TextSpan(

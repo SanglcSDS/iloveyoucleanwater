@@ -10,6 +10,7 @@ import 'package:iloveyoucleanwater/controllers/learning/document_controller.dart
 import 'package:iloveyoucleanwater/controllers/learning/lessons_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/course.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
+import 'package:intl/intl.dart';
 
 class CourseController extends GetxController
     with GetSingleTickerProviderStateMixin {
@@ -29,41 +30,40 @@ class CourseController extends GetxController
 
   @override
   void onInit() {
-    checkLogged();
-    if (isLogged.value) {
-      initData();
-    }
+    initData();
     update();
     super.onInit();
   }
 
   Future<void> initData() async {
-    final String response =
-        await rootBundle.loadString('assets/json/data.json');
-    final data = await json.decode(response);
-    var courseJson = data["courses"] as List;
-    courses = courseJson.map((e) => Course.fromJson(e)).toList().obs;
-    update();
+    checkLogged();
+    if (isLogged.value) {
+      final String response =
+          await rootBundle.loadString('assets/json/data.json');
+      final data = await json.decode(response);
+      var courseJson = data["courses"] as List;
+      courses = courseJson.map((e) => Course.fromJson(e)).toList().obs;
+      update();
+    }
   }
 
   void checkLogged() {
     try {
       if (box.hasData("token")) {
         String token = box.read("token");
-        isLogged = token.isNotEmpty ? true.obs : false.obs;
+        if (token.isNotEmpty) {
+          DateTime expireDate =
+              DateFormat('yyyy-MM-dd HH:mm:ss').parse(box.read("expiresAt"));
+          if (DateTime.now().isBefore(expireDate)) {
+            isLogged = true.obs;
+          }
+        }
       }
     } catch (e) {
       debugPrint(e.toString());
     } finally {
       update();
     }
-  }
-
-  void setLogged() {
-    isLogged = true.obs;
-    debugPrint("isLogged: " + isLogged.value.toString());
-    initData();
-    update();
   }
 
   Color randomColor() {

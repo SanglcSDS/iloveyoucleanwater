@@ -7,15 +7,15 @@ import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class QuestionView extends StatelessWidget {
   QuestionView({Key? key}) : super(key: key);
-  final QuestionController controller = Get.put(QuestionController());
+  final QuestionController _controller = Get.put(QuestionController());
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<QuestionController>(
       init: QuestionController(),
       initState: (_) {
-        controller.currentAnswer = 0.obs;
-        controller.values = RxMap();
+        _controller.currentAnswer = 0.obs;
+        _controller.values = RxMap();
       },
       builder: (_) => Scaffold(
         appBar: AppBar(
@@ -41,10 +41,10 @@ class QuestionView extends StatelessWidget {
               ),
               Expanded(
                 child: ListView.builder(
-                  itemCount: controller.questions!.length,
+                  itemCount: _controller.questions!.length,
                   itemBuilder: (context, index) {
-                    // return _questionItem(index, controller.questions[index]);
-                    Question question = controller.questions![index];
+                    // return _questionItem(index, _controller.questions[index]);
+                    Question question = _controller.questions![index];
                     return Obx(() => _buildQuestion(question, index));
                     // return SizedBox();
                   },
@@ -69,16 +69,16 @@ class QuestionView extends StatelessWidget {
           children: List.generate(
             question.answers.length,
             (index) {
-              int key = controller.getKey();
+              int key = _controller.getKey();
               return Row(
                 children: [
                   Checkbox(
                       tristate: false,
-                      value: controller.values![key],
+                      value: _controller.values![key],
                       onChanged: (bool? newVal) {
                         debugPrint("Key : " + key.toString());
                         debugPrint("newVal : " + newVal.toString());
-                        controller.updateValues(key, newVal!);
+                        _controller.updateValues(key, newVal!);
                       }),
                   Expanded(
                     child: Text(

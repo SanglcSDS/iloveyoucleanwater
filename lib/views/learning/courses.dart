@@ -6,16 +6,15 @@ import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class CourseView extends StatelessWidget {
-  final controller = Get.put(CourseController());
+  final _controller = Get.put(CourseController());
   CourseView({Key? key}) : super(key: key);
-  RxBool isLogged = false.obs;
+  RxBool _isLogged = false.obs;
 
   @override
   Widget build(BuildContext context) {
-    isLogged = controller.isLogged.value.obs;
+    _isLogged = _controller.isLogged.value.obs;
     return GetBuilder<CourseController>(
       init: CourseController(),
-      initState: (_) => controller.initData(),
       builder: (_) => Scaffold(
         appBar: AppBar(
           title:
@@ -24,66 +23,65 @@ class CourseView extends StatelessWidget {
           backgroundColor: Colors.white,
         ),
         backgroundColor: kDirtyWhite,
-        body: Obx(() =>
-            !isLogged.value ? _beforeLogin(context) : _afterLogin(context)),
-        // Stack(
-        //   children: [
-        //     SizedBox(
-        //       width: MediaQuery.of(context).size.width,
-        //       height: MediaQuery.of(context).size.height,
-        //       child: Align(
-        //           alignment: Alignment.bottomCenter,
-        //           child: Image.asset("assets/images/bgmain.png")),
-        //     ),
-        //     Obx(() =>
-        //         !isLogged.value ? _beforeLogin(context) : _afterLogin(context)),
-        //   ],
-        // ),
+        body: !_isLogged.value
+            ? _beforeLogin(context)
+            : Obx(() => _afterLogin(context)),
       ),
     );
   }
 
   Widget _beforeLogin(BuildContext context) {
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+    return Stack(
       children: [
-        Row(
+        SizedBox(
+          width: MediaQuery.of(context).size.width,
+          height: MediaQuery.of(context).size.height,
+          child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Image.asset("assets/images/bgmain.png")),
+        ),
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            SizedBox(
-              height: 1.4 * (MediaQuery.of(context).size.height / 20),
-              width: 5 * (MediaQuery.of(context).size.width / 10),
-              child: ElevatedButton(
-                style: ElevatedButton.styleFrom(
-                  elevation: 5.0,
-                  primary: kBlue1,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30.0),
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                SizedBox(
+                  height: 1.4 * (MediaQuery.of(context).size.height / 20),
+                  width: 5 * (MediaQuery.of(context).size.width / 10),
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 5.0,
+                      primary: kBlue1,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30.0),
+                      ),
+                    ),
+                    onPressed: () => Get.toNamed(Routes.LOGIN),
+                    child: Text(
+                      "Login",
+                      style: TextStyle(
+                        color: Colors.white,
+                        letterSpacing: 1.5,
+                        fontSize: MediaQuery.of(context).size.height / 40,
+                      ),
+                    ),
                   ),
                 ),
-                onPressed: () => Get.toNamed(Routes.LOGIN),
-                child: Text(
-                  "Login",
-                  style: TextStyle(
-                    color: Colors.white,
-                    letterSpacing: 1.5,
-                    fontSize: MediaQuery.of(context).size.height / 40,
-                  ),
+              ],
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 20),
+              child: Text(
+                'Bạn phải đăng nhập để tham gia các khóa học.',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: MediaQuery.of(context).size.height / 45,
+                  fontWeight: FontWeight.w400,
                 ),
               ),
-            )
-          ],
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          child: Text(
-            'Bạn phải đăng nhập để tham gia các khóa học.',
-            style: TextStyle(
-              color: Colors.black,
-              fontSize: MediaQuery.of(context).size.height / 45,
-              fontWeight: FontWeight.w400,
             ),
-          ),
+          ],
         ),
       ],
     );
@@ -96,9 +94,9 @@ class CourseView extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Wrap(
           children: List.generate(
-            controller.courses.length,
+            _controller.courses.length,
             (index) {
-              int lessonCount = controller.courses[index].lessons!.length;
+              int _lessonCount = _controller.courses[index].lessons!.length;
               return Container(
                 margin: index <= 1
                     ? const EdgeInsets.only(
@@ -109,10 +107,10 @@ class CourseView extends StatelessWidget {
                 child: Stack(
                   children: [
                     GestureDetector(
-                      onTap: () => controller
-                          .popToLessonViews(controller.courses[index]),
+                      onTap: () => _controller
+                          .popToLessonViews(_controller.courses[index]),
                       child: Card(
-                        color: controller.randomColor(),
+                        color: _controller.randomColor(),
                         elevation: 3,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(20),
@@ -124,7 +122,7 @@ class CourseView extends StatelessWidget {
                                   vertical: 15, horizontal: 15),
                               alignment: Alignment.topLeft,
                               child: Text(
-                                controller.courses[index].title,
+                                _controller.courses[index].title,
                                 style: const TextStyle(
                                     color: kBlack,
                                     fontSize: 20,
@@ -139,7 +137,7 @@ class CourseView extends StatelessWidget {
                                           bottom: 20, left: 15),
                                       alignment: Alignment.bottomLeft,
                                       child: Text(
-                                        lessonCount.toString() + ' bài học',
+                                        _lessonCount.toString() + ' bài học',
                                         style: const TextStyle(
                                             color: kBlack,
                                             fontSize: 18,

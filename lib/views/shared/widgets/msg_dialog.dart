@@ -24,4 +24,23 @@ class MsgDialog {
       ),
     );
   }
+
+  static void showWarningDialogs(
+      BuildContext context, String title, String msg) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text(title),
+        content: Text(msg),
+        actions: [
+          TextButton(
+            onPressed: () => {
+              Navigator.of(context).pop(MsgDialog),
+            },
+            child: const Text('Close'),
+          ),
+        ],
+      ),
+    );
+  }
 }

@@ -6,18 +6,20 @@ import 'package:iloveyoucleanwater/models/learning/document.dart';
 
 class DocumentView extends StatelessWidget {
   DocumentView({Key? key}) : super(key: key);
-  final DocumentController controller = Get.put(DocumentController());
+  final DocumentController _controller = Get.put(DocumentController());
 
   @override
   Widget build(BuildContext context) {
-    return (controller.documents != null && controller.documents!.isNotEmpty)
-        ? ListView.builder(
-            itemCount: controller.documents!.length,
-            itemBuilder: (context, index) {
-              RxObjectMixin<Document> document =
-                  controller.documents![index].obs;
-              return Obx(() => _fileItem(document.value, index));
-            })
+    return (_controller.documents != null && _controller.documents!.isNotEmpty)
+        ? GetBuilder(
+            init: DocumentController(),
+            initState: (_) => _controller.loadDocuments(),
+            builder: (_) => ListView.builder(
+                itemCount: _controller.documents!.length,
+                itemBuilder: (context, index) {
+                  return _fileItem(_controller.documents![index], index);
+                }),
+          )
         : const Center(
             child: Text('Không có tài liệu'),
           );
@@ -29,22 +31,67 @@ class DocumentView extends StatelessWidget {
           ? const EdgeInsets.only(bottom: 2, left: 5, right: 5)
           : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       child: Card(
-        child: ListTile(
-          leading: const Image(
-            image: AssetImage('assets/images/pdf_file_icon.png'),
-          ),
-          title: Container(
-              padding: const EdgeInsets.only(top: 5),
-              child: Text(document.title)),
-          subtitle: Container(
-            alignment: Alignment.bottomLeft,
-            child: TextButton(
-              onPressed: () {
-                controller.downloadFile(document);
-              },
-              child: const Text('Tải xuống'),
+        child: Column(
+          children: [
+            ListTile(
+              leading: const Image(
+                image: AssetImage('assets/images/pdf_file_icon.png'),
+              ),
+              title: Container(
+                  padding: const EdgeInsets.only(top: 5),
+                  child: Text(document.title)),
+              subtitle: Container(
+                padding: const EdgeInsets.symmetric(vertical: 3),
+                alignment: Alignment.bottomLeft,
+                child: Obx(() =>
+                    _controller.downloadValues[index]["isDownloading"] == false
+                        ? _controller.downloadValues[index]["localPath"] == ""
+                            ? TextButton(
+                                onPressed: () {
+                                  // controller.downloadFile(document);
+                                  _controller.downloadFile(
+                                      document: document, index: index);
+                                },
+                                child: const Text('Tải xuống'),
+                              )
+                            : TextButton(
+                                onPressed: () => _controller.openFile(
+                                    localPath: _controller.downloadValues[index]
+                                        ["localPath"]),
+                                child: const Text('Mở file'),
+                              )
+                        : Column(
+                            children: [
+                              SizedBox(
+                                child: Text(_controller.downloadValues[index]
+                                    ["percentStr"]),
+                              ),
+                              SizedBox(
+                                child: LinearProgressIndicator(
+                                  value: _controller.downloadValues[index]
+                                      ["percent"],
+                                ),
+                              ),
+                            ],
+                          )),
+              ),
             ),
-          ),
+            // Obx(() => _controller.downloadValues[index]["isDownloading"] == true
+            //     ? Column(
+            //         children: [
+            //           SizedBox(
+            //             child: Text(
+            //                 _controller.downloadValues[index]["percentStr"]),
+            //           ),
+            //           SizedBox(
+            //             child: LinearProgressIndicator(
+            //               value: _controller.downloadValues[index]["percent"],
+            //             ),
+            //           ),
+            //         ],
+            //       )
+            //     : const SizedBox()),
+          ],
         ),
       ),
     );

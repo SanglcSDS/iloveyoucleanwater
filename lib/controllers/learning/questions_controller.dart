@@ -35,6 +35,7 @@ class QuestionController extends GetxController {
   void updateValues(int key, bool newVal) {
     values![key] = values![key] == true ? false : true;
     debugPrint(values!.toString());
+    update();
   }
 
   int getKey() {

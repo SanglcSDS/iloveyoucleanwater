@@ -2,8 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/controllers/learning/course_controller.dart';
-import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/service/account/account_service.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/msg_dialog.dart';
 
 class AccountController extends GetxController {
   final AccountProvider _accountProvider = Get.put(AccountProvider());
@@ -17,10 +17,8 @@ class AccountController extends GetxController {
     super.onInit();
   }
 
-  Future<void> onLogin(String email, String password) async {
+  Future<bool> onLogin(context, String email, String password) async {
     Response<dynamic> response = await _accountProvider.login(email, password);
-    debugPrint("email: " + email + " / password: " + password);
-    debugPrint("response: " + response.statusCode.toString());
     int statusCode = response.statusCode!;
     if (statusCode == 200) {
       // MsgDia
@@ -30,13 +28,19 @@ class AccountController extends GetxController {
         String tokenType = json['token_type'];
         await box.write("token", tokenType + " " + token);
         await box.write("expiresAt", json['expires_at']);
-        debugPrint(box.read("token"));
+        _courseController.isLogged = true.obs;
+        _courseController.initData();
+        return true;
       } catch (e) {
         debugPrint(e.toString());
       }
-
-      _courseController.setLogged();
-      Get.offNamed(Routes.HOME);
+    } else if (statusCode == 401) {
+      MsgDialog.showWarningDialogs(context, "Login failed!",
+          "Mật khẩu hoặc tài khoản không đúng! Vui lòng đăng nhập lại.");
+    } else {
+      MsgDialog.showWarningDialogs(context, "Login failed!",
+          "Đăng nhập không thành công! Vui lòng đăng nhập lại.");
     }
+    return false;
   }
 }

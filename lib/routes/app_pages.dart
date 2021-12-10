@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/account/account_binding.dart';
+import 'package:iloveyoucleanwater/controllers/account/register_binding.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_binding.dart';
 import 'package:iloveyoucleanwater/controllers/introduce/introduce_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/course_binding.dart';
@@ -76,7 +77,7 @@ class AppPages {
     GetPage(
       name: Routes.REGISTER,
       page: () => RegisterScreen(),
-      binding: AccountBinding(),
+      binding: RegisterBinding(),
     ),
     GetPage(
       name: Routes.USER_INFO,
