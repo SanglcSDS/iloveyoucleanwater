@@ -5,9 +5,9 @@ class NewsService extends GetConnect {
     return get("https://my-grocery-strapi.herokuapp.com/home-carousels");
   }
 
-  Future<Response> getNewAll(int page) {
+  Future<Response> getNewAll(int page, int id) {
     return get(
-        "http://112.78.4.235/api/posts/list?pageLength=3&language=vi&page=$page&categoryId=");
+        "http://112.78.4.235/api/posts/list?pageLength=2&language=vi&page=$page&categoryId=$id");
   }
 
   Future<Response> GetNews() {

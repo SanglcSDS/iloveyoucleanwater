@@ -34,7 +34,7 @@ class TitleWidgetView extends StatelessWidget {
             backgroundColor: MaterialStateProperty.resolveWith<Color>(
               (Set<MaterialState> states) {
                 if (states.contains(MaterialState.disabled)) {
-                  return kGrey3;
+                  return Colors.white;
                 }
                 return Colors.white;
               },
