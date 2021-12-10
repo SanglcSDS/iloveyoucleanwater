@@ -38,7 +38,7 @@ class PrimaryCard extends StatelessWidget {
                     valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
                   ),
                 ),
-                fit: BoxFit.fill,
+                fit: BoxFit.cover,
               ),
             ),
           )),
