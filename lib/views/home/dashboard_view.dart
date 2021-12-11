@@ -59,6 +59,7 @@ class DashboardView extends StatelessWidget {
                   width: MediaQuery.of(context).size.width * 0.55,
                 ),
               ),
+
               actions: <Widget>[
                 IconButton(
                   icon: const Icon(Icons.settings, color: kGrey1),
@@ -82,6 +83,7 @@ class DashboardView extends StatelessWidget {
               // ),
 
               centerTitle: true,
+
               //expandedHeight: 100.0,
             )
           ],
@@ -123,9 +125,9 @@ class DashboardView extends StatelessWidget {
                       },
                     )),
                     BannerHomeView(),
-                    TitleWidgetView(
-                        title: 'news'.tr.toUpperCase(),
-                        onPressed: _controller.oClickNews0),
+                    // TitleWidgetView(
+                    //     title: 'news'.tr.toUpperCase(),
+                    //     onPressed: _controller.oClickNews0),
                     Obx(
                       () => Column(
                         children: List.generate(
@@ -178,8 +180,8 @@ class DashboardView extends StatelessWidget {
                         }),
                       ),
                     ),
-                    TitleWidgetNextView(
-                        title: 'all'.tr, onPressed: _controller.oClickNews1),
+                    // TitleWidgetNextView(
+                    //     title: 'all'.tr, onPressed: _controller.oClickNews1),
                     Obx(
                       () => Column(
                         children: List.generate(
@@ -231,11 +233,11 @@ class DashboardView extends StatelessWidget {
                         }),
                       ),
                     ),
-                    TitleWidgetNextView(
-                        title: 'all'.tr, onPressed: _controller.oClickNews0),
-                    TitleWidgetView(
-                        title: 'album'.tr.toUpperCase(),
-                        onPressed: _controller.oClickLibrary0),
+                    // TitleWidgetNextView(
+                    //     title: 'all'.tr, onPressed: _controller.oClickNews0),
+                    // TitleWidgetView(
+                    //     title: 'album'.tr.toUpperCase(),
+                    //     onPressed: _controller.oClickLibrary0),
                     Container(
                       width: double.infinity,
                       height: 300.0,
@@ -277,9 +279,9 @@ class DashboardView extends StatelessWidget {
                         ),
                       ),
                     ),
-                    TitleWidgetView(
-                        title: 'video'.tr.toUpperCase(),
-                        onPressed: _controller.oClickLibrary1),
+                    // TitleWidgetView(
+                    //     title: 'video'.tr.toUpperCase(),
+                    //     onPressed: _controller.oClickLibrary1),
                     Container(
                       width: double.infinity,
                       height: 300.0,

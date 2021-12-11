@@ -23,6 +23,8 @@ final controllerLibrary = Get.put(LibraryController());
 class HomeController extends GetxController {
   final RefreshController refreshHomeController =
       RefreshController(initialRefresh: true);
+  final RefreshController refreshHomeControllerNew =
+      RefreshController(initialRefresh: true);
   var isloadingHome = false.obs;
   var isLoading = false;
   final NewsService provider = NewsService();
@@ -36,6 +38,8 @@ class HomeController extends GetxController {
   RxList listProgramNewitem = <NewModel>[].obs;
   RxList listEnvironmentalNews = <NewModel>[].obs;
   RxList listEnvironmentalNewsitem = <NewModel>[].obs;
+  RxList listItemNews = <NewModel>[].obs;
+
   List<BannerModel> listBanner = [];
   List<CategoryModel> listCategory = [];
   RxList listPhoto = <LibraryModel>[].obs;
@@ -49,7 +53,7 @@ class HomeController extends GetxController {
     listEnvironmentalNewsitem.clear();
     listProgramNew.clear();
     banners();
-    getCategory();
+    // getCategory();
     getPhotoHome();
     getVideoHome();
     return true;
@@ -58,33 +62,46 @@ class HomeController extends GetxController {
   @override
   void onInit() {
     banners();
-    getCategory();
+    // getCategory();
     getPhotoHome();
     getVideoHome();
 
     super.onInit();
   }
 
-  void getNewsHomes() async {
-    await getNewsHome(listCategory[1].id, listProgramNew);
-    await getNewsHome1(listCategory[0].id, listEnvironmentalNews);
-  }
+  // void getNewsHomes() async {
+  //   await getNewsHome(listCategory[1].id, listProgramNew);
+  //   await getNewsHome1(listCategory[0].id, listEnvironmentalNews);
+  // }
 
-  Future<void> getNewsHome(int id, RxList list) async {
-    List<NewModel> listItem = [];
+  // Future<void> getNewsHome(int id, RxList list) async {
+  //   List<NewModel> listItem = [];
+  //   Response _data = await homeService.getNewsHome(id);
+
+  //   if (_data.statusCode == 200) {
+  //     var jsonString = _data.body['data']['data'];
+  //     if (jsonString != null) {
+  //       jsonString.forEach((e) {
+  //         listItem.add(NewModel.fromJson(e));
+  //       });
+  //       listProgramNewitem.assignAll(listItem);
+  //       if (listItem.length > 0) {
+  //         listItem.removeAt(0);
+  //       }
+  //       listProgramNew.assignAll(listItem);
+  //     }
+  //   }
+  // }
+
+  Future<void> getListItemNews(int id) async {
     Response _data = await homeService.getNewsHome(id);
 
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data']['data'];
       if (jsonString != null) {
         jsonString.forEach((e) {
-          listItem.add(NewModel.fromJson(e));
+          listItemNews.add(NewModel.fromJson(e));
         });
-        listProgramNewitem.assignAll(listItem);
-        if (listItem.length > 0) {
-          listItem.removeAt(0);
-        }
-        listProgramNew.assignAll(listItem);
       }
     }
   }
@@ -134,19 +151,19 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getCategory() async {
-    Response _data = await homeService.getCategoryNew();
+  // Future<void> getCategory() async {
+  //   Response _data = await homeService.getCategoryNew();
 
-    if (_data.statusCode == 200) {
-      var jsonString = _data.body['data']['data'];
-      if (jsonString != null) {
-        jsonString.forEach((e) {
-          listCategory.add(CategoryModel.fromJson(e));
-        });
-        getNewsHomes();
-      }
-    }
-  }
+  //   if (_data.statusCode == 200) {
+  //     var jsonString = _data.body['data']['data'];
+  //     if (jsonString != null) {
+  //       jsonString.forEach((e) {
+  //         listCategory.add(CategoryModel.fromJson(e));
+  //       });
+  //       getNewsHomes();
+  //     }
+  //   }
+  // }
 
   Future<void> getDetailPhotoHome(LibraryModel news) async {
     Response _data = await homeService.getDetailPhotoHome(news.id);

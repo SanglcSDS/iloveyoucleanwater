@@ -11,7 +11,7 @@ import 'package:path_provider/path_provider.dart';
 class DocumentController extends GetxController {
   RxBool downloading = false.obs;
   RxList<Map<String, dynamic>> downloadValues = <Map<String, dynamic>>[].obs;
-  RxList<Document>? documents;
+  RxList documents = <Document>[].obs;
   final GetStorage _box = GetStorage();
 
   @override
@@ -37,14 +37,17 @@ class DocumentController extends GetxController {
     //   });
     // }
     List<Map<String, dynamic>> _values = <Map<String, dynamic>>[].obs;
-    documents!.forEach((element) {
-      _values.add({
-        "isDownloading": false,
-        "percentStr": "",
-        "percent": 0.0,
-        "localPath": ""
+    if (documents.length > 0) {
+      documents.forEach((element) {
+        _values.add({
+          "isDownloading": false,
+          "percentStr": "",
+          "percent": 0.0,
+          "localPath": ""
+        });
       });
-    });
+    }
+
     downloadValues = _values.obs;
     update();
   }

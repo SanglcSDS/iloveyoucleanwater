@@ -26,7 +26,9 @@ class _CarouselSliderViewState extends State<CarouselSliderView> {
                 child: Stack(
                   children: [
                     CachedNetworkImage(
-                      imageUrl: e.image,
+                      imageUrl: (e.image.contains(Constants.URL_IMAGE)
+                          ? e.image
+                          : Constants.URL_IMAGE + e.image),
                       errorWidget: (context, url, error) =>
                           const Icon(Icons.error),
                       progressIndicatorBuilder:

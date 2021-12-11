@@ -59,20 +59,14 @@ class PrimaryCard extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
             child: Row(
               children: [
-                Expanded(
-                  child: Text("news.category",
-                      style: kDetailContent,
-                      overflow: TextOverflow.ellipsis,
-                      maxLines: 1),
-                ),
-                const SizedBox(width: 10.0),
+                const SizedBox(width: 5.0),
                 const CircleAvatar(
                   radius: 5.0,
                   backgroundColor: kGrey1,
                 ),
                 const SizedBox(width: 10.0),
                 Expanded(
-                    child: Text("news.time",
+                    child: Text(news.createdAt,
                         style: kDetailContent,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1))

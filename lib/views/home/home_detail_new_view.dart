@@ -6,7 +6,6 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/news/news_%20details_model.dart';
 
-import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 
