@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:iloveyoucleanwater/models/news/news_model.dart';
 
 class CategoryModel {
   int id;
@@ -6,13 +7,23 @@ class CategoryModel {
   int status;
   String language;
   int referenceId;
+  int totalPages;
+  int currentPage;
 
-  CategoryModel(
-      {required this.id,
-      required this.title,
-      required this.status,
-      required this.language,
-      required this.referenceId});
+  int index;
+  List<NewModel> news;
+
+  CategoryModel({
+    required this.id,
+    required this.title,
+    required this.status,
+    required this.language,
+    required this.referenceId,
+    required this.totalPages,
+    required this.currentPage,
+    required this.news,
+    required this.index,
+  });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) => CategoryModel(
         id: json['id'] ?? '' as int,
@@ -20,6 +31,10 @@ class CategoryModel {
         status: json['status'] ?? '' as int,
         language: json['language'] ?? '',
         referenceId: json['reference_id'] ?? '',
+        totalPages: json['page'] ?? 1,
+        currentPage: json['page'] ?? 1,
+        news: json['news'] ?? [],
+        index: json['index'] ?? 0,
       );
 
   Map<String, dynamic> toJson() {

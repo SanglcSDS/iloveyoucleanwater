@@ -1,65 +1,232 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:ffi';
+
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
-import 'package:iloveyoucleanwater/views/home/dashboard_view.dart';
-import 'package:iloveyoucleanwater/views/introduce/Introduce_view.dart';
-import 'package:iloveyoucleanwater/views/learning/courses.dart';
-import 'package:iloveyoucleanwater/views/learning/tab_bar_lessons.dart';
-import 'package:iloveyoucleanwater/views/library/library_view.dart';
-import 'package:iloveyoucleanwater/views/news/news_view.dart';
+import 'package:iloveyoucleanwater/controllers/introduce/introduce_controller.dart';
+import 'package:iloveyoucleanwater/models/news/category_model.dart';
+import 'package:iloveyoucleanwater/models/news/category_news_modell.dart';
+import 'package:iloveyoucleanwater/models/news/news_model.dart';
+import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:iloveyoucleanwater/views/home/banner_home_view.dart';
+import 'package:iloveyoucleanwater/views/home/slide/failureView.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/home_item_news_widget_view.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/title_widget_view.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class HomeView extends GetView<HomeController> {
-  @override
-  Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(builder: (controller) {
-      return Scaffold(
-        resizeToAvoidBottomInset: false,
+class HomeView extends StatelessWidget {
+  RefreshController refreshHomeController =
+      new RefreshController(initialRefresh: true);
 
-        bottomNavigationBar: BottomNavigationBar(
-          onTap: controller.changeTabIndex,
-          currentIndex: controller.tabIndex,
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.white,
-          elevation: 0,
-          items: <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-              icon: const Icon(Icons.home),
-              label: 'home'.tr,
+  TabController animaTeto;
+  HomeView({
+    required this.animaTeto,
+  });
+  final _Controller = Get.put(HomeController());
+
+  List<Widget> generateSlider() {
+    List<Widget> imageSlides = _Controller.listPopular.map((item) {
+      return Container(
+        margin: const EdgeInsets.all(5),
+        child: ClipRRect(
+          borderRadius: const BorderRadius.all(Radius.circular(10)),
+          child: CachedNetworkImage(
+            imageUrl: (item.image.contains(Constants.URL_IMAGE)
+                ? item.image
+                : Constants.URL_IMAGE + item.image),
+            fit: BoxFit.cover,
+            width: Get.width,
+            placeholder: (context, url) => Container(
+              color: Colors.grey,
             ),
-            BottomNavigationBarItem(
-              icon: const Icon(FontAwesomeIcons.addressCard),
-              label: 'introduce'.tr,
+            errorWidget: (context, url, rerror) => const Icon(
+              Icons.error,
+              color: Colors.red,
             ),
-            BottomNavigationBarItem(
-              icon: const Icon(FontAwesomeIcons.newspaper),
-              label: 'news'.tr,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(FontAwesomeIcons.photoVideo),
-              label: 'library'.tr,
-            ),
-            BottomNavigationBarItem(
-              icon: const Icon(FontAwesomeIcons.graduationCap),
-              label: 'learning'.tr,
-            ),
-          ],
-        ),
-        body: SafeArea(
-          child: IndexedStack(
-            index: controller.tabIndex,
-            children: [
-              DashboardView(),
-              IntroduceView(),
-              NewsView(),
-              LibraryView(),
-              CourseView(),
-            ],
           ),
         ),
-        //  floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       );
-    });
+    }).toList();
+    return imageSlides;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Center(
+      child: SmartRefresher(
+        controller: refreshHomeController,
+        onRefresh: () async {
+          final result = await _Controller.onRefreshHome(isRefresh: true);
+          if (result) {
+            refreshHomeController.refreshCompleted();
+          } else {
+            refreshHomeController.refreshFailed();
+          }
+        },
+        child: SingleChildScrollView(
+          child: Column(children: <Widget>[
+            Obx(
+              () {
+                if (_Controller.isDataProcessing.value) {
+                  return Center(
+                    child: Container(
+                      margin: const EdgeInsets.all(9),
+                      child: const CircularProgressIndicator(),
+                    ),
+                  );
+                } else {
+                  if (_Controller.isDataErrer.value) {
+                    return FailureVier(
+                        title: "Error",
+                        message: "on click loading slide ",
+                        onPressed: () => _Controller.getPopular());
+                  } else {
+                    return CarouselSlider(
+                      items: generateSlider(),
+                      options: CarouselOptions(
+                        autoPlay: true,
+                        aspectRatio: 2.0,
+                        enlargeCenterPage: true,
+                        enlargeStrategy: CenterPageEnlargeStrategy.height,
+                      ),
+                    );
+                  }
+                }
+              },
+            ),
+            const SizedBox(
+              height: 7.0,
+            ),
+            BannerHomeView(),
+            Obx(
+              () => Column(
+                children: List.generate(
+                    _Controller.listCategoryNewsModel.length, (index) {
+                  return historyNull(
+                      _Controller.listCategoryNewsModel[index].news,
+                      _Controller.listCategoryNewsModel[index].title,
+                      _Controller.listCategoryNewsModel[index].item);
+                }),
+              ),
+            ),
+            TitleWidgetNextPhotoVideo(
+                title: 'album'.tr.toUpperCase(),
+                onPressed: _Controller.oClickLibrary0),
+            Container(
+              width: double.infinity,
+              height: 300.0,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Obx(
+                  () => Row(
+                    children:
+                        List.generate(_Controller.listPhoto.length, (index) {
+                      var news = _Controller.listPhoto[index];
+
+                      return Hero(
+                        tag: "Imgarsss$index",
+                        child: InkWell(
+                          onTap: () {
+                            _Controller.getDetailPhotoHome(news);
+                          },
+                          child: Container(
+                            margin:
+                                const EdgeInsets.only(right: 12.0, top: 5.0),
+                            child: PrimaryCard(news: news),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(
+              height: 5.0,
+            ),
+            TitleWidgetNextPhotoVideo(
+                title: 'video'.tr.toUpperCase(),
+                onPressed: _Controller.oClickLibrary1),
+            Container(
+              width: double.infinity,
+              height: 300.0,
+              child: SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Obx(
+                  () => Row(
+                    children:
+                        List.generate(_Controller.listVideo.length, (index) {
+                      var news = _Controller.listVideo[index];
+
+                      return Hero(
+                        tag: "Videoss$index",
+                        child: InkWell(
+                          // onTap: () =>  Get.to(() => DetailsLibraryView(news: news)),
+                          child: Container(
+                            margin:
+                                const EdgeInsets.only(right: 12.0, top: 5.0),
+                            child: PrimaryCard(news: news),
+                          ),
+                        ),
+                      );
+                    }),
+                  ),
+                ),
+              ),
+            ),
+          ]),
+        ),
+      ),
+    );
+  }
+
+  Widget historyNull(List<NewModel> ListCategoryNews, String title, int index) {
+    return Column(
+      children: <Widget>[
+        TitleWidgetNextView(
+          title: title,
+          onPressed: animaTeto,
+          index: index,
+        ),
+        Column(
+            children: List.generate(ListCategoryNews.length, (index) {
+          var recent = ListCategoryNews[index];
+          if (index == 0) {
+            return Hero(
+              tag: "ItemnewE$index",
+              child: InkWell(
+                // onTap: () {
+                //   _controller.getNewsDetailsModel(recent);
+                // },
+                child: Container(
+                  width: double.infinity,
+                  height: 350.0,
+                  child: HomeItemNewsWidgetView(news: recent),
+                ),
+              ),
+            );
+          } else {
+            return Hero(
+              tag: "newE$index",
+              child: InkWell(
+                // onTap: () {
+                //   _controller.getNewsDetailsModel(recent);
+                // },
+                child: Container(
+                  width: double.infinity,
+                  height: 120.0,
+                  margin: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: NewWidgetView(news: recent),
+                ),
+              ),
+            );
+          }
+        })),
+      ],
+    );
   }
 }
