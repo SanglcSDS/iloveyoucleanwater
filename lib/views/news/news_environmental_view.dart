@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
-import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class NewsEnvironmentalView extends StatelessWidget {

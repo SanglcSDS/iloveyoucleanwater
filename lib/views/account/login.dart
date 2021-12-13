@@ -5,7 +5,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:iloveyoucleanwater/controllers/account/account_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
-import 'package:iloveyoucleanwater/views/home/home_view.dart';
+import 'package:iloveyoucleanwater/views/home/home_tabbar_view.dart';
 
 class LoginScreen extends GetView<AccountController> {
   final GlobalKey<FormState> _loginForm = GlobalKey<FormState>();

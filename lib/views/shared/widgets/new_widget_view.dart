@@ -24,8 +24,8 @@ class NewWidgetView extends StatelessWidget {
       child: Row(
         children: [
           Container(
-            width: 90.0,
-            height: 135.0,
+            width: 120.0,
+            height: 100.0,
             child: ClipRRect(
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(5),
@@ -49,13 +49,6 @@ class NewWidgetView extends StatelessWidget {
                 width: 1000,
               ),
             ),
-
-            // DecorationImage(
-            //   image: (news.image.contains(Constants.URL_IMAGE)
-            //       ? news.image
-            //       : Constants.URL_IMAGE + news.image),
-            //   fit: BoxFit.cover,
-            // ),
           ),
           const SizedBox(width: 12.0),
           Expanded(
@@ -67,26 +60,14 @@ class NewWidgetView extends StatelessWidget {
                   Text(
                     news.title,
                     overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
+                    maxLines: 3,
                     style: kTitleCard,
                   ),
                   const SizedBox(height: 4.0),
-                  Text(
-                    news.description,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: kDetailContent,
-                  ),
                   const Spacer(),
                   Row(
                     children: [
-                      Expanded(
-                        child: Text(news.categoryTitle,
-                            style: kDetailContent,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1),
-                      ),
-                      const SizedBox(width: 10.0),
+                      const SizedBox(width: 5.0),
                       const CircleAvatar(
                         radius: 5.0,
                         backgroundColor: kGrey1,

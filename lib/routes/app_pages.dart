@@ -11,7 +11,7 @@ import 'package:iloveyoucleanwater/controllers/news/news_binding.dart';
 import 'package:iloveyoucleanwater/views/account/login.dart';
 import 'package:iloveyoucleanwater/views/account/register.dart';
 import 'package:iloveyoucleanwater/views/account/user_info.dart';
-import 'package:iloveyoucleanwater/views/home/home_view.dart';
+import 'package:iloveyoucleanwater/views/home/home_tabbar_view.dart';
 import 'package:iloveyoucleanwater/views/introduce/Introduce_view.dart';
 import 'package:iloveyoucleanwater/views/learning/courses.dart';
 import 'package:iloveyoucleanwater/views/learning/questions.dart';
@@ -22,13 +22,13 @@ import 'package:iloveyoucleanwater/views/welcome/welcome_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  // static const INITIAL = Routes.HOME;
-  static const INITIAL = Routes.LOGIN;
+  static const INITIAL = Routes.WELCOME;
+  // static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
       name: Routes.HOME,
-      page: () => HomeView(),
+      page: () => HomeTabBarView(),
       binding: HomeBinding(),
     ),
     GetPage(
