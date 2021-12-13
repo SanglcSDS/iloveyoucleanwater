@@ -56,6 +56,7 @@ dependencies:
   linked_scroll_controller: ^0.2.0
   intl: ^0.17.0
   youtube_player_flutter: ^8.0.0
+
   animated_splash_screen: ^1.1.0
 
 

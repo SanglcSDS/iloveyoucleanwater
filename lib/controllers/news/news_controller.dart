@@ -9,6 +9,7 @@ import 'package:iloveyoucleanwater/service/news_service.dart';
 class NewsController extends GetxController {
   final HomeService provider = HomeService();
   final NewsService providerNewsService = NewsService();
+
   RxList<CategoryModel> listCategory = <CategoryModel>[].obs;
 
   @override
