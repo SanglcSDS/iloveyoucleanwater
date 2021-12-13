@@ -10,7 +10,7 @@ class NewsController extends GetxController {
   final HomeService provider = HomeService();
   final NewsService providerNewsService = NewsService();
 
-  RxList<CategoryModel> listCategory = <CategoryModel>[].obs;
+  List<CategoryModel> listCategory = [];
 
   @override
   void onInit() {

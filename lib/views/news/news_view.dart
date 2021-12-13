@@ -7,6 +7,7 @@ import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/news/news_environmental_view.dart';
 import 'package:iloveyoucleanwater/views/news/news_program_view.dart';
 import 'package:iloveyoucleanwater/views/news/news_tabbar_view.dart';
+import 'package:iloveyoucleanwater/views/news/test_loadmore.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/loading_widgets.dart';
 import 'package:shimmer/shimmer.dart';
@@ -33,6 +34,7 @@ class NewsView extends GetView<NewsController> {
           )
         ],
         body:
+            // NewsTabBar(),
 
             //  Shimmer.fromColors(
             //   baseColor: Colors.grey[400]!,
@@ -45,7 +47,7 @@ class NewsView extends GetView<NewsController> {
             // ),
 
             _controller.listCategory.length > 0
-                ? NewsTabBar()
+                ? NewsTabBarssss()
                 : LoadingWidget(),
       ),
     );
