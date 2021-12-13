@@ -1,25 +1,23 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
-import 'package:iloveyoucleanwater/controllers/introduce/introduce_controller.dart';
+import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class HomeNewsListView extends StatelessWidget {
+class NewsListView extends StatelessWidget {
   final int index;
   final int id;
 
-  HomeNewsListView({required this.index, required this.id});
-  RefreshController refreshController =
-      new RefreshController(initialRefresh: true);
+  NewsListView({required this.index, required this.id});
+  RefreshController refreshController = RefreshController(initialRefresh: true);
 
-  final _controller = Get.put(HomeController());
+  final _controller = Get.put(NewsController());
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Obx(() {
         Widget getList() {
-          var list = _controller.listCategoryNewPage[index];
+          var list = _controller.listCategory[index];
 
           ListView myList = ListView.builder(
             itemCount: list.news.length,
@@ -47,19 +45,6 @@ class HomeNewsListView extends StatelessWidget {
         return SmartRefresher(
           controller: refreshController,
           enablePullUp: true,
-          // footer: CustomFooter(
-          //   builder: (context, mode) {
-          //     if (mode == LoadStatus.idle) {
-          //       return Center(child: Text("pull up load"));
-          //     } else if (mode == LoadStatus.failed) {
-          //       return Center(child: Text("Load Failed!Click retry!"));
-          //     } else if (mode == LoadStatus.canLoading) {
-          //       return Center(child: Text("release to load more"));
-          //     } else {
-          //       return Center(child: Text("No more Data"));
-          //     }
-          //   },
-          // ),
           onRefresh: () async {
             final result = await _controller.getLoadMoreRefresh(true, id);
 
@@ -75,7 +60,7 @@ class HomeNewsListView extends StatelessWidget {
             if (result) {
               refreshController.loadComplete();
             } else {
-              var check = _controller.listCategoryNewPage[index];
+              var check = _controller.listCategory[index];
               if (check.currentPage > check.totalPages) {
                 refreshController.loadNoData();
               } else {

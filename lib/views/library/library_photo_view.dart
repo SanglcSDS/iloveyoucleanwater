@@ -12,7 +12,6 @@ class LibraryPhotoView extends StatelessWidget {
   LibraryPhotoView({required this.tag});
 
   final _controller = Get.put(LibraryController());
-  final _homecontroller = Get.put(LibraryController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -44,7 +43,7 @@ class LibraryPhotoView extends StatelessWidget {
                 tag: "$tag$index",
                 child: InkWell(
                   onTap: () {
-                    _homecontroller.getDetailPhotoHome(recent);
+                    _controller.getDetailPhotoHome(recent);
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 15.0),

@@ -4,16 +4,20 @@ import 'package:iloveyoucleanwater/utils/constants.dart';
 class TitleWidgetNextView extends StatelessWidget {
   final String title;
   final int index;
-  final TabController onPressed;
+  // final TabController onPressed;
   TitleWidgetNextView(
-      {required this.title, required this.onPressed, required this.index});
+      {required this.title,
+
+      // required this.onPressed,
+
+      required this.index});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: () {
-        onPressed.animateTo(index);
-      },
+      // onTap: () {
+      //   onPressed.animateTo(index);
+      // },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[

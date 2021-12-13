@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:shimmer/shimmer.dart';
 
 class NewWidgetView extends StatelessWidget {
   final NewModel news;
@@ -39,10 +40,14 @@ class NewWidgetView extends StatelessWidget {
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 progressIndicatorBuilder: (context, url, downloadProgress) =>
                     Center(
-                  child: CircularProgressIndicator(
-                    value: downloadProgress.progress,
-                    backgroundColor: Colors.cyanAccent,
-                    valueColor: const AlwaysStoppedAnimation<Color>(Colors.red),
+                  child: Shimmer.fromColors(
+                    baseColor: Colors.grey[400]!,
+                    highlightColor: Colors.grey[100]!,
+                    child: Container(
+                      width: double.infinity,
+                      height: double.infinity,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
                 fit: BoxFit.cover,

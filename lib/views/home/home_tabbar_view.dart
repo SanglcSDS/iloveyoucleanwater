@@ -7,6 +7,8 @@ import 'package:iloveyoucleanwater/views/home/home_tab_view.dart';
 import 'package:iloveyoucleanwater/views/introduce/Introduce_view.dart';
 import 'package:iloveyoucleanwater/views/learning/courses.dart';
 import 'package:iloveyoucleanwater/views/library/library_view.dart';
+import 'package:iloveyoucleanwater/views/news/news_view.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/loading_timer.dart';
 
 class HomeTabBarView extends GetView<HomeController> {
   @override
@@ -22,10 +24,10 @@ class HomeTabBarView extends GetView<HomeController> {
           backgroundColor: Colors.white,
           elevation: 0,
           items: <BottomNavigationBarItem>[
-            // BottomNavigationBarItem(
-            //   icon: const Icon(Icons.home),
-            //   label: 'home'.tr,
-            // ),
+            BottomNavigationBarItem(
+              icon: const Icon(Icons.home),
+              label: 'home'.tr,
+            ),
             BottomNavigationBarItem(
               icon: const Icon(FontAwesomeIcons.newspaper),
               label: 'news'.tr,
@@ -34,7 +36,6 @@ class HomeTabBarView extends GetView<HomeController> {
               icon: const Icon(FontAwesomeIcons.addressCard),
               label: 'introduce'.tr,
             ),
-
             BottomNavigationBarItem(
               icon: const Icon(FontAwesomeIcons.photoVideo),
               label: 'library'.tr,
@@ -50,7 +51,7 @@ class HomeTabBarView extends GetView<HomeController> {
             index: controller.tabIndex,
             children: [
               HomeTabView(),
-              //  DashboardView(),
+              NewsView(),
               IntroduceView(),
               LibraryView(),
               CourseView(),

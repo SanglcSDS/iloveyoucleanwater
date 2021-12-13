@@ -59,13 +59,13 @@ class LibraryController extends GetxController
       }
     }
 
-    Response<dynamic> _data = await libraryService.getVideo(currentPagsP);
+    Response<dynamic> _data = await libraryService.getVideo(currentPagsV);
     if (_data.statusCode == 200) {
-      var jsonString = _data.body["data"]['data'];
+      var jsonString = _data.body["data"]["data"];
 
       if (jsonString != null) {
         if (isLoadingV) {
-          listPhoto.clear();
+          listVideo.clear();
           jsonString.forEach((e) {
             listVideo.add(LibraryModel.fromJson(e));
           });

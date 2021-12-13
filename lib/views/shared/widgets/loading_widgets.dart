@@ -5,14 +5,19 @@ import 'package:shimmer/shimmer.dart';
 class LoadingWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Shimmer.fromColors(
-        baseColor: Colors.grey[300]!,
-        highlightColor: Colors.grey[100]!,
-        child: ListView.builder(
-          itemBuilder: (_, __) => (dummyListViewCell()),
-          itemCount: 5,
+    return Container(
+      width: double.infinity,
+      height: double.infinity,
+      color: Colors.white,
+      child: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Shimmer.fromColors(
+          baseColor: Colors.grey[300]!,
+          highlightColor: Colors.grey[100]!,
+          child: ListView.builder(
+            itemBuilder: (_, __) => (dummyListViewCell()),
+            itemCount: 5,
+          ),
         ),
       ),
     );
@@ -69,6 +74,83 @@ class LoadingWidget extends StatelessWidget {
             ),
           )
         ],
+      ),
+    );
+  }
+}
+
+class LoadingImage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[100]!,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: 10.0,
+                color: Colors.white,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+              ),
+              Container(
+                width: double.infinity,
+                height: 10.0,
+                color: Colors.white,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+              ),
+              Container(
+                width: double.infinity,
+                height: 10.0,
+                color: Colors.white,
+              ),
+              const Padding(
+                padding: EdgeInsets.symmetric(vertical: 5.0),
+              ),
+              Container(
+                width: double.infinity,
+                height: 10.0,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class LoadingSlide extends StatelessWidget {
+  double width;
+  LoadingSlide({required this.width});
+  @override
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(5.0),
+      child: Shimmer.fromColors(
+        baseColor: Colors.grey[300]!,
+        highlightColor: Colors.grey[50]!,
+        child: Container(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                width: double.infinity,
+                height: width,
+                color: Colors.white,
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }
