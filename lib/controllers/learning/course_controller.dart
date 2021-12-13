@@ -17,14 +17,6 @@ class CourseController extends GetxController
   RxBool isLogged = false.obs;
   RxList<Course> courses = <Course>[].obs;
   final GetStorage box = GetStorage();
-  final List<Color> colors = [
-    Colors.grey,
-    Color(Colors.blueGrey[200]!.value),
-    Colors.blueAccent,
-    Colors.lime,
-    Color(Colors.green[200]!.value),
-    Color(Colors.brown[300]!.value),
-  ];
   final LessonController _lessonController = Get.put(LessonController());
   final DocumentController _documentController = Get.put(DocumentController());
 
@@ -64,12 +56,6 @@ class CourseController extends GetxController
     } finally {
       update();
     }
-  }
-
-  Color randomColor() {
-    Random random = Random();
-    int index = random.nextInt(colors.length);
-    return colors[index];
   }
 
   void popToLessonViews(Course course) {

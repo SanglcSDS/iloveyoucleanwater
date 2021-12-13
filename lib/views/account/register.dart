@@ -1,10 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
 import 'package:iloveyoucleanwater/controllers/account/register_controller.dart';
+import 'package:iloveyoucleanwater/models/account/city.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/dropdown_search_widget.dart';
 
 class RegisterScreen extends StatelessWidget {
   final GlobalKey<FormState> _registerForm = GlobalKey<FormState>();
@@ -15,6 +16,7 @@ class RegisterScreen extends StatelessWidget {
   final TextEditingController _pwdController = TextEditingController();
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
+  final TextEditingController _workplaceController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -22,16 +24,22 @@ class RegisterScreen extends StatelessWidget {
       key: _registerForm,
       child: GetBuilder<RegisterController>(
         init: RegisterController(),
+        // initState: (_) => _controller.loadDataProvince(),
         builder: (_) => SafeArea(
           child: Scaffold(
             resizeToAvoidBottomInset: false,
-            backgroundColor: const Color(0xfff2f3f7),
+            backgroundColor: Colors.white,
             body: SingleChildScrollView(
+              reverse: true,
               child: Column(
                 // mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   // _buildLogo(context),
                   _buildContainer(context),
+                  Padding(
+                    padding: EdgeInsets.only(
+                        bottom: MediaQuery.of(context).viewInsets.bottom),
+                  ),
                 ],
               ),
             ),
@@ -40,27 +48,6 @@ class RegisterScreen extends StatelessWidget {
       ),
     );
   }
-
-  // Widget _buildLogo(BuildContext context) {
-  //   return Row(
-  //     children: <Widget>[
-  //       IconButton(
-  //           onPressed: () => Get.back(),
-  //           icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
-  //       Padding(
-  //         padding: const EdgeInsets.symmetric(vertical: 20),
-  //         child: Text(
-  //           'Đăng ký',
-  //           style: GoogleFonts.oswald(
-  //             fontSize: MediaQuery.of(context).size.height / 25,
-  //             fontWeight: FontWeight.bold,
-  //             color: Colors.white,
-  //           ),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
 
   Widget _buildEmailRow() {
     return Padding(
@@ -123,7 +110,7 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _buildPhoneNumberRow() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20),
+      padding: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       child: TextFormField(
         keyboardType: TextInputType.phone,
         controller: _phoneController,
@@ -134,25 +121,99 @@ class RegisterScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildGenderDropdown(List<Map<String, dynamic>> _values) {
+  Widget _buildGenderDropdown(
+      List<Map<String, dynamic>> _values, BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.only(right: 20, top: 10, bottom: 10),
+      width: MediaQuery.of(context).size.width / 2 - 60,
+      height: 45,
+      child: CustomDropdown(
+        items: _values,
+        selectedItem: _values[0],
+        label: "Giới tính *",
+        itemAsString: (Map<String, dynamic> item) => item['value'],
+        onChange: (Map<String, dynamic>? newValue) {
+          _controller.onChangeGender(newValue!);
+        },
+        showSearchBox: true,
+      ),
+    );
+  }
+
+  Widget _buildJobDropdown(
+      List<Map<String, dynamic>> _values, BuildContext context) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      width: MediaQuery.of(context).size.width / 2,
+      height: 45,
+      child: CustomDropdown(
+        items: _values,
+        selectedItem: _values[0],
+        label: "Bạn là",
+        itemAsString: (Map<String, dynamic> item) => item['value'],
+        onChange: (Map<String, dynamic>? newValue) {
+          _controller.onChangeJob(newValue!);
+        },
+        showSearchBox: true,
+      ),
+    );
+  }
+
+  Widget _buildProvinceDropdown(List<Province> _provinces) {
+    return Container(
+      margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      height: 45,
+      child: CustomDropdown(
+        items: _provinces,
+        selectedItem: _provinces[0],
+        label: "Tỉnh/Thành phố *",
+        itemAsString: (Province p) => p.name,
+        onChange: (Province p) => _controller.onChangeProvince(p),
+        showSearchBox: true,
+        // validation: (Province p) {
+        //   if (p.id <= 0) {
+        //     return 'Chọn Tỉnh/thành phố';
+        //   }
+        //   return null;
+        // },
+      ),
+    );
+  }
+
+  Widget _buildDistrictDropdown(List<District> _districts) {
+    return Container(
+      margin: const EdgeInsets.only(left: 20, right: 20, top: 10),
+      height: 45,
+      child: CustomDropdown(
+        items: _districts,
+        selectedItem: _districts[0],
+        label: "Quận/Huyện *",
+        itemAsString: (District d) => d.name,
+        onChange: (District d) => _controller.onChangeDistrict(d),
+        showSearchBox: true,
+        // validation: (value) {
+        //   if (value == null || value!.id <= 0) {
+        //     return 'Chọn Quận/huyện';
+        //   }
+        //   return null;
+        // },
+      ),
+    );
+  }
+
+  Widget _buildWorkplace() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20),
-      child: DropdownButton<int>(
-          value: _controller.gender.value,
-          underline: Container(
-            height: 1,
-            color: kBlack,
-          ),
-          onChanged: (int? newValue) {
-            _controller.gender = newValue!.obs;
-            _controller.update();
-          },
-          items: List.generate(_values.length, (index) {
-            return DropdownMenuItem(
-              value: _values[index]["id"],
-              child: Text(_values[index]["value"]),
-            );
-          })),
+      child: TextFormField(
+        controller: _workplaceController,
+        keyboardType: TextInputType.text,
+        decoration: const InputDecoration(
+          labelText: 'Nơi công tác',
+        ),
+        validator: (value) {
+          return null;
+        },
+      ),
     );
   }
 
@@ -213,12 +274,18 @@ class RegisterScreen extends StatelessWidget {
             ),
             onPressed: () async {
               if (_registerForm.currentState!.validate()) {
-                bool isRegisted = await _controller.onRegister(context);
+                bool isRegisted = await _controller.onRegister(
+                    context,
+                    _emailController.text,
+                    _pwdController.text,
+                    _nameController.text,
+                    _phoneController.text,
+                    _workplaceController.text);
                 if (isRegisted == true) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Đăng ký thành công!')),
                   );
-                  Get.toNamed(Routes.LOGIN);
+                  Get.offNamed(Routes.LOGIN);
                 } else {
                   ScaffoldMessenger.of(context).showSnackBar(
                     const SnackBar(content: Text('Đăng ký không thành công')),
@@ -242,7 +309,6 @@ class RegisterScreen extends StatelessWidget {
 
   Widget _buildContainer(BuildContext context) {
     return Column(
-      // mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         Container(
           padding: const EdgeInsets.only(top: 50, bottom: 30),
@@ -257,9 +323,13 @@ class RegisterScreen extends StatelessWidget {
         _buildPhoneNumberRow(),
         Row(
           children: [
-            Obx(() => _buildGenderDropdown(_controller.genders)),
+            _buildJobDropdown(_controller.jobs, context),
+            _buildGenderDropdown(_controller.genders, context),
           ],
         ),
+        _buildProvinceDropdown(_controller.provinces),
+        Obx(() => _buildDistrictDropdown(_controller.rxDistricts)),
+        _buildWorkplace(),
         Obx(() => _buildPolicyRow()),
         _buildRegisterButton(context),
         _buildLoginBtn(context),

@@ -54,7 +54,7 @@ class CourseView extends StatelessWidget {
                       elevation: 5.0,
                       primary: kBlue1,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30.0),
+                        borderRadius: BorderRadius.circular(5.0),
                       ),
                     ),
                     onPressed: () => Get.toNamed(Routes.LOGIN),
@@ -110,10 +110,10 @@ class CourseView extends StatelessWidget {
                       onTap: () => _controller
                           .popToLessonViews(_controller.courses[index]),
                       child: Card(
-                        color: _controller.randomColor(),
+                        // color: _controller.courses[index].color,
                         elevation: 3,
                         shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(20),
+                          borderRadius: BorderRadius.circular(5),
                         ),
                         child: Column(
                           children: [
@@ -129,32 +129,24 @@ class CourseView extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
-                            Expanded(
-                              child: Row(
+                            Container(
+                              alignment: Alignment.bottomLeft,
+                              child: Stack(
                                 children: [
                                   Container(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 20, left: 15),
-                                      alignment: Alignment.bottomLeft,
-                                      child: Text(
-                                        _lessonCount.toString() + ' bài học',
-                                        style: const TextStyle(
-                                            color: kBlack,
-                                            fontSize: 18,
-                                            fontWeight: FontWeight.w300),
-                                      )),
-                                  Expanded(
-                                    child: Container(
-                                      padding: const EdgeInsets.only(
-                                          bottom: 15, right: 15),
-                                      alignment: Alignment.bottomRight,
-                                      child: const Icon(
-                                        Icons.menu_book_outlined,
-                                        size: 45,
-                                        color: Colors.white,
-                                      ),
+                                    child: Image.asset(
+                                      "assets/images/giot-nuoc-1.png",
+                                      fit: BoxFit.fitHeight,
                                     ),
                                   ),
+                                  Container(
+                                      child: Text(
+                                    _lessonCount.toString() + ' bài học',
+                                    style: const TextStyle(
+                                        color: kBlack,
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w300),
+                                  )),
                                 ],
                               ),
                             ),

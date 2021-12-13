@@ -1,11 +1,8 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/learning/lesson.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/msg_dialog.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
-// import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class LessonController extends GetxController {
   late String title;
@@ -20,22 +17,26 @@ class LessonController extends GetxController {
 
   @override
   void onInit() {
-    percent = 0.5.obs;
-    percentStr = '50% Hoàn thành'.obs;
+    percent = 0.0.obs;
+    percentStr = '0% Hoàn thành'.obs;
     super.onInit();
   }
 
   void onInitLesson(List<Lesson> list) {
     if (list.isNotEmpty) {
+      int countUnlockLesson = 0;
       lessons = list.obs;
       currentLesson = list[0].obs;
       for (int i = 0; i < list.length; i++) {
         if (list[i].unlocked) {
           currentLesson = list[i].obs;
           activeIndex = i.obs;
+          countUnlockLesson++;
         }
       }
       currentUrl = currentLesson!.value.url.obs;
+      percent = (countUnlockLesson / list.length).obs;
+      percentStr = '${(percent! * 100).floor()} % Hoàn thành'.obs;
 
       videoController = YoutubePlayerController(
         initialVideoId: YoutubePlayer.convertUrlToId(currentUrl!.value)!,

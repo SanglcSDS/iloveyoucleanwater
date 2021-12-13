@@ -26,5 +26,5 @@ class District {
   District.fromJson(Map<String, dynamic> json)
       : id = json['id'],
         name = json['name'],
-        provinceId = json['province_id'];
+        provinceId = int.parse(json['province_id']);
 }

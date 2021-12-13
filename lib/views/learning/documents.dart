@@ -76,21 +76,6 @@ class DocumentView extends StatelessWidget {
                           )),
               ),
             ),
-            // Obx(() => _controller.downloadValues[index]["isDownloading"] == true
-            //     ? Column(
-            //         children: [
-            //           SizedBox(
-            //             child: Text(
-            //                 _controller.downloadValues[index]["percentStr"]),
-            //           ),
-            //           SizedBox(
-            //             child: LinearProgressIndicator(
-            //               value: _controller.downloadValues[index]["percent"],
-            //             ),
-            //           ),
-            //         ],
-            //       )
-            //     : const SizedBox()),
           ],
         ),
       ),

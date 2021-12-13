@@ -36,17 +36,28 @@ class DocumentController extends GetxController {
 
     //   });
     // }
+
+    var dir = await getApplicationDocumentsDirectory();
     List<Map<String, dynamic>> _values = <Map<String, dynamic>>[].obs;
-    documents!.forEach((element) {
-      _values.add({
-        "isDownloading": false,
-        "percentStr": "",
-        "percent": 0.0,
-        "localPath": ""
+    if (documents != null) {
+      documents!.forEach((element) {
+        String localPath = checkDocumentInStorage(element, dir.path);
+        _values.add({
+          "isDownloading": false,
+          "percentStr": "",
+          "percent": 0.0,
+          "localPath": localPath,
+        });
       });
-    });
+    }
     downloadValues = _values.obs;
     update();
+  }
+
+  String checkDocumentInStorage(Document document, String dirPath) {
+    String localPath = "$dirPath/${document.fileName}";
+    if (File(localPath).existsSync()) return localPath;
+    return "";
   }
 
   Future<void> downloadFile(
