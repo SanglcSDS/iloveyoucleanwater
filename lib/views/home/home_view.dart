@@ -17,7 +17,8 @@ import 'package:iloveyoucleanwater/views/shared/widgets/title_widget_view.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class HomeView extends StatelessWidget {
-  EasyRefreshController easyRefreshController = EasyRefreshController();
+  RefreshController refreshHomeController =
+      RefreshController(initialRefresh: false);
 
   final _Controller = Get.put(HomeController());
 
@@ -49,187 +50,212 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomeController>(
-      builder: (newsController) => Container(
-        //  height: MediaQuery.of(context).size.height,
-        child: (_Controller.isloadingHome.value)
-            ? LoadingWidget()
-            : EasyRefresh.custom(
-                controller: easyRefreshController,
-                header: ClassicalHeader(
-                  refreshText: 'Kéo xuống làm mới',
-                  refreshingText: "Làm mới...",
-                  refreshedText: "Làm mới hoàn tất",
-                  refreshFailedText: "Làm mới không thành công",
-                  infoText: "Cập nhật %T",
-                  refreshReadyText: "nhả ra để làm mới",
-                ),
-                onRefresh: () async {
-                  final result =
-                      await _Controller.onRefreshHome(isRefresh: true);
+    return Obx(
+      () => Center(
+        child: SmartRefresher(
+          header: ClassicHeader(
+            releaseText: 'Nhả ra để làm mới',
+            refreshingText: "Làm mới...",
+            completeText: "Làm mới hoàn tất",
+            idleText: "Kéo xuống làm mới",
+          ),
+          controller: refreshHomeController,
+          onRefresh: () async {
+            final result = await _Controller.onRefreshHome(isRefresh: true);
+            if (result) {
+              refreshHomeController.refreshCompleted();
+            } else {
+              refreshHomeController.refreshFailed();
+            }
+          },
+          child: (_Controller.isloadingHome.value)
+              ? LoadingWidget()
+              : SingleChildScrollView(
+                  child: Column(children: <Widget>[
+                    (_Controller.isDataProcessing.value)
+                        ? LoadingSlide(
+                            width: 170,
+                          )
+                        : CarouselSlider(
+                            items: generateSlider(),
+                            options: CarouselOptions(
+                              autoPlay: true,
+                              aspectRatio: 2.0,
+                              enlargeCenterPage: true,
+                              enlargeStrategy: CenterPageEnlargeStrategy.height,
+                            ),
+                          ),
+                    const SizedBox(
+                      height: 7.0,
+                    ),
+                    InkWell(
+                      onTap: () {
+                        _Controller.changeTabIndex(2);
+                      },
+                      child: BannerHomeView(
+                        introduceModel: _Controller.introduceModel.value,
+                      ),
+                    ),
+                    Column(
+                      children: List.generate(
+                          _Controller.listCategoryNewsModel.length, (indexs) {
+                        return Hero(
+                          tag: 'trg$indexs',
 
-                  if (result) {
-                    easyRefreshController.finishRefresh(success: true);
-                  } else {
-                    easyRefreshController.finishRefresh(success: false);
-                  }
-                },
-                slivers: <Widget>[
-                    // (!_Controller.isloadingHome.value)
-                    //     ? SliverList(
-                    //         delegate: SliverChildBuilderDelegate((context, index) {
-                    //         return Column(
-                    //           children: <Widget>[
-                    //             LoadingWidget(),
-                    //           ],
-                    //         );
-                    //       }, childCount: 1))
-                    //     :
+                          child: Column(
+                            children: <Widget>[
+                              TitleWidgetNextView(
+                                  title: _Controller
+                                      .listCategoryNewsModel[indexs].title,
+                                  //  onPressed: animaTeto,
+                                  index: 1),
+                              Column(
+                                  children: List.generate(
+                                      _Controller.listCategoryNewsModel[indexs]
+                                          .news.length, (index) {
+                                var recent = _Controller
+                                    .listCategoryNewsModel[indexs].news[index];
+                                if (index == 0) {
+                                  return InkWell(
+                                    onTap: () {
+                                      _Controller.getNewsDetailsModel(recent);
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 350.0,
+                                      child:
+                                          HomeItemNewsWidgetView(news: recent),
+                                    ),
+                                  );
+                                } else {
+                                  return InkWell(
+                                    onTap: () {
+                                      _Controller.getNewsDetailsModel(recent);
+                                    },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 120.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 12.0),
+                                      child: NewWidgetView(news: recent),
+                                    ),
+                                  );
+                                }
+                              })),
+                            ],
+                          ),
 
-                    SliverList(
-                        delegate: SliverChildBuilderDelegate((context, index) {
-                      return SingleChildScrollView(
-                        child: Column(children: <Widget>[
-                          (_Controller.isDataProcessing.value)
-                              ? LoadingSlide(
-                                  width: 170,
-                                )
-                              : CarouselSlider(
-                                  items: generateSlider(),
-                                  options: CarouselOptions(
-                                    autoPlay: true,
-                                    aspectRatio: 2.0,
-                                    enlargeCenterPage: true,
-                                    enlargeStrategy:
-                                        CenterPageEnlargeStrategy.height,
-                                  ),
+                          //  historyNull(
+                          //     _Controller.listCategoryNewsModel[index].news,
+                          //     _Controller.listCategoryNewsModel[index].title,
+                          //     _Controller.listCategoryNewsModel[index].item),
+                        );
+                      }),
+                    ),
+                    TitleWidgetNextPhotoVideo(
+                        title: 'album'.tr.toUpperCase(), index: 3),
+                    Container(
+                      //  padding: EdgeInsets.only(left: 12, right: 12),
+                      width: double.infinity,
+                      height: 300.0,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(_Controller.listPhoto.length,
+                              (index) {
+                            var news = _Controller.listPhoto[index];
+
+                            return Hero(
+                              tag: "Image1$index",
+                              child: InkWell(
+                                onTap: () {
+                                  _Controller.getDetailPhotoHome(news);
+                                },
+                                child: Container(
+                                  margin:
+                                      const EdgeInsets.only(left: 10, top: 5.0),
+                                  child: PrimaryCard(news: news),
                                 ),
-                          const SizedBox(
-                            height: 7.0,
-                          ),
-                          BannerHomeView(),
-                          Column(
-                            children: List.generate(
-                                _Controller.listCategoryNewsModel.length,
-                                (index) {
-                              return Hero(
-                                tag: 'trg$index',
-                                child: historyNull(
-                                    _Controller
-                                        .listCategoryNewsModel[index].news,
-                                    _Controller
-                                        .listCategoryNewsModel[index].title,
-                                    _Controller
-                                        .listCategoryNewsModel[index].item),
-                              );
-                            }),
-                          ),
-                          TitleWidgetNextPhotoVideo(
-                              title: 'album'.tr.toUpperCase(),
-                              onPressed: _Controller.oClickLibrary0),
-                          Container(
-                            width: double.infinity,
-                            height: 300.0,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: List.generate(
-                                    _Controller.listPhoto.length, (index) {
-                                  var news = _Controller.listPhoto[index];
-
-                                  return Hero(
-                                    tag: "Image1$index",
-                                    child: InkWell(
-                                      onTap: () {
-                                        _Controller.getDetailPhotoHome(news);
-                                      },
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                            right: 12.0, top: 5.0),
-                                        child: PrimaryCard(news: news),
-                                      ),
-                                    ),
-                                  );
-                                }),
                               ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 5.0,
-                          ),
-                          TitleWidgetNextPhotoVideo(
-                              title: 'video'.tr.toUpperCase(),
-                              onPressed: _Controller.oClickLibrary1),
-                          Container(
-                            width: double.infinity,
-                            height: 300.0,
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                children: List.generate(
-                                    _Controller.listVideo.length, (index) {
-                                  var news = _Controller.listVideo[index];
+                            );
+                          }),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 5.0,
+                    ),
+                    TitleWidgetNextPhotoVideo(
+                        title: 'video'.tr.toUpperCase(), index: 3),
+                    Container(
+                      width: double.infinity,
+                      height: 300.0,
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.horizontal,
+                        child: Row(
+                          children: List.generate(_Controller.listVideo.length,
+                              (index) {
+                            var news = _Controller.listVideo[index];
 
-                                  return Hero(
-                                    tag: "Videoss$index",
-                                    child: InkWell(
-                                      // onTap: () =>  Get.to(() => DetailsLibraryView(news: news)),
-                                      child: Container(
-                                        margin: const EdgeInsets.only(
-                                            right: 12.0, top: 5.0),
-                                        child: PrimaryCard(news: news),
-                                      ),
-                                    ),
-                                  );
-                                }),
+                            return Hero(
+                              tag: "Videoss$index",
+                              child: InkWell(
+                                // onTap: () =>  Get.to(() => DetailsLibraryView(news: news)),
+                                child: Container(
+                                  margin: const EdgeInsets.only(
+                                      left: 10.0, top: 5.0),
+                                  child: PrimaryCard(news: news),
+                                ),
                               ),
-                            ),
-                          ),
-                        ]),
-                      );
-                    }, childCount: 1)),
+                            );
+                          }),
+                        ),
+                      ),
+                    ),
                   ]),
+                ),
+        ),
       ),
     );
   }
 
-  Widget historyNull(List<NewModel> ListCategoryNews, String title, int index) {
-    return Column(
-      children: <Widget>[
-        TitleWidgetNextView(
-          title: title,
-          //  onPressed: animaTeto,
-          index: index,
-        ),
-        Column(
-            children: List.generate(ListCategoryNews.length, (index) {
-          var recent = ListCategoryNews[index];
-          if (index == 0) {
-            return InkWell(
-              onTap: () {
-                _Controller.getNewsDetailsModel(recent);
-              },
-              child: Container(
-                width: double.infinity,
-                height: 350.0,
-                child: HomeItemNewsWidgetView(news: recent),
-              ),
-            );
-          } else {
-            return InkWell(
-              onTap: () {
-                _Controller.getNewsDetailsModel(recent);
-              },
-              child: Container(
-                width: double.infinity,
-                height: 120.0,
-                margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: NewWidgetView(news: recent),
-              ),
-            );
-          }
-        })),
-      ],
-    );
-  }
+  // Widget historyNull(List<NewModel> ListCategoryNews, String title, int index) {
+  //   return Column(
+  //     children: <Widget>[
+  //       TitleWidgetNextView(
+  //         title: title,
+  //         //  onPressed: animaTeto,
+  //         index: index,
+  //       ),
+  //       Column(
+  //           children: List.generate(ListCategoryNews.length, (index) {
+  //         var recent = ListCategoryNews[index];
+  //         if (index == 0) {
+  //           return InkWell(
+  //             onTap: () {
+  //               _Controller.getNewsDetailsModel(recent);
+  //             },
+  //             child: Container(
+  //               width: double.infinity,
+  //               height: 350.0,
+  //               child: HomeItemNewsWidgetView(news: recent),
+  //             ),
+  //           );
+  //         } else {
+  //           return InkWell(
+  //             onTap: () {
+  //               _Controller.getNewsDetailsModel(recent);
+  //             },
+  //             child: Container(
+  //               width: double.infinity,
+  //               height: 120.0,
+  //               margin: const EdgeInsets.symmetric(horizontal: 10.0),
+  //               child: NewWidgetView(news: recent),
+  //             ),
+  //           );
+  //         }
+  //       })),
+  //     ],
+  //   );
+  // }
 }

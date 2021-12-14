@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
@@ -15,6 +16,7 @@ class _NewsListViewState extends State<NewsListView>
   EasyRefreshController easyRefreshController = new EasyRefreshController();
   late TabController controller;
   final _controller = Get.put(NewsController());
+  final _Homecontroller = Get.put(HomeController());
   bool _disposed = false;
   @override
   void initState() {
@@ -48,7 +50,7 @@ class _NewsListViewState extends State<NewsListView>
                   border: Border(
                     top: BorderSide(
                       width: 1.0,
-                      color: kGrey1,
+                      color: kGrey3,
                     ),
                   ),
                 ),
@@ -117,12 +119,6 @@ class _NewsListViewState extends State<NewsListView>
                             final result = await newsController
                                 .getLoadMoreRefresh(false, recent.id);
                             if (result) {
-                              // if (check.currentPage > check.totalPages) {
-                              //   easyRefreshController.finishLoad(
-                              //       success: true, noMore: true);
-                              // } else {
-
-                              // }
                               easyRefreshController.finishLoad(success: true);
                             } else {
                               easyRefreshController.finishLoad(success: false);
@@ -137,9 +133,10 @@ class _NewsListViewState extends State<NewsListView>
                                 return Hero(
                                   tag: "aaaa$index",
                                   child: InkWell(
-                                    // onTap: () {
-                                    //   _Homecontroller.getNewsDetailsModel(recent);
-                                    // },
+                                    onTap: () {
+                                      _Homecontroller.getNewsDetailsModel(
+                                          recents);
+                                    },
                                     child: Container(
                                       width: double.infinity,
                                       height: 135.0,

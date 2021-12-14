@@ -32,16 +32,6 @@ class HomeDetailNewsView extends StatelessWidget {
                     onTap: () => Get.back(),
                   ),
                   const Spacer(),
-                  CircleButton(
-                    colors: kBlue1,
-                    icon: Icons.facebook,
-                    onTap: () {},
-                  ),
-                  CircleButton(
-                    colors: kBlue1,
-                    icon: FontAwesomeIcons.twitter,
-                    onTap: () {},
-                  ),
                 ],
               ),
             ),

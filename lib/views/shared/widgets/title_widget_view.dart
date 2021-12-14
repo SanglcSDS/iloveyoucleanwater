@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class TitleWidgetNextView extends StatelessWidget {
+  final _Controller = Get.put(HomeController());
   final String title;
   final int index;
   // final TabController onPressed;
@@ -15,9 +18,9 @@ class TitleWidgetNextView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      // onTap: () {
-      //   onPressed.animateTo(index);
-      // },
+      onTap: () {
+        _Controller.changeTabIndex(index);
+      },
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
@@ -78,16 +81,16 @@ class TitleWidgetNextView extends StatelessWidget {
 }
 
 class TitleWidgetNextPhotoVideo extends StatelessWidget {
+  final _Controller = Get.put(HomeController());
   final String title;
-  final VoidCallback onPressed;
-  TitleWidgetNextPhotoVideo({required this.title, required this.onPressed});
+  final int index;
+  TitleWidgetNextPhotoVideo({required this.title, required this.index});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        onPressed:
-        onPressed;
+        _Controller.changeTabIndex(index);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,

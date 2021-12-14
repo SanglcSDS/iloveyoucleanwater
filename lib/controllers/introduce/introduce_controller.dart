@@ -59,6 +59,7 @@ class IntroduceController extends GetxController
   @override
   void onClose() {
     controller.dispose();
+
     super.onClose();
   }
 }

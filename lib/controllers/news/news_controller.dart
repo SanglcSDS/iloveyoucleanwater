@@ -6,7 +6,8 @@ import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/service/home_Service.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
 
-class NewsController extends GetxController {
+class NewsController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   final HomeService provider = HomeService();
   final NewsService providerNewsService = NewsService();
 
@@ -15,7 +16,7 @@ class NewsController extends GetxController {
   @override
   void onInit() {
     getCategory();
-
+    controller = TabController(length: listCategory.length, vsync: this);
     super.onInit();
   }
 

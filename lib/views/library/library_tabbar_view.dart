@@ -46,7 +46,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                 border: Border(
                   top: BorderSide(
                     width: 1.0,
-                    color: kGrey1,
+                    color: kGrey3,
                   ),
                 ),
               ),

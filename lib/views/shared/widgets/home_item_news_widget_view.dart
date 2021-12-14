@@ -49,7 +49,7 @@ class HomeItemNewsWidgetView extends StatelessWidget {
           const SizedBox(height: 5.0),
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
             child: Text(
               news.title,
               overflow: TextOverflow.ellipsis,
@@ -59,7 +59,7 @@ class HomeItemNewsWidgetView extends StatelessWidget {
           ),
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
+                const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
             child: Text(
               news.description,
               overflow: TextOverflow.ellipsis,
@@ -70,7 +70,7 @@ class HomeItemNewsWidgetView extends StatelessWidget {
           const SizedBox(height: 5.0),
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+                const EdgeInsets.symmetric(horizontal: 9.0, vertical: 15.0),
             child: Row(
               children: [
                 const SizedBox(width: 5.0),

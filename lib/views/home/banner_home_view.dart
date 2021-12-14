@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
+import 'package:iloveyoucleanwater/models/introduce/introduce_model.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:get/get.dart';
 
 class BannerHomeView extends StatelessWidget {
+  final _Controller = Get.put(HomeController());
+  late IntroduceModel introduceModel;
+  BannerHomeView({required this.introduceModel});
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -23,8 +28,8 @@ class BannerHomeView extends StatelessWidget {
                 alignment: Alignment.topCenter,
                 padding: const EdgeInsets.only(
                     top: 10, right: 10, left: 10, bottom: 0),
-                child: const Text(
-                  "Chương trình “Mizuiku” là sáng kiến tuyên truyền, giáo dục ý thức bảo vệ tài nguyên nước cho học sinh bậc tiểu học được khởi xướng bởi Tập đoàn Suntory và đã triển khai thành công tại Nhật Bản từ năm 2004. Đến nay, chương trình đã thu hút sự tham gia của trên 154 nghìn học sinh tiểu học và phụ huynh, nhận được đánh giá cao từ cộng đồng và xã hội Nhật Bản.",
+                child: Text(
+                  introduceModel.description,
                   style: TextStyle(color: kGrey1),
                   maxLines: 4,
                   overflow: TextOverflow.ellipsis,
@@ -46,7 +51,9 @@ class BannerHomeView extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      _Controller.changeTabIndex(2);
+                    },
                     shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(18.0),
                         side: BorderSide(color: Colors.blue[200]!)),

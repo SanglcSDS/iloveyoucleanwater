@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/models/home/banner_model.dart';
+import 'package:iloveyoucleanwater/models/introduce/introduce_model.dart';
 import 'package:iloveyoucleanwater/models/library/library_detail_photo_model.dart';
 import 'package:iloveyoucleanwater/models/library/library_model.dart';
 import 'package:iloveyoucleanwater/models/news/category_model.dart';
@@ -9,16 +10,19 @@ import 'package:iloveyoucleanwater/models/news/category_news_modell.dart';
 import 'package:iloveyoucleanwater/models/news/news_%20details_model.dart';
 import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/service/home_Service.dart';
+import 'package:iloveyoucleanwater/service/introduce_service.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
 import 'package:iloveyoucleanwater/views/home/home_detail_new_view.dart';
 import 'package:iloveyoucleanwater/views/library/library_detail_photo_View.dart';
-import 'package:iloveyoucleanwater/views/shared/widgets/loading_timer.dart';
+import 'package:intl/intl.dart';
 
 final controllerNews = Get.put(NewsController());
 final controllerLibrary = Get.put(LibraryController());
 
 class HomeController extends GetxController {
   NewsService providerNewsService = NewsService();
+  IntroduceService service = IntroduceService();
+
   var isloadingHome = true.obs;
   var isLoading = false;
   final NewsService provider = NewsService();
@@ -32,35 +36,72 @@ class HomeController extends GetxController {
   RxList listPhoto = <LibraryModel>[].obs;
   RxList listVideo = <LibraryModel>[].obs;
   Rx<LibraryDetailPhotoModel>? detailPhoto;
+  late Rx<IntroduceModel> introduceModel;
   var listPopular = List<BannerModel>.empty(growable: true).obs;
   var isDataProcessing = false.obs;
   var isDataErrer = false.obs;
 
   @override
   void onInit() async {
+    isloadingHome(true);
+    await Future.delayed(Duration(seconds: 2));
     await getCategory();
     await getListNewCategory();
-
+    GetIntroduces();
     getPopular();
     getPhotoHome();
     getVideoHome();
     isloadingHome(false);
     update();
+
+    DateTime tempDate = DateTime.parse("2021-12-09T08:21:04.000000Z");
+
+    String a = calculateTimeDifferenceBetween(
+        startDate: tempDate, endDate: DateTime.now());
+    print(a);
+
     super.onInit();
   }
 
+  static String calculateTimeDifferenceBetween(
+      {required DateTime startDate, required DateTime endDate}) {
+    int seconds = endDate.difference(startDate).inSeconds;
+    if (seconds < 60)
+      return '$seconds second';
+    else if (seconds >= 60 && seconds < 3600)
+      return '${startDate.difference(endDate).inMinutes.abs()} minute';
+    else if (seconds >= 3600 && seconds < 86400)
+      return '${startDate.difference(endDate).inHours} hour';
+    else
+      return '${startDate.difference(endDate).inDays} day';
+  }
+
   Future<bool> onRefreshHome({bool isRefresh = false}) async {
+    listCategoryNewsModel.clear();
+    listCategory.clear();
     isloadingHome(true);
     await Future.delayed(Duration(seconds: 2));
-    update();
+
     await getCategory();
     await getListNewCategory();
+    GetIntroduces();
     getPopular();
     getPhotoHome();
     getVideoHome();
     isloadingHome(false);
     update();
     return true;
+  }
+
+  Future<void> GetIntroduces() async {
+    Response _data = await service.GetIntroduces();
+    if (_data.statusCode == 200) {
+      var jsonString = _data.body['data'];
+      if (jsonString != null) {
+        introduceModel = IntroduceModel.fromJson(jsonString[0]).obs;
+      }
+    }
+    update();
   }
 
   Future<void> getCategory() async {
@@ -77,8 +118,6 @@ class HomeController extends GetxController {
   }
 
   Future<void> getListNewCategory() async {
-    listCategoryNewsModel.clear();
-    listCategory.clear();
     for (int i = 0; i < listCategory.length; i++) {
       await getNewsHome(listCategory[i].id, listCategory[i].title, i);
     }
