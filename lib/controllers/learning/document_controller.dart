@@ -5,57 +5,60 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/models/learning/document.dart';
+import 'package:iloveyoucleanwater/service/learning_service.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:get/get_connect/http/src/response/response.dart'
+    as getx_response;
 
 class DocumentController extends GetxController {
+  late int _courseId;
   RxBool downloading = false.obs;
   RxList<Map<String, dynamic>> downloadValues = <Map<String, dynamic>>[].obs;
   RxList<Document>? documents;
   final GetStorage _box = GetStorage();
+  final LearningService _learningService = Get.put(LearningService());
 
   @override
   void onInit() {
-    loadDocuments();
     super.onInit();
   }
 
-  void loadDocuments() async {
-    // List<Document> _listDocs = <Document>[];
-    // if (_box.hasData("documents")) {
-    //   var _docJson = _box.read("documents");
-    //   String _dir = (await getApplicationDocumentsDirectory()).path;
+  void loadDocuments(int courseId) async {
+    // fetch api
+    _courseId = courseId;
+    getx_response.Response<dynamic> response =
+        await _learningService.getDocumentByCouresId(courseId);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> body = response.body;
+      List<Document> list = [];
+      if (body.containsKey("data")) {
+        for (var docJson in (body["data"] as List)) {
+          list.add(Document.fromJson(docJson));
+        }
+      }
+      documents = list.obs;
 
-    //   _docJson.forEach((e) async {
-    //     Document item = Document.fromJson(e);
-    //     String filePath = '$_dir/${item.fileName}';
-    //     if (await File(filePath).exists()) {
-    //       item.setLocalPath = filePath;
-    //     }
-    //     _listDocs.add(Document.fromJson(e));
-
-    //   });
-    // }
-
-    var dir = await getApplicationDocumentsDirectory();
-    List<Map<String, dynamic>> _values = <Map<String, dynamic>>[].obs;
-    if (documents != null) {
-      documents!.forEach((element) {
-        String localPath = checkDocumentInStorage(element, dir.path);
-        _values.add({
-          "isDownloading": false,
-          "percentStr": "",
-          "percent": 0.0,
-          "localPath": localPath,
+      var dir = await getApplicationDocumentsDirectory();
+      List<Map<String, dynamic>> _values = <Map<String, dynamic>>[].obs;
+      if (documents != null && documents!.isNotEmpty) {
+        documents!.forEach((element) {
+          String localPath = checkDocumentInStorage(element, dir.path);
+          _values.add({
+            "isDownloading": false,
+            "percentStr": "",
+            "percent": 0.0,
+            "localPath": localPath,
+          });
         });
-      });
+      }
+      downloadValues = _values.obs;
     }
-    downloadValues = _values.obs;
     update();
   }
 
   String checkDocumentInStorage(Document document, String dirPath) {
-    String localPath = "$dirPath/${document.fileName}";
+    String localPath = "$dirPath/$_courseId/${document.fileName}";
     if (File(localPath).existsSync()) return localPath;
     return "";
   }
@@ -71,8 +74,8 @@ class DocumentController extends GetxController {
       var dir = await getApplicationDocumentsDirectory();
       localPath = "${dir.path}/${document.fileName}";
       await dio.download(
-        document.url,
-        "${dir.path}/${document.fileName}",
+        document.link,
+        "${dir.path}/$_courseId/${document.fileName}",
         onReceiveProgress: (rec, total) {
           var percent = rec / total;
           downloadValues[index]['percent'] = percent;
@@ -89,16 +92,6 @@ class DocumentController extends GetxController {
     downloadValues[index]['isDownloading'] = false;
     update();
   }
-
-  // Future openFile({required Document document, required int index}) async {
-  //   downloadValues[index]['isDownloading'] = true;
-  //   update();
-  //   await downloadFile(document);
-  //   var dir = await getApplicationDocumentsDirectory();
-  //   if (file == null) return;
-
-  //   OpenFile.open('${dir.path}/${document.fileName}');
-  // }
 
   Future openFile({required String localPath}) async {
     OpenFile.open(localPath);

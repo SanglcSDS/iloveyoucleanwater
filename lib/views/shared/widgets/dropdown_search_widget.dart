@@ -33,6 +33,7 @@ class CustomDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    debugPrint("items " + items!.length.toString());
     return DropdownSearch<T>(
       showSelectedItems: true,
       items: items,
@@ -41,7 +42,8 @@ class CustomDropdown<T> extends StatelessWidget {
       mode: Mode.BOTTOM_SHEET,
       compareFn: (i, s) => i == s,
       dropdownSearchDecoration: InputDecoration(
-        labelText: label!,
+        // labelText: label!,
+        hintText: label!,
         contentPadding: const EdgeInsets.fromLTRB(12, 12, 0, 0),
         border: const OutlineInputBorder(),
         isDense: true,

@@ -15,6 +15,7 @@ class CourseView extends StatelessWidget {
     _isLogged = _controller.isLogged.value.obs;
     return GetBuilder<CourseController>(
       init: CourseController(),
+      initState: (_) => _controller.initData(),
       builder: (_) => Scaffold(
         appBar: AppBar(
           title:
@@ -96,7 +97,8 @@ class CourseView extends StatelessWidget {
           children: List.generate(
             _controller.courses.length,
             (index) {
-              int _lessonCount = _controller.courses[index].lessons!.length;
+              // int _lessonCount = _controller.courses[index].lessons!.length;
+              int _lessonCount = 4;
               return Container(
                 margin: index <= 1
                     ? const EdgeInsets.only(
@@ -104,18 +106,25 @@ class CourseView extends StatelessWidget {
                     : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
                 width: MediaQuery.of(context).size.width / 2.2,
                 height: MediaQuery.of(context).size.height / 3,
-                child: Stack(
-                  children: [
-                    GestureDetector(
-                      onTap: () => _controller
-                          .popToLessonViews(_controller.courses[index]),
-                      child: Card(
-                        // color: _controller.courses[index].color,
-                        elevation: 3,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(5),
+                child: GestureDetector(
+                  onTap: () =>
+                      _controller.popToLessonViews(_controller.courses[index]),
+                  child: Card(
+                    elevation: 3,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5),
+                    ),
+                    child: Stack(
+                      children: [
+                        Container(
+                          alignment: Alignment.bottomRight,
+                          child: Image.asset(
+                            _controller.getDropletIcon(index),
+                            width: 100,
+                            height: 100,
+                          ),
                         ),
-                        child: Column(
+                        Column(
                           children: [
                             Container(
                               padding: const EdgeInsets.symmetric(
@@ -129,32 +138,24 @@ class CourseView extends StatelessWidget {
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
-                            Container(
-                              alignment: Alignment.bottomLeft,
-                              child: Stack(
-                                children: [
-                                  Container(
-                                    child: Image.asset(
-                                      "assets/images/giot-nuoc-1.png",
-                                      fit: BoxFit.fitHeight,
-                                    ),
-                                  ),
-                                  Container(
-                                      child: Text(
+                            Expanded(
+                              child: Container(
+                                  alignment: Alignment.bottomLeft,
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 15, horizontal: 15),
+                                  child: Text(
                                     _lessonCount.toString() + ' bài học',
                                     style: const TextStyle(
                                         color: kBlack,
                                         fontSize: 18,
                                         fontWeight: FontWeight.w300),
                                   )),
-                                ],
-                              ),
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
-                  ],
+                  ),
                 ),
               );
             },

@@ -11,9 +11,9 @@ class AccountController extends GetxController {
   final GetStorage box = GetStorage();
   @override
   void onInit() {
-    if (box.read("token") != null) {
-      box.remove("token");
-    }
+    // if (box.read("token") != null) {
+    //   box.remove("token");
+    // }
     super.onInit();
   }
 

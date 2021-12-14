@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/account/city.dart';
 import 'package:iloveyoucleanwater/models/account/user.dart';
@@ -15,13 +16,13 @@ class RegisterController extends GetxController {
   RxInt _district = 0.obs;
   List<Province> provinces = <Province>[];
   List<District> districts = <District>[];
+  RxList<Province> rxProvinces = <Province>[].obs;
   RxList<District> rxDistricts = <District>[].obs;
 
   @override
   void onInit() {
     debugPrint("oninit ?????");
     genders = <Map<String, dynamic>>[
-      {"id": -1, "value": "Giới tính"},
       {"id": 0, "value": "Nam"},
       {"id": 1, "value": "Nữ"},
       {"id": 2, "value": "Khác"},
@@ -32,22 +33,29 @@ class RegisterController extends GetxController {
       {"id": 1, "value": "Học sinh"},
       {"id": 2, "value": "Khác"},
     ];
-    provinces.add(Province(id: 0, name: 'Chọn tỉnh/Thành phố'));
-    districts
-        .add(District(id: 0, name: 'Chọn Quận/Huyện/Thị xã', provinceId: 0));
+    // provinces.add(Province(id: 0, name: 'Chọn tỉnh/Thành phố'));
+    // districts
+    //     .add(District(id: 0, name: 'Chọn Quận/Huyện/Thị xã', provinceId: 0));
     loadDataProvince();
     super.onInit();
   }
 
-  void loadDataProvince() async {
+  Future<void> loadDataProvince() async {
+    EasyLoading.show(status: "Loading...");
     Response<dynamic> res = await _accountProvider.getDataProvinces();
     var jsonProvince = res.body['provinces'];
-    debugPrint("Provinces: " + jsonProvince.toString());
     if (jsonProvince != null) {
+      debugPrint("json Provinces");
       for (var item in jsonProvince) {
         provinces.add(Province.fromJson(item));
       }
     }
+    rxProvinces = provinces.obs;
+
+    debugPrint("Provinces: " +
+        rxProvinces.length.toString() +
+        "  /  " +
+        rxProvinces[1].name);
 
     var jsonDistrict = res.body['districts'];
     if (jsonDistrict != null) {
@@ -55,8 +63,14 @@ class RegisterController extends GetxController {
         districts.add(District.fromJson(item));
       }
       rxDistricts = districts.obs;
+
+      debugPrint("rxDistricts: " +
+          rxDistricts.length.toString() +
+          "  /  " +
+          rxDistricts[1].name);
     }
     update();
+    EasyLoading.dismiss();
   }
 
   void onChangeProvince(Province province) {

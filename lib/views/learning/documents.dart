@@ -13,7 +13,6 @@ class DocumentView extends StatelessWidget {
     return (_controller.documents != null && _controller.documents!.isNotEmpty)
         ? GetBuilder(
             init: DocumentController(),
-            initState: (_) => _controller.loadDocuments(),
             builder: (_) => ListView.builder(
                 itemCount: _controller.documents!.length,
                 itemBuilder: (context, index) {
@@ -39,7 +38,7 @@ class DocumentView extends StatelessWidget {
               ),
               title: Container(
                   padding: const EdgeInsets.only(top: 5),
-                  child: Text(document.title)),
+                  child: Text(document.fileName!)),
               subtitle: Container(
                 padding: const EdgeInsets.symmetric(vertical: 3),
                 alignment: Alignment.bottomLeft,

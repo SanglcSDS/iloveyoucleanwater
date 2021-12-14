@@ -120,7 +120,7 @@ class ListLesson extends StatelessWidget {
         lessons!.length,
         (index) {
           Icon _lock = const Icon(Icons.lock, size: 16);
-          if (lessons![index].unlocked) {
+          if (lessons![index].statusWork) {
             _lock = const Icon(Icons.lock_open, size: 16);
           }
           return Container(
@@ -169,34 +169,34 @@ class ListLesson extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Text(
-                                    lessons![index].time,
+                                    lessons![index].time.toString(),
                                     style: const TextStyle(fontSize: 14),
                                   ),
                                 ),
                               ],
                             ),
                           ),
-                          Row(
-                            children: [
-                              const Align(
-                                child: Icon(
-                                  Icons.person,
-                                  size: 16,
-                                ),
-                              ),
-                              Container(
-                                alignment: Alignment.bottomCenter,
-                                margin:
-                                    const EdgeInsets.only(left: 5, right: 10),
-                                child: Text(
-                                  'Đã học: ' +
-                                      lessons![index].totalStudent.toString() +
-                                      ' học viên',
-                                  style: const TextStyle(fontSize: 14),
-                                ),
-                              ),
-                            ],
-                          ),
+                          // Row(
+                          //   children: [
+                          //     const Align(
+                          //       child: Icon(
+                          //         Icons.person,
+                          //         size: 16,
+                          //       ),
+                          //     ),
+                          //     Container(
+                          //       alignment: Alignment.bottomCenter,
+                          //       margin:
+                          //           const EdgeInsets.only(left: 5, right: 10),
+                          //       child: Text(
+                          //         'Đã học: ' +
+                          //             lessons![index].totalStudent.toString() +
+                          //             ' học viên',
+                          //         style: const TextStyle(fontSize: 14),
+                          //       ),
+                          //     ),
+                          //   ],
+                          // ),
                           Row(
                             children: [
                               Align(

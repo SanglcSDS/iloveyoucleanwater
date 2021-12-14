@@ -8,8 +8,10 @@ import 'package:iloveyoucleanwater/controllers/learning/lessons_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/questions_binding.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_binding.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_binding.dart';
+import 'package:iloveyoucleanwater/views/account/log_in.dart';
 import 'package:iloveyoucleanwater/views/account/login.dart';
 import 'package:iloveyoucleanwater/views/account/register.dart';
+import 'package:iloveyoucleanwater/views/account/sign_up.dart';
 import 'package:iloveyoucleanwater/views/account/user_info.dart';
 import 'package:iloveyoucleanwater/views/home/home_view.dart';
 import 'package:iloveyoucleanwater/views/introduce/Introduce_view.dart';
@@ -22,8 +24,8 @@ import 'package:iloveyoucleanwater/views/welcome/welcome_view.dart';
 part 'app_routes.dart';
 
 class AppPages {
-  static const INITIAL = Routes.HOME;
-  // static const INITIAL = Routes.LOGIN;
+  // static const INITIAL = Routes.HOME;
+  static const INITIAL = Routes.LOGIN;
 
   static final routes = [
     GetPage(
@@ -71,12 +73,12 @@ class AppPages {
     // Account
     GetPage(
       name: Routes.LOGIN,
-      page: () => LoginScreen(),
+      page: () => LogInView(),
       binding: AccountBinding(),
     ),
     GetPage(
       name: Routes.REGISTER,
-      page: () => RegisterScreen(),
+      page: () => SignUpView(),
       binding: RegisterBinding(),
     ),
     GetPage(
