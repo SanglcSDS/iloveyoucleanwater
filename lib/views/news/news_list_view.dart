@@ -1,76 +1,165 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
+import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
-import 'package:pull_to_refresh/pull_to_refresh.dart';
 
-class NewsListView extends StatelessWidget {
-  final int index;
-  final int id;
+class NewsListView extends StatefulWidget {
+  @override
+  _NewsListViewState createState() => _NewsListViewState();
+}
 
-  NewsListView({required this.index, required this.id});
-  RefreshController refreshController = RefreshController(initialRefresh: true);
-
+class _NewsListViewState extends State<NewsListView>
+    with SingleTickerProviderStateMixin {
+  EasyRefreshController easyRefreshController = new EasyRefreshController();
+  late TabController controller;
   final _controller = Get.put(NewsController());
+  bool _disposed = false;
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < _controller.listCategory.length; i++) {
+      _controller.getLoadMoreRefresh(true, _controller.listCategory[i].id);
+    }
+
+    controller =
+        TabController(length: _controller.listCategory.length, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    _disposed = true;
+    easyRefreshController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Obx(() {
-        Widget getList() {
-          var list = _controller.listCategory[index];
-
-          ListView myList = ListView.builder(
-            itemCount: list.news.length,
-            itemBuilder: (context, index) {
-              var recent = list.news[index];
-              return Hero(
-                tag: "aaaa$index",
-                child: InkWell(
-                  // onTap: () {
-                  //   _Homecontroller.getNewsDetailsModel(recent);
-                  // },
-                  child: Container(
-                    width: double.infinity,
-                    height: 135.0,
-                    margin: const EdgeInsets.symmetric(horizontal: 10.0),
-                    child: NewWidgetView(news: recent),
+    return GetBuilder<NewsController>(
+      builder: (newsController) => DefaultTabController(
+          length: 2,
+          initialIndex: 0,
+          child: Column(
+            children: <Widget>[
+              Container(
+                decoration: const BoxDecoration(
+                  border: Border(
+                    top: BorderSide(
+                      width: 1.0,
+                      color: kGrey1,
+                    ),
                   ),
                 ),
-              );
-            },
-          );
-          return myList;
-        }
+              ),
+              Container(
+                color: Colors.white,
+                constraints: const BoxConstraints.expand(height: 50),
+                child: TabBar(
+                  labelStyle: const TextStyle(
+                    fontWeight: FontWeight.bold,
+                  ),
+                  unselectedLabelStyle: const TextStyle(
+                    fontStyle: FontStyle.normal,
+                  ),
+                  indicatorColor: Colors.blue,
+                  labelColor: Colors.blue,
+                  unselectedLabelColor: kGrey1,
+                  isScrollable: true,
+                  controller: controller,
+                  tabs: newsController.listCategory.map((text) {
+                    return Tab(
+                      text: text.title,
+                    );
+                  }).toList(),
+                ),
+              ),
+              Expanded(
+                child: Container(
+                  child: TabBarView(
+                      controller: controller,
+                      children: List.generate(
+                          newsController.listCategory.length, (indexs) {
+                        var recent = newsController.listCategory[indexs];
 
-        return SmartRefresher(
-          controller: refreshController,
-          enablePullUp: true,
-          onRefresh: () async {
-            final result = await _controller.getLoadMoreRefresh(true, id);
+                        return EasyRefresh.custom(
+                          controller: easyRefreshController,
+                          header: ClassicalHeader(
+                            refreshText: 'Kéo xuống làm mới',
+                            refreshingText: "Làm mới...",
+                            refreshedText: "Làm mới hoàn tất",
+                            refreshFailedText: "Làm mới không thành công",
+                            infoText: "Cập nhật %T",
+                            refreshReadyText: "nhả ra để làm mới",
+                          ),
+                          footer: ClassicalFooter(
+                            loadText: "load hoàn tất",
+                            noMoreText: "Không còn dữ liệu",
+                            loadReadyText: "Nhả ra để làm mới ",
+                            loadingText: "Đang tải..",
+                            loadFailedText: "Không còn dữ liệu",
+                            showInfo: false,
+                          ),
+                          onRefresh: () async {
+                            final result = await newsController
+                                .getLoadMoreRefresh(true, recent.id);
+                            if (result) {
+                              easyRefreshController.finishRefresh(
+                                  success: true);
+                            } else {
+                              easyRefreshController.finishRefresh(
+                                  success: false);
+                            }
+                          },
+                          onLoad: () async {
+                            var check = newsController.listCategory[indexs];
+                            final result = await newsController
+                                .getLoadMoreRefresh(false, recent.id);
+                            if (result) {
+                              // if (check.currentPage > check.totalPages) {
+                              //   easyRefreshController.finishLoad(
+                              //       success: true, noMore: true);
+                              // } else {
 
-            if (result) {
-              refreshController.refreshCompleted();
-            } else {
-              refreshController.refreshFailed();
-            }
-          },
-          onLoading: () async {
-            final result = await _controller.getLoadMoreRefresh(false, id);
-
-            if (result) {
-              refreshController.loadComplete();
-            } else {
-              var check = _controller.listCategory[index];
-              if (check.currentPage > check.totalPages) {
-                refreshController.loadNoData();
-              } else {
-                refreshController.loadFailed();
-              }
-            }
-          },
-          child: getList(),
-        );
-      }),
+                              // }
+                              easyRefreshController.finishLoad(success: true);
+                            } else {
+                              easyRefreshController.finishLoad(success: false);
+                            }
+                          },
+                          slivers: <Widget>[
+                            SliverList(
+                              delegate: SliverChildBuilderDelegate(
+                                  (context, index) {
+                                var recents = newsController
+                                    .listCategory[indexs].news[index];
+                                return Hero(
+                                  tag: "aaaa$index",
+                                  child: InkWell(
+                                    // onTap: () {
+                                    //   _Homecontroller.getNewsDetailsModel(recent);
+                                    // },
+                                    child: Container(
+                                      width: double.infinity,
+                                      height: 135.0,
+                                      margin: const EdgeInsets.symmetric(
+                                          horizontal: 10.0),
+                                      child: NewWidgetView(news: recents),
+                                    ),
+                                  ),
+                                );
+                              },
+                                  childCount: newsController
+                                      .listCategory[indexs].news.length),
+                            )
+                          ],
+                        );
+                      })),
+                ),
+              ),
+            ],
+          )),
     );
   }
 }

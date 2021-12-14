@@ -10,4 +10,6 @@ const Map<String, String> en = {
   'video': 'Videos',
   'programNews': 'Program News',
   'environmentalNews': 'Environmental news',
+  'introduceProgram': 'Mizuiku - I love clean water & program',
+  'introducePartner': 'Co-organizing Board',
 };

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
-import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
-import 'package:iloveyoucleanwater/views/shared/widgets/new_widget_view.dart';
-import 'package:iloveyoucleanwater/views/news/read_news_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 

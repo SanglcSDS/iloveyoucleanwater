@@ -15,7 +15,15 @@ class NewsController extends GetxController {
   @override
   void onInit() {
     getCategory();
+
     super.onInit();
+  }
+
+  Future<void> getListNewCategory() async {
+    listCategory.clear();
+    for (int i = 0; i < listCategory.length; i++) {
+      await getLoadMoreRefresh(true, listCategory[i].id);
+    }
   }
 
   Future<bool> getLoadMoreRefresh(bool isLoading, int id) async {

@@ -10,4 +10,6 @@ const Map<String, String> vi = {
   'video': 'Videos',
   'programNews': 'Tin tức chương trình',
   'environmentalNews': 'Tin tức môi trường',
+  'introduceProgram': 'Giới thiệu chương trình',
+  'introducePartner': 'Giới thiệu đối tác',
 };

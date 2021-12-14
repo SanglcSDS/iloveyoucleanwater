@@ -25,7 +25,7 @@ class LoadingWidget extends StatelessWidget {
 
   // A Separate Function called from itemBuilder
   Widget dummyListViewCell() {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.only(bottom: 8.0),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.start,

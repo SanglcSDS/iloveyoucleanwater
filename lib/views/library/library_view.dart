@@ -22,10 +22,6 @@ class LibraryView extends GetView<LibraryController> {
             title: Container(
               child: Text('library'.tr, style: TextStyle(color: kGrey1)),
             ),
-            leading: IconButton(
-              icon: const Icon(Icons.arrow_back_ios, color: kGrey1),
-              onPressed: () => Get.back(),
-            ),
           )
         ],
         body: LibraryTabBarView(),

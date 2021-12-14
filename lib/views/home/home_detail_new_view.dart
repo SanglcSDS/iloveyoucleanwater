@@ -53,16 +53,6 @@ class HomeDetailNewsView extends StatelessWidget {
         child: ListView(
           children: [
             const SizedBox(height: 12.0),
-            // Container(
-            //   height: 220.0,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(5.0),
-            //     image: DecorationImage(
-            //       image: NetworkImage(news.image),
-            //       fit: BoxFit.fill,
-            //     ),
-            //   ),
-            // ),
             Container(
               height: 220.0,
               child: ClipRRect(
@@ -91,13 +81,6 @@ class HomeDetailNewsView extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
-
-              // DecorationImage(
-              //   image: (news.image.contains(Constants.URL_IMAGE)
-              //       ? news.image
-              //       : Constants.URL_IMAGE + news.image),
-              //   fit: BoxFit.cover,
-              // ),
             ),
             const SizedBox(height: 15.0),
             Row(
@@ -154,7 +137,6 @@ class HomeDetailNewsView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15.0),
-
             Html(data: news.content),
             const SizedBox(height: 25.0)
           ],

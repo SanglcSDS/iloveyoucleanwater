@@ -44,7 +44,8 @@ class HomeController extends GetxController {
     getPopular();
     getPhotoHome();
     getVideoHome();
-
+    isloadingHome(false);
+    update();
     super.onInit();
   }
 
