@@ -10,4 +10,41 @@ const Map<String, String> vi = {
   'video': 'Videos',
   'programNews': 'Tin tức chương trình',
   'environmentalNews': 'Tin tức môi trường',
+
+  // learning
+  'courses': 'Danh sách khóa học',
+  'lesson': 'Bài học',
+  'comments': 'Thảo luận',
+  'comment_input': 'Viết bình luận',
+  'documents': 'Tài liệu',
+
+  // log_in
+  'login': 'Đăng nhập',
+  'login_btn': 'ĐĂNG NHẬP',
+  'login_email': 'Nhập email',
+  'login_password': 'Nhập mật khẩu',
+  'log_in_question': 'Bạn đã có tài khoản. ',
+
+  // sign_up
+  'signup': 'Đăng ký',
+  'signup_btn': 'ĐĂNG KÝ',
+  'signup_email': 'Email *',
+  'signup_password': 'Mật khẩu *',
+  'signup_name': 'Họ và tên *',
+  'signup_phone': 'Số điện thoại *',
+  'signup_workplace': 'Nơi công tác *',
+  'signup_gender': 'Giới tính *',
+  'signup_gender_male': 'Nam',
+  'signup_gender_female': 'Nữ',
+  'signup_gender_other': 'Khác',
+  'signup_you_are': 'Bạn là',
+  'signup_you_are_teacher': 'Giáo viên',
+  'signup_you_are_student': 'Học sinh',
+  'signup_you_are_other': 'Khác',
+  'sign_up_policy_1': 'Bạn có đồng ý với ',
+  'sign_up_policy_2': 'Điều khoản sử dụng',
+  'sign_up_policy_3': ' và ',
+  'sign_up_policy_4': 'Chính sách bảo mật',
+  'sign_up_policy_5': ' của hệ thống trực tuyến này?',
+  'sign_up_question': 'Bạn chưa có tài khoản? ',
 };

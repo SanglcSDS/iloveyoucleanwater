@@ -121,7 +121,7 @@ class LogInView extends GetView<AccountController> {
                       ),
                     ),
                     TextButton(
-                      onPressed: () => Get.offNamed(Routes.REGISTER),
+                      onPressed: () => Get.toNamed(Routes.REGISTER),
                       child: RichText(
                         text: const TextSpan(children: [
                           TextSpan(
