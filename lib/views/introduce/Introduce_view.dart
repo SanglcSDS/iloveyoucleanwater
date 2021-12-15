@@ -19,7 +19,8 @@ class IntroduceView extends GetView<IntroduceController> {
             backgroundColor: Colors.white,
             centerTitle: true,
             title: Container(
-              child: Text('introduce'.tr, style: TextStyle(color: kGrey1)),
+              child:
+                  Text('introduce'.tr, style: TextStyle(color: primaryColor)),
             ),
           )
         ],
@@ -48,8 +49,8 @@ class IntroduceView extends GetView<IntroduceController> {
                     unselectedLabelStyle: const TextStyle(
                       fontStyle: FontStyle.normal,
                     ),
-                    indicatorColor: Colors.blue,
-                    labelColor: Colors.blue,
+                    indicatorColor: primaryColor,
+                    labelColor: primaryColor,
                     unselectedLabelColor: kGrey1,
                     controller: introduceController.controller,
                     tabs: introduceController.myTabs,

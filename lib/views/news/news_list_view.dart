@@ -65,8 +65,8 @@ class _NewsListViewState extends State<NewsListView>
                   unselectedLabelStyle: const TextStyle(
                     fontStyle: FontStyle.normal,
                   ),
-                  indicatorColor: Colors.blue,
-                  labelColor: Colors.blue,
+                  indicatorColor: primaryColor,
+                  labelColor: primaryColor,
                   unselectedLabelColor: kGrey1,
                   isScrollable: true,
                   controller: controller,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/library/library_photo_view.dart';
@@ -18,6 +19,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
   EasyRefreshController easyRefreshControllervideo = EasyRefreshController();
   late TabController controller;
   final _controller = Get.put(LibraryController());
+  final _homecontroller = Get.put(HomeController());
   @override
   void initState() {
     super.initState();
@@ -61,8 +63,8 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                 unselectedLabelStyle: const TextStyle(
                   fontStyle: FontStyle.normal,
                 ),
-                indicatorColor: Colors.blue,
-                labelColor: Colors.blue,
+                indicatorColor: primaryColor,
+                labelColor: primaryColor,
                 unselectedLabelColor: kGrey1,
                 controller: controller,
                 tabs: <Widget>[
@@ -120,7 +122,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                               tag: "photo$index",
                               child: InkWell(
                                 onTap: () {
-                                  _controller.getDetailPhotoHome(recent);
+                                  _homecontroller.getDetailVideo(recent);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(top: 15.0),
@@ -181,9 +183,9 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                             return Hero(
                               tag: "photo$index",
                               child: InkWell(
-                                // onTap: () {
-                                //   _controller.getDetailPhotoHome(recent);
-                                // },
+                                onTap: () {
+                                  _homecontroller.getDetailVideo(recent);
+                                },
                                 child: Container(
                                   padding: EdgeInsets.only(top: 15.0),
                                   width: double.infinity,

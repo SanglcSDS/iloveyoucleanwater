@@ -10,7 +10,8 @@ class IntroduceController extends GetxController
     with GetSingleTickerProviderStateMixin {
   IntroduceService service = IntroduceService();
   late IntroduceModel introduceModel;
-  RxList introduceDetialModel = <IntroduceDetialModel>[].obs;
+  RxList introduceProgram = <IntroduceDetialModel>[].obs;
+  RxList introducePartner = <IntroduceDetialModel>[].obs;
 
   final List<Tab> myTabs = <Tab>[
     Tab(
@@ -26,7 +27,8 @@ class IntroduceController extends GetxController
   void onInit() {
     super.onInit();
     //  GetIntroduces();
-    GetDetialIntroduces(1);
+    GetDetialProgram(1);
+    GetDetialPartner(3);
     controller =
         TabController(vsync: this, length: myTabs.length, initialIndex: 0);
   }
@@ -42,14 +44,26 @@ class IntroduceController extends GetxController
 //     update();
 //   }
 
-  Future<void> GetDetialIntroduces(int id) async {
-    Response _data = await service.GetDetailIntroduces(1);
+  Future<void> GetDetialProgram(int id) async {
+    Response _data = await service.GetDetailIntroduces(id);
 
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data'];
       //  print(jsonString);
       if (jsonString != null) {
-        introduceDetialModel.add(IntroduceDetialModel.fromJson(jsonString));
+        introduceProgram.add(IntroduceDetialModel.fromJson(jsonString));
+      }
+    }
+  }
+
+  Future<void> GetDetialPartner(int id) async {
+    Response _data = await service.GetDetailIntroduces(id);
+
+    if (_data.statusCode == 200) {
+      var jsonString = _data.body['data'];
+      //  print(jsonString);
+      if (jsonString != null) {
+        introducePartner.add(IntroduceDetialModel.fromJson(jsonString));
       }
     }
   }

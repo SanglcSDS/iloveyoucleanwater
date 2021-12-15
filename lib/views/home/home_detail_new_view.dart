@@ -106,28 +106,40 @@ class HomeDetailNewsView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12.0),
-            Text(news.title, style: kTitleCard.copyWith(fontSize: 28.0)),
+            Text(
+              news.title,
+              style: kTitleCard,
+              textAlign: TextAlign.justify,
+            ),
             const SizedBox(height: 15.0),
             Row(
-              children: <Widget>[
-                Text(news.createdAt, style: kDetailContent),
+              children: [
                 const SizedBox(width: 5.0),
-                const SizedBox(
-                  width: 10.0,
-                  child: Divider(
-                    color: kBlack,
-                    height: 1.0,
-                  ),
+                const Icon(
+                  Icons.date_range,
+                  color: kGrey1,
                 ),
                 const SizedBox(width: 5.0),
-                Text(
-                  news.language,
-                  style: kDetailContent.copyWith(color: Colors.black),
-                ),
+                Expanded(
+                    child: Text(
+                        calculateTimeDifferenceBetween(
+                            stringTime: news.createdAt),
+                        style: kDetailContent,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1))
               ],
             ),
             const SizedBox(height: 15.0),
-            Html(data: news.content),
+            SingleChildScrollView(
+              child: Html(
+                style: {
+                  "p": Style(textAlign: TextAlign.justify),
+                  "img": Style(width: 200, height: 300),
+                },
+                shrinkWrap: true,
+                data: news.content,
+              ),
+            ),
             const SizedBox(height: 25.0)
           ],
         ),

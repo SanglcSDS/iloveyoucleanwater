@@ -64,6 +64,7 @@ class NewWidgetView extends StatelessWidget {
                 children: [
                   Text(
                     news.title,
+                    textAlign: TextAlign.justify,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                     style: kTitleCard,

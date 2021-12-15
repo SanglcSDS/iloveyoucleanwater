@@ -13,9 +13,9 @@ class IntroduceProgramNew extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      itemCount: _Controller.introduceDetialModel.length,
+      itemCount: _Controller.introduceProgram.length,
       itemBuilder: (context, index) {
-        var item = _Controller.introduceDetialModel;
+        var item = _Controller.introduceProgram;
         return Obx(
           () => Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -23,14 +23,19 @@ class IntroduceProgramNew extends StatelessWidget {
                 children: [
                   const SizedBox(height: 12.0),
                   Text(item[index].description,
-                      style: kTitleCard.copyWith(fontSize: 20.0)),
+                      textAlign: TextAlign.justify,
+                      style: kTitleCard.copyWith(fontSize: 15.0)),
                   const SizedBox(height: 15.0),
                   const SizedBox(height: 15.0),
-                  // SingleChildScrollView(
-                  //   child: Html(
-                  //     data: item[index].content,
-                  //   ),
-                  // ),
+                  SingleChildScrollView(
+                    child: Html(
+                      style: {
+                        "p": Style(textAlign: TextAlign.justify),
+                        "img": Style(width: MediaQuery.of(context).size.width)
+                      },
+                      data: item[index].content,
+                    ),
+                  ),
                   const SizedBox(height: 25.0)
                 ],
               )),

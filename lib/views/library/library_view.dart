@@ -20,7 +20,7 @@ class LibraryView extends GetView<LibraryController> {
             backgroundColor: Colors.white,
             centerTitle: true,
             title: Container(
-              child: Text('library'.tr, style: TextStyle(color: kGrey1)),
+              child: Text('library'.tr, style: TextStyle(color: primaryColor)),
             ),
           )
         ],

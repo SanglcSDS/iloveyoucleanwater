@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
@@ -88,9 +89,7 @@ class HomeView extends StatelessWidget {
                       onTap: () {
                         _Controller.changeTabIndex(2);
                       },
-                      child: BannerHomeView(
-                        introduceModel: _Controller.introduceModel.value,
-                      ),
+                      child: BannerHomeView(),
                     ),
                     Column(
                       children: List.generate(
@@ -149,7 +148,9 @@ class HomeView extends StatelessWidget {
                       }),
                     ),
                     TitleWidgetNextPhotoVideo(
-                        title: 'album'.tr.toUpperCase(), index: 3),
+                      title: 'album'.tr.toUpperCase(),
+                      index: 3,
+                    ),
                     Container(
                       //  padding: EdgeInsets.only(left: 12, right: 12),
                       width: double.infinity,
@@ -196,7 +197,9 @@ class HomeView extends StatelessWidget {
                             return Hero(
                               tag: "Videoss$index",
                               child: InkWell(
-                                // onTap: () =>  Get.to(() => DetailsLibraryView(news: news)),
+                                onTap: () {
+                                  _Controller.getDetailVideo(news);
+                                },
                                 child: Container(
                                   margin: const EdgeInsets.only(
                                       left: 10.0, top: 5.0),

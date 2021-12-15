@@ -19,7 +19,7 @@ class NewsView extends GetView<NewsController> {
             backgroundColor: Colors.white,
             centerTitle: true,
             title: Container(
-              child: Text('news'.tr, style: TextStyle(color: kGrey1)),
+              child: Text('news'.tr, style: TextStyle(color: primaryColor)),
             ),
           )
         ],

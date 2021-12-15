@@ -20,14 +20,14 @@ const kBlue1 = Color(0xff339AFF);
 const kDarkGrey = Color(0xFF9fa1a6);
 const kLightBlue = Color(0xFFe1f5fe);
 const kDirtyWhite = Color(0xFFEFEFEF);
-
+const primaryColor = Color(0xFF51c5da);
 var kNonActiveTabStyle = GoogleFonts.roboto(
   textStyle: const TextStyle(fontSize: 14.0, color: kGrey1),
 );
 var kNonActiveTabStyles = GoogleFonts.roboto(
   textStyle: const TextStyle(
     fontSize: 16.0,
-    color: kBlue1,
+    color: primaryColor,
     fontWeight: FontWeight.w900,
   ),
 );
@@ -64,7 +64,7 @@ var kTitleCard = GoogleFonts.roboto(
 var kTitleCard1 = GoogleFonts.roboto(
   textStyle: const TextStyle(
     fontSize: 18.0,
-    color: kBlue1,
+    color: primaryColor,
     fontWeight: FontWeight.bold,
   ),
 );

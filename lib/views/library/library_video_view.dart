@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -9,12 +10,18 @@ class LibraryVideoView extends StatelessWidget {
   LibraryVideoView({required this.tag});
 
   final _controller = Get.put(LibraryController());
-  final _homecontroller = Get.put(LibraryController());
+  final _homecontroller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Container(
       child: Obx(
         () => SmartRefresher(
+          header: const ClassicHeader(
+            releaseText: 'Nhả ra để làm mới',
+            refreshingText: "Làm mới...",
+            completeText: "Làm mới hoàn tất",
+            idleText: "Kéo xuống làm mới",
+          ),
           controller: _controller.refreshControllerVideo,
           enablePullUp: true,
           onRefresh: () async {
@@ -40,9 +47,9 @@ class LibraryVideoView extends StatelessWidget {
               return Hero(
                 tag: "$tag$index",
                 child: InkWell(
-                  // onTap: () {
-                  //  _homecontroller.getDetailPhotoHome(recent);
-                  // },
+                  onTap: () {
+                    _homecontroller.getDetailVideo(recent);
+                  },
                   child: Container(
                     padding: EdgeInsets.only(top: 15.0),
                     width: double.infinity,

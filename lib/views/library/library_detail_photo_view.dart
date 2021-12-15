@@ -114,11 +114,15 @@ class LibraryDetailPhotoView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 12.0),
-            Text(news.title, style: kTitleCard.copyWith(fontSize: 28.0)),
+            Text(
+              news.title,
+              style: kTitleCard,
+              textAlign: TextAlign.justify,
+            ),
             const SizedBox(height: 15.0),
             Row(
               children: [
-                const SizedBox(width: 5.0),
+                const SizedBox(width: 3.0),
                 const Icon(
                   Icons.date_range,
                   color: kGrey1,
@@ -133,7 +137,17 @@ class LibraryDetailPhotoView extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 15.0),
-            Html(data: news.content),
+            Html(
+              data: news.content,
+              style: {
+                "p": Style(
+                  textAlign: TextAlign.justify,
+                ),
+                "img": Style(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    height: MediaQuery.of(context).size.height * 0.7)
+              },
+            ),
             const SizedBox(height: 15.0),
             Column(
               children: List.generate(news.listImages.length, (index) {

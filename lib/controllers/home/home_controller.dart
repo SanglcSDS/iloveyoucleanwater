@@ -5,6 +5,7 @@ import 'package:iloveyoucleanwater/models/home/banner_model.dart';
 import 'package:iloveyoucleanwater/models/introduce/introduce_model.dart';
 import 'package:iloveyoucleanwater/models/library/library_detail_photo_model.dart';
 import 'package:iloveyoucleanwater/models/library/library_model.dart';
+import 'package:iloveyoucleanwater/models/library/library_video_model.dart';
 import 'package:iloveyoucleanwater/models/news/category_model.dart';
 import 'package:iloveyoucleanwater/models/news/category_news_modell.dart';
 import 'package:iloveyoucleanwater/models/news/news_%20details_model.dart';
@@ -14,6 +15,8 @@ import 'package:iloveyoucleanwater/service/introduce_service.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
 import 'package:iloveyoucleanwater/views/home/home_detail_new_view.dart';
 import 'package:iloveyoucleanwater/views/library/library_detail_photo_view.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/hom_item_video_widget_view.dart';
+import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 final controllerNews = Get.put(NewsController());
 final controllerLibrary = Get.put(LibraryController());
@@ -27,26 +30,30 @@ class HomeController extends GetxController {
   final NewsService provider = NewsService();
   final HomeService homeService = HomeService();
   var tabIndex = 0;
-  Rx<NewsDetailsModel>? detail;
+
+  ///Rx<NewsDetailsModel>? detail;
   // RxList<CategoryModel> listCategoryNewPage = <CategoryModel>[].obs;
   RxList<CategoryNewsModel> listCategoryNewsModel = <CategoryNewsModel>[].obs;
   RxList<CategoryModel> listCategory = <CategoryModel>[].obs;
   List<BannerModel> listBanner = [];
   RxList listPhoto = <LibraryModel>[].obs;
   RxList listVideo = <LibraryModel>[].obs;
+  var listIntroduce = <IntroduceModel>[].obs;
+
   Rx<LibraryDetailPhotoModel>? detailPhoto;
-  late Rx<IntroduceModel> introduceModel;
   var listPopular = List<BannerModel>.empty(growable: true).obs;
   var isDataProcessing = false.obs;
   var isDataErrer = false.obs;
-
+  // Rx<YoutubePlayerController>? videoController;
   @override
   void onInit() async {
     isloadingHome(true);
     await Future.delayed(Duration(seconds: 2));
     await getCategory();
     await getListNewCategory();
+
     GetIntroduces();
+
     getPopular();
     getPhotoHome();
     getVideoHome();
@@ -65,6 +72,7 @@ class HomeController extends GetxController {
     await getCategory();
     await getListNewCategory();
     GetIntroduces();
+
     getPopular();
     getPhotoHome();
     getVideoHome();
@@ -73,12 +81,54 @@ class HomeController extends GetxController {
     return true;
   }
 
+  // void onInitLesson(String currentUrl) {
+  //   videoController = YoutubePlayerController(
+  //     initialVideoId: YoutubePlayer.convertUrlToId(currentUrl)!,
+  //     flags: const YoutubePlayerFlags(
+  //       controlsVisibleAtStart: true,
+  //       autoPlay: false,
+  //     ),
+  //   ).obs;
+  // }
+
+  Future<void> getDetailVideo(LibraryModel news) async {
+    late LibraryVideoModel detail;
+    late YoutubePlayerController video;
+    Response _data = await homeService.getDetailVideoHome(news.id);
+
+    if (_data.statusCode == 200) {
+      var jsonString = _data.body['data'];
+      if (jsonString != null) {
+        detail = LibraryVideoModel.fromJson(jsonString);
+
+        video = YoutubePlayerController(
+          initialVideoId: YoutubePlayer.convertUrlToId(detail.linkVideo)!,
+          flags: const YoutubePlayerFlags(
+            controlsVisibleAtStart: true,
+            autoPlay: true,
+          ),
+        );
+        Get.to(() =>
+            ItemVideoWidgetView(LibraryVideo: detail, videoController: video));
+      }
+    }
+  }
+
   Future<void> GetIntroduces() async {
+    List<IntroduceModel> list = [];
     Response _data = await service.GetIntroduces();
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data'];
       if (jsonString != null) {
-        introduceModel = IntroduceModel.fromJson(jsonString[0]).obs;
+        listIntroduce.clear();
+        jsonString.forEach((e) {
+          list.add(IntroduceModel.fromJson(e));
+        });
+        list.forEach((e) {
+          if (e.id == 1) {
+            listIntroduce.add(e);
+          }
+        });
       }
     }
     update();
@@ -175,34 +225,33 @@ class HomeController extends GetxController {
   }
 
   Future<void> getDetailPhotoHome(LibraryModel news) async {
+    late LibraryDetailPhotoModel detail;
     Response _data = await homeService.getDetailPhotoHome(news.id);
 
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data'];
       if (jsonString != null) {
-        detailPhoto = LibraryDetailPhotoModel.fromJson(jsonString).obs;
+        detail = LibraryDetailPhotoModel.fromJson(jsonString);
+        Get.to(() => LibraryDetailPhotoView(
+              news: detail,
+              title: 'album'.tr,
+              datetime: news.createdAt,
+            ));
       }
     }
-
-    Get.to(() => LibraryDetailPhotoView(
-          news: detailPhoto!.value,
-          title: 'album'.tr,
-          datetime: news.createdAt,
-        ));
   }
 
   Future<void> getNewsDetailsModel(NewModel news) async {
     Response _data = await homeService.getNewDetail(news.id);
-
+    late NewsDetailsModel detail;
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data'];
       if (jsonString != null) {
-        detail = NewsDetailsModel.fromJson(jsonString).obs;
+        detail = NewsDetailsModel.fromJson(jsonString);
+        Get.to(
+            () => HomeDetailNewsView(news: detail, title: news.categoryTitle));
       }
     }
-
-    Get.to(() =>
-        HomeDetailNewsView(news: detail!.value, title: news.categoryTitle));
   }
 
   void changeTabIndex(int index) {

@@ -52,6 +52,7 @@ class HomeItemNewsWidgetView extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
             child: Text(
               news.title,
+              textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
               style: kTitleCard1,
@@ -62,6 +63,7 @@ class HomeItemNewsWidgetView extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 12.0, vertical: 5.0),
             child: Text(
               news.description,
+              textAlign: TextAlign.justify,
               overflow: TextOverflow.ellipsis,
               maxLines: 4,
               style: kDetailContent,
