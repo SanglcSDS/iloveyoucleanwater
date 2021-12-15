@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/account/account_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
@@ -95,6 +96,7 @@ class LogInView extends GetView<AccountController> {
                         child: ElevatedButton(
                             onPressed: () async {
                               if (_loginForm.currentState!.validate()) {
+                                EasyLoading.show(status: "Đang đăng nhập...");
                                 bool _isLogged = await controller.onLogin(
                                     context,
                                     _emailController.text,
@@ -104,6 +106,7 @@ class LogInView extends GetView<AccountController> {
                                     const SnackBar(
                                         content: Text('Đăng nhập thành công!')),
                                   );
+                                  EasyLoading.dismiss();
                                   Get.offNamed(Routes.HOME);
                                 }
                               }

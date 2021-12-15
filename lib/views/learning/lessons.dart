@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/learning/lessons_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/lesson.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
+import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:percent_indicator/linear_percent_indicator.dart';
 
 class LessonView extends StatelessWidget {
@@ -18,7 +19,7 @@ class LessonView extends StatelessWidget {
           Container(
             height: 40,
             width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
             child: Row(
               children: [
                 Container(
@@ -37,70 +38,20 @@ class LessonView extends StatelessWidget {
                     percent: controller.percent!.value,
                     center: Text(controller.percentStr!.value),
                     linearStrokeCap: LinearStrokeCap.roundAll,
-                    progressColor: Colors.lightBlue[300],
+                    progressColor: primaryColor,
                   ),
                 ),
               ],
             ),
           ),
           Obx(
-            () => ListLesson(
-              lessons: controller.lessons!,
-              activeIndex: controller.activeIndex!.value,
-            ),
+            () => controller.lessons!.isEmpty
+                ? const SizedBox()
+                : ListLesson(
+                    lessons: controller.lessons!,
+                    activeIndex: controller.activeIndex!.value,
+                  ),
           ),
-          Obx(
-            () => Container(
-              child: controller.isComplete.value
-                  ? Row(
-                      children: [
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
-                            alignment: Alignment.center,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.blue),
-                              ),
-                              onPressed: () => Get.toNamed(Routes.QUESTIONS),
-                              child: const Text(
-                                'Kiểm tra kiến thức',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                        Expanded(
-                          child: Container(
-                            margin: const EdgeInsets.symmetric(
-                                horizontal: 15, vertical: 5),
-                            alignment: Alignment.center,
-                            child: OutlinedButton(
-                              style: ButtonStyle(
-                                backgroundColor:
-                                    MaterialStateProperty.all<Color>(
-                                        Colors.blue),
-                              ),
-                              onPressed: () => Get.toNamed(Routes.QUESTIONS),
-                              child: const Text(
-                                'Đánh giá khóa học',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
-                    )
-                  : const SizedBox(),
-            ),
-          )
         ],
       ),
     );
@@ -128,11 +79,10 @@ class ListLesson extends StatelessWidget {
                 ? const EdgeInsets.only(bottom: 2, left: 5, right: 5)
                 : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
             child: Card(
-              color:
-                  activeIndex == index ? Colors.lightBlue[200] : Colors.white,
+              color: activeIndex == index ? primaryColor : Colors.white,
               elevation: 3,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+                borderRadius: BorderRadius.circular(5),
               ),
               child: Column(
                 children: [

@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/models/learning/document.dart';
 import 'package:iloveyoucleanwater/service/learning_service.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/msg_dialog.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:get/get_connect/http/src/response/response.dart'
@@ -63,7 +64,7 @@ class DocumentController extends GetxController {
     return "";
   }
 
-  Future<void> downloadFile(
+  Future<void> downloadFile(BuildContext context,
       {required Document document, required int index}) async {
     downloadValues[index]['isDownloading'] = true;
     update();
@@ -72,7 +73,11 @@ class DocumentController extends GetxController {
 
     try {
       var dir = await getApplicationDocumentsDirectory();
-      localPath = "${dir.path}/${document.fileName}";
+      bool directoryExists = await Directory(dir.path).exists();
+      if (!directoryExists) {
+        Directory(dir.path).create();
+      }
+      localPath = "${dir.path}/$_courseId/${document.fileName}";
       await dio.download(
         document.link,
         "${dir.path}/$_courseId/${document.fileName}",
@@ -84,11 +89,12 @@ class DocumentController extends GetxController {
           update();
         },
       );
+      downloadValues[index]['localPath'] = localPath;
     } catch (e) {
       debugPrint(e.toString());
+      MsgDialog.showWarningDialogs(context, "Lỗi", "Tải file thất bại!");
     }
 
-    downloadValues[index]['localPath'] = localPath;
     downloadValues[index]['isDownloading'] = false;
     update();
   }

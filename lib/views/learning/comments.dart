@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/learning/comments_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/comment.dart';
+import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class CommentView extends StatelessWidget {
   final commentController = Get.put(CommentController());
@@ -18,21 +19,25 @@ class CommentView extends StatelessWidget {
         child: Column(
           children: [
             Expanded(child: _rederListComment(commentController.comments)),
-            TextField(
-              controller: textController,
-              keyboardType: TextInputType.multiline,
-              textInputAction: TextInputAction.newline,
-              decoration: InputDecoration(
-                hintText: "Type a messages...",
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(4),
-                ),
-                suffixIcon: IconButton(
-                  icon: const Icon(Icons.send),
-                  onPressed: () => {
-                    commentController.writeComment(textController.text),
-                    textController.clear(),
-                  },
+            Theme(
+              data: ThemeData(primarySwatch: kPrimaryMaterial),
+              child: TextField(
+                controller: textController,
+                keyboardType: TextInputType.multiline,
+                textInputAction: TextInputAction.newline,
+                decoration: InputDecoration(
+                  hintText: "Type a messages...",
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(4),
+                  ),
+                  suffixIcon: IconButton(
+                    icon: const Icon(Icons.send),
+                    onPressed: () => {
+                      commentController.writeComment(textController.text),
+                      textController.clear(),
+                      FocusScope.of(context).requestFocus(FocusNode())
+                    },
+                  ),
                 ),
               ),
             ),

@@ -11,17 +11,17 @@ class Constants {
 
 const primaryColor = Color(0xFF51c5da);
 
-MaterialColor kPrimaryMaterial = const MaterialColor(0xFF51c5da, const {
-  50: const Color(0xFF51c5da),
-  100: const Color(0xFF51c5da),
-  200: const Color(0xFF51c5da),
-  300: const Color(0xFF51c5da),
-  400: const Color(0xFF51c5da),
-  500: const Color(0xFF51c5da),
-  600: const Color(0xFF51c5da),
-  700: const Color(0xFF51c5da),
-  800: const Color(0xFF51c5da),
-  900: const Color(0xFF51c5da)
+MaterialColor kPrimaryMaterial = const MaterialColor(0xFF51c5da, {
+  50: Color(0xFF51c5da),
+  100: Color(0xFF51c5da),
+  200: Color(0xFF51c5da),
+  300: Color(0xFF51c5da),
+  400: Color(0xFF51c5da),
+  500: Color(0xFF51c5da),
+  600: Color(0xFF51c5da),
+  700: Color(0xFF51c5da),
+  800: Color(0xFF51c5da),
+  900: Color(0xFF51c5da)
 });
 
 const kGrey1 = Color(0xFF9F9F9F);

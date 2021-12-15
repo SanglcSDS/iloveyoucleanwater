@@ -80,16 +80,23 @@ class SignUpView extends GetView<RegisterController> {
                       Theme(
                         data: ThemeData(primarySwatch: kPrimaryMaterial),
                         child: TextFormField(
-                          keyboardType: TextInputType.text,
-                          obscureText: true,
-                          controller: _pwdController,
-                          decoration: const InputDecoration(
-                              prefixIcon: Icon(
-                                Icons.lock,
-                                color: primaryColor,
-                              ),
-                              hintText: 'Mật khẩu *'),
-                        ),
+                            keyboardType: TextInputType.text,
+                            obscureText: true,
+                            controller: _pwdController,
+                            decoration: const InputDecoration(
+                                prefixIcon: Icon(
+                                  Icons.lock,
+                                  color: primaryColor,
+                                ),
+                                hintText: 'Mật khẩu *'),
+                            validator: (value) {
+                              if (value == null || value.isEmpty) {
+                                return 'Vui lòng nhập mật khẩu.';
+                              } else if (value.length < 8) {
+                                return 'Mật khẩu cần có ít nhất 8 ký tự Ví dụ: Mizuiku123';
+                              }
+                              return null;
+                            }),
                       ),
                       const SizedBox(
                         height: 8,
@@ -105,6 +112,12 @@ class SignUpView extends GetView<RegisterController> {
                                 color: primaryColor,
                               ),
                               hintText: 'Họ và tên *'),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Vui lòng nhập tên (ghi tiếng Việt có dấu).';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       const SizedBox(
@@ -128,6 +141,26 @@ class SignUpView extends GetView<RegisterController> {
                       ),
                       Theme(
                         data: ThemeData(primarySwatch: kPrimaryMaterial),
+                        child: TextFormField(
+                          controller: _workplaceController,
+                          keyboardType: TextInputType.text,
+                          decoration: const InputDecoration(
+                            prefixIcon: Icon(
+                              Icons.work,
+                              color: primaryColor,
+                            ),
+                            hintText: 'Nơi công tác',
+                          ),
+                          validator: (value) {
+                            return null;
+                          },
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Theme(
+                        data: ThemeData(primarySwatch: kPrimaryMaterial),
                         child: CustomDropdown(
                           items: controller.genders,
                           selectedItem: const {
@@ -141,6 +174,12 @@ class SignUpView extends GetView<RegisterController> {
                             controller.onChangeGender(newValue!);
                           },
                           showSearchBox: true,
+                          validation: (value) {
+                            if (value == null || value["id"] < 0) {
+                              return 'Vui lòng chọn giới tính.';
+                            }
+                            return null;
+                          },
                         ),
                       ),
                       const SizedBox(
@@ -170,8 +209,7 @@ class SignUpView extends GetView<RegisterController> {
                               ? const SizedBox()
                               : CustomDropdown(
                                   items: controller.rxProvinces,
-                                  selectedItem: Province(
-                                      id: 0, name: "Chọn Tỉnh/Thành phố"),
+                                  selectedItem: controller.rxProvinces[0],
                                   label: "",
                                   itemAsString: (Province p) => p.name,
                                   onChange: (Province p) =>
@@ -190,10 +228,7 @@ class SignUpView extends GetView<RegisterController> {
                               ? const SizedBox()
                               : CustomDropdown(
                                   items: controller.rxDistricts,
-                                  selectedItem: District(
-                                      id: 1,
-                                      name: 'Quận Ba Đình',
-                                      provinceId: 1),
+                                  selectedItem: controller.rxDistricts[0],
                                   label: "",
                                   itemAsString: (District d) => d.name,
                                   onChange: (District d) =>
@@ -201,6 +236,45 @@ class SignUpView extends GetView<RegisterController> {
                                   showSearchBox: true,
                                 ),
                         ),
+                      ),
+                      const SizedBox(
+                        height: 8,
+                      ),
+                      Theme(
+                        data: ThemeData(primarySwatch: kPrimaryMaterial),
+                        child: Row(children: [
+                          Checkbox(
+                            value: controller.policyRadio.value,
+                            onChanged: (bool? value) {
+                              controller.policyRadio = value!.obs;
+                              controller.update();
+                            },
+                          ),
+                          Expanded(
+                            child: RichText(
+                              text: const TextSpan(
+                                text: 'Bạn có đồng ý với ',
+                                style: TextStyle(color: kBlack),
+                                children: [
+                                  TextSpan(
+                                      text: 'Điều khoản sử dụng ',
+                                      style: TextStyle(color: primaryColor)),
+                                  TextSpan(
+                                    text: 'và ',
+                                    style: TextStyle(color: kBlack),
+                                  ),
+                                  TextSpan(
+                                      text: 'Chính sách bảo mật ',
+                                      style: TextStyle(color: primaryColor)),
+                                  TextSpan(
+                                    text: 'của hệ thống trực tuyến này?',
+                                    style: TextStyle(color: kBlack),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                        ]),
                       ),
 
                       const SizedBox(
@@ -213,6 +287,7 @@ class SignUpView extends GetView<RegisterController> {
                           child: ElevatedButton(
                               onPressed: () async {
                                 if (_signUpForm.currentState!.validate()) {
+                                  debugPrint("validated");
                                   bool isRegisted = await controller.onRegister(
                                       context,
                                       _emailController.text,
@@ -245,7 +320,7 @@ class SignUpView extends GetView<RegisterController> {
                         ),
                       ),
                       TextButton(
-                        onPressed: () => Get.offNamed(Routes.REGISTER),
+                        onPressed: () => Get.offNamed(Routes.LOGIN),
                         child: RichText(
                           text: const TextSpan(children: [
                             TextSpan(

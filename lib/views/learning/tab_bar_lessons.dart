@@ -3,103 +3,178 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/learning/lessons_controller.dart';
+import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/learning/comments.dart';
 import 'package:iloveyoucleanwater/views/learning/documents.dart';
 import 'package:iloveyoucleanwater/views/learning/lessons.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
-class LearningView extends StatelessWidget {
-  final _controller = Get.put(LessonController());
+class LearningView extends GetView<LessonController> {
   LearningView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder(
-      init: LessonController(),
-      builder: (_) => DefaultTabController(
-        length: 3,
-        child: WillPopScope(
-          onWillPop: () async {
-            if (MediaQuery.of(context).orientation == Orientation.landscape) {
-              await SystemChrome.setPreferredOrientations([
-                DeviceOrientation.portraitUp,
-                DeviceOrientation.portraitDown
-              ]);
-              return false;
-            }
-            return true;
-          },
-          child: Scaffold(
-            body: MediaQuery.of(context).orientation == Orientation.portrait
-                ? Stack(
-                    children: [
-                      Column(
-                        children: <Widget>[
-                          SafeArea(
-                            child: SizedBox(
-                              child: Obx(
-                                () => YoutubePlayer(
-                                    controller:
-                                        _controller.videoController!.value,
-                                    onEnded: (_) =>
-                                        _controller.videoEnded(context)),
+    return GetBuilder<LessonController>(
+        builder: (_) => controller.lessons != null &&
+                controller.lessons!.isNotEmpty
+            ? DefaultTabController(
+                length: 3,
+                child: WillPopScope(
+                  onWillPop: () async {
+                    if (MediaQuery.of(context).orientation ==
+                        Orientation.landscape) {
+                      await SystemChrome.setPreferredOrientations([
+                        DeviceOrientation.portraitUp,
+                        DeviceOrientation.portraitDown
+                      ]);
+                      return false;
+                    }
+                    return true;
+                  },
+                  child: Scaffold(
+                    body: MediaQuery.of(context).orientation ==
+                            Orientation.portrait
+                        ? Stack(
+                            children: [
+                              Column(
+                                children: <Widget>[
+                                  SafeArea(
+                                    child: controller.videoController == null
+                                        ? SizedBox(
+                                            width: MediaQuery.of(context)
+                                                .size
+                                                .width,
+                                            height: 100,
+                                          )
+                                        : YoutubePlayer(
+                                            controller: controller
+                                                .videoController!.value,
+                                            onEnded: (_) =>
+                                                controller.videoEnded(context)),
+                                  ),
+                                  Theme(
+                                    data: ThemeData(
+                                        primarySwatch: kPrimaryMaterial),
+                                    child: const TabBar(
+                                      tabs: [
+                                        Tab(
+                                          child: Text('Bài học',
+                                              style: TextStyle(color: kBlack)),
+                                        ),
+                                        Tab(
+                                          child: Text('Thảo luận',
+                                              style: TextStyle(color: kBlack)),
+                                        ),
+                                        Tab(
+                                          child: Text('Tài liệu',
+                                              style: TextStyle(color: kBlack)),
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Expanded(
+                                    child: TabBarView(
+                                      children: [
+                                        LessonView(),
+                                        CommentView(),
+                                        DocumentView(),
+                                      ],
+                                    ),
+                                  ),
+                                  Obx(
+                                    () => Container(
+                                      child: controller.isComplete.value
+                                          ? Row(
+                                              children: [
+                                                Expanded(
+                                                  child: Container(
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 5),
+                                                    alignment: Alignment.center,
+                                                    child: OutlinedButton(
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    primaryColor),
+                                                      ),
+                                                      onPressed: () =>
+                                                          Get.toNamed(
+                                                              Routes.QUESTIONS),
+                                                      child: const Text(
+                                                        'Kiểm tra kiến thức',
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Expanded(
+                                                  child: Container(
+                                                    margin: const EdgeInsets
+                                                            .symmetric(
+                                                        horizontal: 15,
+                                                        vertical: 5),
+                                                    alignment: Alignment.center,
+                                                    child: OutlinedButton(
+                                                      style: ButtonStyle(
+                                                        backgroundColor:
+                                                            MaterialStateProperty
+                                                                .all<Color>(
+                                                                    primaryColor),
+                                                      ),
+                                                      onPressed: () =>
+                                                          Get.toNamed(
+                                                              Routes.QUESTIONS),
+                                                      child: const Text(
+                                                        'Đánh giá khóa học',
+                                                        style: TextStyle(
+                                                          color: Colors.white,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            )
+                                          : const SizedBox(),
+                                    ),
+                                  )
+                                ],
                               ),
-                            ),
-                          ),
-                          const TabBar(
-                            tabs: [
-                              Tab(
-                                child: Text('Bài học',
-                                    style: TextStyle(color: kBlack)),
-                              ),
-                              Tab(
-                                child: Text('Thảo luận',
-                                    style: TextStyle(color: kBlack)),
-                              ),
-                              Tab(
-                                child: Text('Tài liệu',
-                                    style: TextStyle(color: kBlack)),
+                              SafeArea(
+                                child: Container(
+                                  alignment: Alignment.topLeft,
+                                  padding:
+                                      const EdgeInsets.only(left: 5, top: 5),
+                                  child: IconButton(
+                                    icon: const Icon(Icons.arrow_back_ios,
+                                        color: kGrey2),
+                                    onPressed: () => Get.back(),
+                                  ),
+                                ),
                               ),
                             ],
-                          ),
-                          Expanded(
-                            child: TabBarView(
-                              children: [
-                                LessonView(),
-                                CommentView(),
-                                DocumentView(),
-                              ],
+                          )
+                        : SizedBox(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: YoutubePlayer(
+                              controller: controller.videoController!.value,
+                              onEnded: (_) {
+                                controller.videoEnded(context);
+                              },
                             ),
                           ),
-                        ],
-                      ),
-                      SafeArea(
-                        child: Container(
-                          alignment: Alignment.topLeft,
-                          padding: const EdgeInsets.only(left: 5, top: 5),
-                          child: IconButton(
-                            icon:
-                                const Icon(Icons.arrow_back_ios, color: kGrey2),
-                            onPressed: () => Get.back(),
-                          ),
-                        ),
-                      ),
-                    ],
-                  )
-                : SizedBox(
-                    width: MediaQuery.of(context).size.width,
-                    height: MediaQuery.of(context).size.height,
-                    child: YoutubePlayer(
-                      controller: _controller.videoController!.value,
-                      onEnded: (_) {
-                        _controller.videoEnded(context);
-                      },
-                    ),
                   ),
-          ),
-        ),
-      ),
-    );
+                ),
+              )
+            : const SizedBox()
+        // ),
+        );
   }
 }

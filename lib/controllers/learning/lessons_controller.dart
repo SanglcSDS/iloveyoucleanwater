@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/learning/lesson.dart';
@@ -28,7 +27,6 @@ class LessonController extends GetxController {
   }
 
   void onInitLesson(int courseId) async {
-    debugPrint("course id =======> " + courseId.toString());
     _courseId = courseId;
     Response<dynamic> response =
         await _learningService.getLessonByCoureseId(courseId);
@@ -51,6 +49,7 @@ class LessonController extends GetxController {
             countUnlockLesson++;
           }
         }
+        if (countUnlockLesson == list.length) isComplete = true.obs;
         currentUrl = currentLesson!.value.url.obs;
         percent = (countUnlockLesson / list.length).obs;
         percentStr = '${(percent! * 100).floor()} % Hoàn thành'.obs;
@@ -73,59 +72,44 @@ class LessonController extends GetxController {
 
   void changeLesson(Lesson lesson, int index) {
     if (lesson.statusWork) {
+      EasyLoading.show(status: "Đang tải bài học....");
       currentLesson = lesson.obs;
       currentUrl = lesson.url.obs;
       activeIndex = index.obs;
       videoController!.value
           .load(YoutubePlayer.convertUrlToId(currentUrl!.value)!);
       update();
+      EasyLoading.dismiss();
     }
   }
-
-  // void videoEnded(context) {
-  //   int length = lessons!.length - 1;
-  //   if (activeIndex!.value < length) {
-  //     activeIndex = (activeIndex!.value + 1).obs;
-  //     currentLesson = lessons![activeIndex!.value].obs;
-  //     currentUrl = lessons![activeIndex!.value].url.obs;
-
-  //     videoController!.value
-  //         .load(YoutubePlayer.convertUrlToId(currentUrl!.value)!);
-  //   } else {
-  //     isComplete = true.obs;
-  //     MsgDialog.showMsgDialogs(
-  //         context,
-  //         'Congratulations',
-  //         'Chúc mừng bạn đã hoàn thành khóa học!\nLàm bài kiểm tra ngay?',
-  //         () => Get.toNamed(Routes.QUESTIONS));
-  //     // Get.toNamed(Routes.QUESTIONS);
-  //   }
-
-  //   update();
-  // }
 
   void videoEnded(context) async {
     int length = lessons!.length - 1;
     if (activeIndex!.value < length) {
       activeIndex = (activeIndex!.value + 1).obs;
-      currentLesson = lessons![activeIndex!.value].obs;
-      currentUrl = lessons![activeIndex!.value].url.obs;
-      videoController!.value
-          .load(YoutubePlayer.convertUrlToId(currentUrl!.value)!);
-
       Response<dynamic> response = await _learningService
           .nextLesson(lessons![activeIndex!.value].id.toString());
 
-      // if (response) update();
+      if (response.statusCode == 200 && response.body["error"] == false) {
+        currentLesson = lessons![activeIndex!.value].obs;
+        currentUrl = lessons![activeIndex!.value].url.obs;
+        videoController!.value
+            .load(YoutubePlayer.convertUrlToId(currentUrl!.value)!);
+        lessons![activeIndex!.value].statusWork = true;
+        if (response.body["status_show_test"] == 1) {
+          isComplete = true.obs;
+        }
+      }
+
+      update();
     } else {
       isComplete = true.obs;
       update();
       MsgDialog.showMsgDialogs(
           context,
-          'Congratulations',
-          'Chúc mừng bạn đã hoàn thành khóa học!\nLàm bài kiểm tra ngay?',
+          'Chúc mừng!',
+          'Bạn đã hoàn thành khóa học!\nLàm bài kiểm tra ngay?',
           () => Get.toNamed(Routes.QUESTIONS));
-      // Get.toNamed(Routes.QUESTIONS);
     }
   }
 }

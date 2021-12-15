@@ -37,8 +37,6 @@ class CourseController extends GetxController
   }
 
   Future<void> initData() async {
-    EasyLoading.show(status: "Loading....");
-    update();
     checkLogged();
     if (isLogged.value) {
       Response<dynamic> response = await _learningService.getCourses();
@@ -52,9 +50,7 @@ class CourseController extends GetxController
       // else {
       //   Get.toNamed(Routes.LOGIN);
       // }
-      EasyLoading.showSuccess("Done");
       update();
-      EasyLoading.dismiss();
     }
   }
 
