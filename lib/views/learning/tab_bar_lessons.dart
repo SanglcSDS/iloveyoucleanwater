@@ -82,68 +82,6 @@ class LearningView extends GetView<LessonController> {
                                       ],
                                     ),
                                   ),
-                                  Obx(
-                                    () => Container(
-                                      child: controller.isComplete.value
-                                          ? Row(
-                                              children: [
-                                                Expanded(
-                                                  child: Container(
-                                                    margin: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 15,
-                                                        vertical: 5),
-                                                    alignment: Alignment.center,
-                                                    child: OutlinedButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(
-                                                                    primaryColor),
-                                                      ),
-                                                      onPressed: () =>
-                                                          Get.toNamed(
-                                                              Routes.QUESTIONS),
-                                                      child: const Text(
-                                                        'Kiểm tra kiến thức',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                                Expanded(
-                                                  child: Container(
-                                                    margin: const EdgeInsets
-                                                            .symmetric(
-                                                        horizontal: 15,
-                                                        vertical: 5),
-                                                    alignment: Alignment.center,
-                                                    child: OutlinedButton(
-                                                      style: ButtonStyle(
-                                                        backgroundColor:
-                                                            MaterialStateProperty
-                                                                .all<Color>(
-                                                                    primaryColor),
-                                                      ),
-                                                      onPressed: () =>
-                                                          Get.toNamed(
-                                                              Routes.QUESTIONS),
-                                                      child: const Text(
-                                                        'Đánh giá khóa học',
-                                                        style: TextStyle(
-                                                          color: Colors.white,
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                ),
-                                              ],
-                                            )
-                                          : const SizedBox(),
-                                    ),
-                                  )
                                 ],
                               ),
                               SafeArea(

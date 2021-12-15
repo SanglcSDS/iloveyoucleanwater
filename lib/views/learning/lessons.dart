@@ -13,47 +13,105 @@ class LessonView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SingleChildScrollView(
-      child: Column(
-        children: [
-          Container(
-            height: 40,
-            width: MediaQuery.of(context).size.width,
-            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
-            child: Row(
+    return Column(
+      children: [
+        Expanded(
+          child: SingleChildScrollView(
+            child: Column(
               children: [
                 Container(
-                  child: const Text(
-                    'Tiến độ:',
-                    style: TextStyle(fontWeight: FontWeight.w400, fontSize: 16),
+                  height: 40,
+                  width: MediaQuery.of(context).size.width,
+                  margin:
+                      const EdgeInsets.symmetric(vertical: 10, horizontal: 16),
+                  child: Row(
+                    children: [
+                      Container(
+                        child: const Text(
+                          'Tiến độ:',
+                          style: TextStyle(
+                              fontWeight: FontWeight.w400, fontSize: 16),
+                        ),
+                        margin: const EdgeInsets.only(right: 10),
+                      ),
+                      Expanded(
+                        child: LinearPercentIndicator(
+                          // width: MediaQuery.of(context).size.width - 100,
+                          animation: true,
+                          lineHeight: 20.0,
+                          animationDuration: 2000,
+                          percent: controller.percent!.value,
+                          center: Text(controller.percentStr!.value),
+                          linearStrokeCap: LinearStrokeCap.roundAll,
+                          progressColor: primaryColor,
+                        ),
+                      ),
+                    ],
                   ),
-                  margin: const EdgeInsets.only(right: 10),
                 ),
-                Expanded(
-                  child: LinearPercentIndicator(
-                    // width: MediaQuery.of(context).size.width - 100,
-                    animation: true,
-                    lineHeight: 20.0,
-                    animationDuration: 2000,
-                    percent: controller.percent!.value,
-                    center: Text(controller.percentStr!.value),
-                    linearStrokeCap: LinearStrokeCap.roundAll,
-                    progressColor: primaryColor,
-                  ),
+                Obx(
+                  () => controller.lessons!.isEmpty
+                      ? const SizedBox()
+                      : ListLesson(
+                          lessons: controller.lessons!,
+                          activeIndex: controller.activeIndex!.value,
+                        ),
                 ),
               ],
             ),
           ),
-          Obx(
-            () => controller.lessons!.isEmpty
-                ? const SizedBox()
-                : ListLesson(
-                    lessons: controller.lessons!,
-                    activeIndex: controller.activeIndex!.value,
-                  ),
+        ),
+        Obx(
+          () => Container(
+            child: controller.isComplete.value
+                ? Row(
+                    children: [
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
+                          alignment: Alignment.center,
+                          child: OutlinedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  primaryColor),
+                            ),
+                            onPressed: () => Get.toNamed(Routes.QUESTIONS),
+                            child: const Text(
+                              'Kiểm tra kiến thức',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                      Expanded(
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 15, vertical: 5),
+                          alignment: Alignment.center,
+                          child: OutlinedButton(
+                            style: ButtonStyle(
+                              backgroundColor: MaterialStateProperty.all<Color>(
+                                  primaryColor),
+                            ),
+                            onPressed: () => Get.toNamed(Routes.QUESTIONS),
+                            child: const Text(
+                              'Đánh giá khóa học',
+                              style: TextStyle(
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  )
+                : const SizedBox(),
           ),
-        ],
-      ),
+        )
+      ],
     );
   }
 }
