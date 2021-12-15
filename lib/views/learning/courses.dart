@@ -50,21 +50,19 @@ class CourseView extends StatelessWidget {
                 SizedBox(
                   height: 1.4 * (MediaQuery.of(context).size.height / 20),
                   width: 5 * (MediaQuery.of(context).size.width / 10),
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 5.0,
-                      primary: kBlue1,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(5.0),
+                  child: Theme(
+                    data: ThemeData(primarySwatch: kPrimaryMaterial),
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 5.0,
                       ),
-                    ),
-                    onPressed: () => Get.toNamed(Routes.LOGIN),
-                    child: Text(
-                      "Login",
-                      style: TextStyle(
-                        color: Colors.white,
-                        letterSpacing: 1.5,
-                        fontSize: MediaQuery.of(context).size.height / 40,
+                      onPressed: () => Get.toNamed(Routes.LOGIN),
+                      child: const Text(
+                        "ĐĂNG NHẬP",
+                        style: TextStyle(
+                          color: Colors.white,
+                          letterSpacing: 1.5,
+                        ),
                       ),
                     ),
                   ),
