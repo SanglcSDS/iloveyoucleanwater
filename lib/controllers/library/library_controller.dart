@@ -124,22 +124,22 @@ class LibraryController extends GetxController
     }
   }
 
-  Future<void> getDetailPhotoHome(LibraryModel news) async {
-    Response _data = await libraryService.getDetailPhoto(news.id);
+//   Future<void> getDetailPhotoHome(LibraryModel news) async {
+//     Response _data = await libraryService.getDetailPhoto(news.id);
 
-    if (_data.statusCode == 200) {
-      var jsonString = _data.body['data'];
-      if (jsonString != null) {
-        detailPhoto = LibraryDetailPhotoModel.fromJson(jsonString).obs;
-      }
-    }
-// LibraryDetailPhotoView
-    Get.to(() => LibraryDetailPhotoView(
-          news: detailPhoto!.value,
-          title: 'album'.tr,
-          datetime: news.createdAt,
-        ));
-  }
+//     if (_data.statusCode == 200) {
+//       var jsonString = _data.body['data'];
+//       if (jsonString != null) {
+//         detailPhoto = LibraryDetailPhotoModel.fromJson(jsonString).obs;
+//         Get.to(() => LibraryDetailPhotoView(
+//               news: detailPhoto!.value,
+//               title: 'album'.tr,
+//               datetime: news.createdAt,
+//             ));
+//       }
+//     }
+// // LibraryDetailPhotoView
+//   }
 
   @override
   void onClose() {

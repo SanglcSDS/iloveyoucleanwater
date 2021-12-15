@@ -55,7 +55,7 @@ class TitleWidgetNextView extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         icon: Icon(
                           Icons.arrow_forward_ios,
-                          color: kBlue1,
+                          color: primaryColor,
                           size: 15,
                         ),
                       )),
@@ -126,7 +126,7 @@ class TitleWidgetNextPhotoVideo extends StatelessWidget {
                         alignment: Alignment.centerRight,
                         icon: Icon(
                           Icons.arrow_forward_ios,
-                          color: kBlue1,
+                          color: primaryColor,
                           size: 15,
                         ),
                       )),

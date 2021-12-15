@@ -42,8 +42,8 @@ class DocumentController extends GetxController {
 
       var dir = await getApplicationDocumentsDirectory();
       List<Map<String, dynamic>> _values = <Map<String, dynamic>>[].obs;
-      if (documents != null && documents!.isNotEmpty) {
-        documents!.forEach((element) {
+      if (documents.length > 0) {
+        documents.forEach((element) {
           String localPath = checkDocumentInStorage(element, dir.path);
           _values.add({
             "isDownloading": false,

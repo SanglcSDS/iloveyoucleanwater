@@ -18,7 +18,7 @@ class DocumentView extends StatelessWidget {
                 itemCount: _controller.documents.length,
                 itemBuilder: (context, index) {
                   return _fileItem(
-                      context, _controller.documents![index], index);
+                      context, _controller.documents[index], index);
                 }),
           )
         : const Center(

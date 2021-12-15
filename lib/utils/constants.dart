@@ -70,14 +70,14 @@ var kDetailContent = GoogleFonts.roboto(
 
 var kTitleCard = GoogleFonts.roboto(
   textStyle: const TextStyle(
-    fontSize: 18.0,
+    fontSize: 16.0,
     color: kBlack,
     fontWeight: FontWeight.bold,
   ),
 );
 var kTitleCard1 = GoogleFonts.roboto(
   textStyle: const TextStyle(
-    fontSize: 18.0,
+    fontSize: 16.0,
     color: primaryColor,
     fontWeight: FontWeight.bold,
   ),
@@ -91,7 +91,10 @@ var descriptionStyle = GoogleFonts.roboto(
 
 // String a = calculateTimeDifferenceBetween(
 //     startDate: tempDate, endDate: DateTime.now());
-
+pigLatin(String words) => words.replaceAllMapped(
+      RegExp(r'<img [^>]*src=[""]([^""]+)[^>]*', caseSensitive: false),
+      (match) => "<img ${match.group(1)} /",
+    );
 String calculateTimeDifferenceBetween({required String stringTime}) {
   DateTime startDate = DateTime.parse(stringTime);
   DateTime endDate = DateTime.now();

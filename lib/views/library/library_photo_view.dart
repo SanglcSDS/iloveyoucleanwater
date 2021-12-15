@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
@@ -9,6 +10,7 @@ class LibraryPhotoView extends StatelessWidget {
   LibraryPhotoView({required this.tag});
 
   final _controller = Get.put(LibraryController());
+  final _homecontroller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -41,7 +43,7 @@ class LibraryPhotoView extends StatelessWidget {
                 tag: "$tag$index",
                 child: InkWell(
                   onTap: () {
-                    _controller.getDetailPhotoHome(recent);
+                    _homecontroller.getDetailPhotoHome(recent);
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 15.0),

@@ -152,12 +152,13 @@ class HomeView extends StatelessWidget {
                       index: 3,
                     ),
                     Container(
-                      //  padding: EdgeInsets.only(left: 12, right: 12),
+                      padding: EdgeInsets.only(left: 6, right: 6),
                       width: double.infinity,
                       height: 300.0,
                       child: SingleChildScrollView(
                         scrollDirection: Axis.horizontal,
                         child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: List.generate(_Controller.listPhoto.length,
                               (index) {
                             var news = _Controller.listPhoto[index];
@@ -169,8 +170,8 @@ class HomeView extends StatelessWidget {
                                   _Controller.getDetailPhotoHome(news);
                                 },
                                 child: Container(
-                                  margin:
-                                      const EdgeInsets.only(left: 10, top: 5.0),
+                                  margin: const EdgeInsets.only(
+                                      top: 5.0, right: 12),
                                   child: PrimaryCard(news: news),
                                 ),
                               ),

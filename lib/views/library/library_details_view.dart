@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_widget_from_html/flutter_widget_from_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/service/news.dart';
@@ -117,7 +117,9 @@ class DetailsLibraryView extends StatelessWidget {
               ],
             ),
             SizedBox(height: 15.0),
-            Html(data: news.content),
+            SingleChildScrollView(
+              child: HtmlWidget(news.content),
+            ),
             SizedBox(height: 25.0)
           ],
         ),

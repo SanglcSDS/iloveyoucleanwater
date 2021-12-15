@@ -60,6 +60,7 @@ dependencies:
 
   dropdown_search: ^2.0.1
   flutter_easyloading: ^3.0.3
+  flutter_widget_from_html: ^0.8.0
 
 dev_dependencies:
   flutter_test:
