@@ -1,10 +1,5 @@
-import 'dart:convert';
-import 'dart:math';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/controllers/learning/document_controller.dart';
@@ -32,6 +27,7 @@ class CourseController extends GetxController
 
   @override
   void onInit() {
+    initData();
     dropletIcons.shuffle();
     super.onInit();
   }
@@ -50,8 +46,8 @@ class CourseController extends GetxController
       // else {
       //   Get.toNamed(Routes.LOGIN);
       // }
-      update();
     }
+    update();
   }
 
   String getDropletIcon(int index) {

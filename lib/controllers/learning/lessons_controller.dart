@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/learning/lesson.dart';
@@ -27,9 +28,11 @@ class LessonController extends GetxController {
   }
 
   void onInitLesson(int courseId) async {
+    debugPrint("course id ==== " + courseId.toString());
     _courseId = courseId;
     Response<dynamic> response =
         await _learningService.getLessonByCoureseId(courseId);
+    debugPrint("response code " + response.statusCode.toString());
     if (response.statusCode == 200) {
       Map<String, dynamic> body = response.body;
       List<Lesson> list = [];
@@ -66,7 +69,7 @@ class LessonController extends GetxController {
       }
       update();
     } else {
-      Get.toNamed(Routes.LOGIN);
+      Get.offNamed(Routes.LOGIN);
     }
   }
 

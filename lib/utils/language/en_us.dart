@@ -10,4 +10,7 @@ const Map<String, String> en = {
   'video': 'Videos',
   'programNews': 'Program News',
   'environmentalNews': 'Environmental news',
+
+  // learning
+  'courses': 'Danh sách khóa học'
 };

@@ -18,8 +18,7 @@ class CourseView extends StatelessWidget {
       initState: (_) => _controller.initData(),
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title:
-              const Text('Danh sách khóa học', style: TextStyle(color: kGrey1)),
+          title: Text('courses'.tr, style: TextStyle(color: kGrey1)),
           centerTitle: true,
           backgroundColor: Colors.white,
         ),
@@ -132,7 +131,7 @@ class CourseView extends StatelessWidget {
                                 _controller.courses[index].title,
                                 style: const TextStyle(
                                     color: kBlack,
-                                    fontSize: 20,
+                                    fontSize: 16,
                                     fontWeight: FontWeight.w600),
                               ),
                             ),
@@ -145,7 +144,6 @@ class CourseView extends StatelessWidget {
                                     _lessonCount.toString() + ' bài học',
                                     style: const TextStyle(
                                         color: kBlack,
-                                        fontSize: 18,
                                         fontWeight: FontWeight.w300),
                                   )),
                             ),
