@@ -65,13 +65,15 @@ class PrimaryCard extends StatelessWidget {
             child: Row(
               children: [
                 const SizedBox(width: 5.0),
-                const CircleAvatar(
-                  radius: 5.0,
-                  backgroundColor: kGrey1,
+                const Icon(
+                  Icons.date_range,
+                  color: kGrey1,
                 ),
-                const SizedBox(width: 10.0),
+                const SizedBox(width: 5.0),
                 Expanded(
-                    child: Text(news.createdAt,
+                    child: Text(
+                        calculateTimeDifferenceBetween(
+                            stringTime: news.createdAt),
                         style: kDetailContent,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1))

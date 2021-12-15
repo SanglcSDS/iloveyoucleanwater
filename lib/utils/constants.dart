@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:intl/intl.dart';
+import 'package:get/get.dart';
 
 class Constants {
   Constants._();
@@ -72,3 +74,26 @@ var descriptionStyle = GoogleFonts.roboto(
   fontSize: 15.0,
   height: 2.0,
 ));
+
+// String a = calculateTimeDifferenceBetween(
+//     startDate: tempDate, endDate: DateTime.now());
+
+String calculateTimeDifferenceBetween({required String stringTime}) {
+  DateTime startDate = DateTime.parse(stringTime);
+  DateTime endDate = DateTime.now();
+
+  int seconds = endDate.difference(startDate).inSeconds;
+  var outputFormat = DateFormat('dd/MM/yyyy');
+
+  if (seconds < 60) {
+    return '$seconds ' + 'second'.tr;
+  } else if (seconds >= 60 && seconds < 3600) {
+    return '${startDate.difference(endDate).inMinutes.abs()} ' + 'minute'.tr;
+  } else if (seconds >= 3600 && seconds < 86400) {
+    return '${startDate.difference(endDate).inHours.abs()} ' + 'hour'.tr;
+  } else if (seconds >= 86400 && seconds < 2628000) {
+    return '${startDate.difference(endDate).inDays.abs()} ' + 'day'.tr;
+  } else {
+    return outputFormat.format(startDate);
+  }
+}

@@ -2,12 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/library/library_detail_photo_model.dart';
-import 'package:iloveyoucleanwater/models/news/news_%20details_model.dart';
 
-import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 import 'package:shimmer/shimmer.dart';
@@ -15,7 +12,9 @@ import 'package:shimmer/shimmer.dart';
 class LibraryDetailPhotoView extends StatelessWidget {
   final LibraryDetailPhotoModel news;
   final String title;
-  LibraryDetailPhotoView({required this.news, required this.title});
+  final String datetime;
+  LibraryDetailPhotoView(
+      {required this.news, required this.title, required this.datetime});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,16 +44,6 @@ class LibraryDetailPhotoView extends StatelessWidget {
         child: ListView(
           children: [
             const SizedBox(height: 12.0),
-            // Container(
-            //   height: 220.0,
-            //   decoration: BoxDecoration(
-            //     borderRadius: BorderRadius.circular(5.0),
-            //     image: DecorationImage(
-            //       image: NetworkImage(news.image),
-            //       fit: BoxFit.fill,
-            //     ),
-            //   ),
-            // ),
             Container(
               height: 220.0,
               child: ClipRRect(
@@ -128,25 +117,22 @@ class LibraryDetailPhotoView extends StatelessWidget {
             Text(news.title, style: kTitleCard.copyWith(fontSize: 28.0)),
             const SizedBox(height: 15.0),
             Row(
-              children: <Widget>[
-                Text("news.createdAt", style: kDetailContent),
+              children: [
                 const SizedBox(width: 5.0),
-                const SizedBox(
-                  width: 10.0,
-                  child: Divider(
-                    color: kBlack,
-                    height: 1.0,
-                  ),
+                const Icon(
+                  Icons.date_range,
+                  color: kGrey1,
                 ),
                 const SizedBox(width: 5.0),
-                Text(
-                  news.language,
-                  style: kDetailContent.copyWith(color: Colors.black),
-                ),
+                Expanded(
+                    child: Text(
+                        calculateTimeDifferenceBetween(stringTime: datetime),
+                        style: kDetailContent,
+                        overflow: TextOverflow.ellipsis,
+                        maxLines: 1))
               ],
             ),
             const SizedBox(height: 15.0),
-
             Html(data: news.content),
             const SizedBox(height: 15.0),
             Column(

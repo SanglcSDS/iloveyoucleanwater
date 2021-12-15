@@ -73,17 +73,18 @@ class NewWidgetView extends StatelessWidget {
                   Row(
                     children: [
                       const SizedBox(width: 5.0),
-                      const CircleAvatar(
-                        radius: 5.0,
-                        backgroundColor: kGrey1,
+                      const Icon(
+                        Icons.date_range,
+                        color: kGrey1,
                       ),
-                      const SizedBox(width: 10.0),
+                      const SizedBox(width: 5.0),
                       Expanded(
-                        child: Text(news.createdAt,
-                            style: kDetailContent,
-                            overflow: TextOverflow.ellipsis,
-                            maxLines: 1),
-                      )
+                          child: Text(
+                              calculateTimeDifferenceBetween(
+                                  stringTime: news.createdAt),
+                              style: kDetailContent,
+                              overflow: TextOverflow.ellipsis,
+                              maxLines: 1))
                     ],
                   )
                 ],

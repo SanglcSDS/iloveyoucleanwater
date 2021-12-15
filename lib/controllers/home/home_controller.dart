@@ -13,8 +13,7 @@ import 'package:iloveyoucleanwater/service/home_Service.dart';
 import 'package:iloveyoucleanwater/service/introduce_service.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
 import 'package:iloveyoucleanwater/views/home/home_detail_new_view.dart';
-import 'package:iloveyoucleanwater/views/library/library_detail_photo_View.dart';
-import 'package:intl/intl.dart';
+import 'package:iloveyoucleanwater/views/library/library_detail_photo_view.dart';
 
 final controllerNews = Get.put(NewsController());
 final controllerLibrary = Get.put(LibraryController());
@@ -54,26 +53,7 @@ class HomeController extends GetxController {
     isloadingHome(false);
     update();
 
-    DateTime tempDate = DateTime.parse("2021-12-09T08:21:04.000000Z");
-
-    String a = calculateTimeDifferenceBetween(
-        startDate: tempDate, endDate: DateTime.now());
-    print(a);
-
     super.onInit();
-  }
-
-  static String calculateTimeDifferenceBetween(
-      {required DateTime startDate, required DateTime endDate}) {
-    int seconds = endDate.difference(startDate).inSeconds;
-    if (seconds < 60)
-      return '$seconds second';
-    else if (seconds >= 60 && seconds < 3600)
-      return '${startDate.difference(endDate).inMinutes.abs()} minute';
-    else if (seconds >= 3600 && seconds < 86400)
-      return '${startDate.difference(endDate).inHours} hour';
-    else
-      return '${startDate.difference(endDate).inDays} day';
   }
 
   Future<bool> onRefreshHome({bool isRefresh = false}) async {
@@ -203,9 +183,12 @@ class HomeController extends GetxController {
         detailPhoto = LibraryDetailPhotoModel.fromJson(jsonString).obs;
       }
     }
-// LibraryDetailPhotoView
-    Get.to(() =>
-        LibraryDetailPhotoView(news: detailPhoto!.value, title: 'album'.tr));
+
+    Get.to(() => LibraryDetailPhotoView(
+          news: detailPhoto!.value,
+          title: 'album'.tr,
+          datetime: news.createdAt,
+        ));
   }
 
   Future<void> getNewsDetailsModel(NewModel news) async {

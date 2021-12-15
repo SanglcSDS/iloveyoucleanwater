@@ -1,12 +1,8 @@
-import 'dart:ffi';
-
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
-import 'package:iloveyoucleanwater/models/news/news_model.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/home/banner_home_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/home_item_news_widget_view.dart';
@@ -53,7 +49,7 @@ class HomeView extends StatelessWidget {
     return Obx(
       () => Center(
         child: SmartRefresher(
-          header: ClassicHeader(
+          header: const ClassicHeader(
             releaseText: 'Nhả ra để làm mới',
             refreshingText: "Làm mới...",
             completeText: "Làm mới hoàn tất",

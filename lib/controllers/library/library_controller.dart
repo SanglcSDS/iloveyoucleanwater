@@ -134,8 +134,11 @@ class LibraryController extends GetxController
       }
     }
 // LibraryDetailPhotoView
-    Get.to(() =>
-        LibraryDetailPhotoView(news: detailPhoto!.value, title: 'album'.tr));
+    Get.to(() => LibraryDetailPhotoView(
+          news: detailPhoto!.value,
+          title: 'album'.tr,
+          datetime: news.createdAt,
+        ));
   }
 
   @override

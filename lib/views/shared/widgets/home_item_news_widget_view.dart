@@ -11,7 +11,7 @@ class HomeItemNewsWidgetView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: EdgeInsets.only(top: 7.0),
+      padding: EdgeInsets.only(top: 7.0, bottom: 10.0),
       // decoration: BoxDecoration(
       //     borderRadius: BorderRadius.circular(5.0),
       //     border: Border.all(color: kGrey3, width: 1.0)),
@@ -67,20 +67,22 @@ class HomeItemNewsWidgetView extends StatelessWidget {
               style: kDetailContent,
             ),
           ),
-          const SizedBox(height: 5.0),
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 9.0, vertical: 15.0),
+                EdgeInsets.only(top: 5.0, bottom: 10.0, left: 9.0, right: 9.0),
+            // padding:const EdgeInsets.symmetric(horizontal: 9.0, vertical: 15.0),
             child: Row(
               children: [
                 const SizedBox(width: 5.0),
-                const CircleAvatar(
-                  radius: 5.0,
-                  backgroundColor: kGrey1,
+                const Icon(
+                  Icons.date_range,
+                  color: kGrey1,
                 ),
-                const SizedBox(width: 10.0),
+                const SizedBox(width: 5.0),
                 Expanded(
-                    child: Text(news.createdAt,
+                    child: Text(
+                        calculateTimeDifferenceBetween(
+                            stringTime: news.createdAt),
                         style: kDetailContent,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1))

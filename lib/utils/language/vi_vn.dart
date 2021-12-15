@@ -12,4 +12,8 @@ const Map<String, String> vi = {
   'environmentalNews': 'Tin tức môi trường',
   'introduceProgram': 'Giới thiệu chương trình',
   'introducePartner': 'Giới thiệu đối tác',
+  'second': ' Giây trước',
+  'minute': ' Phút trước',
+  'hour': ' Giời trước',
+  'day': ' Ngày trước',
 };

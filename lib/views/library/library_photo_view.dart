@@ -36,6 +36,7 @@ class LibraryPhotoView extends StatelessWidget {
             itemCount: _controller.listPhoto.length,
             itemBuilder: (context, index) {
               var recent = _controller.listPhoto[index];
+
               return Hero(
                 tag: "$tag$index",
                 child: InkWell(
