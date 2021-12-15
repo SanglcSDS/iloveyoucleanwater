@@ -15,7 +15,7 @@ class LogInView extends GetView<AccountController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Đăng nhập'),
+        title: Text('login'.tr),
         backgroundColor: primaryColor,
         elevation: 0.0,
       ),
@@ -40,6 +40,7 @@ class LogInView extends GetView<AccountController> {
             ),
             Image.asset('assets/images/logo.png'),
             Container(
+              color: Colors.white,
               padding: const EdgeInsets.symmetric(horizontal: 16),
               child: Form(
                 key: _loginForm,
@@ -53,17 +54,17 @@ class LogInView extends GetView<AccountController> {
                       child: TextFormField(
                         controller: _emailController,
                         keyboardType: TextInputType.emailAddress,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.email,
                               color: primaryColor,
                             ),
-                            hintText: "Nhập email"),
+                            hintText: "login_email".tr),
                         validator: (value) {
                           if (value == null || value.isEmpty) {
-                            return 'Bạn chưa nhập email.';
+                            return 'validate_email_empty'.tr;
                           } else if (!value.isEmail) {
-                            return 'Email chưa đúng định dạng.';
+                            return 'validate_email_invalid'.tr;
                           }
                           return null;
                         },
@@ -78,12 +79,12 @@ class LogInView extends GetView<AccountController> {
                         keyboardType: TextInputType.text,
                         obscureText: true,
                         controller: _pwdController,
-                        decoration: const InputDecoration(
+                        decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.lock,
                               color: primaryColor,
                             ),
-                            hintText: 'Nhập password'),
+                            hintText: 'login_password'.tr),
                       ),
                     ),
                     const SizedBox(
@@ -96,25 +97,28 @@ class LogInView extends GetView<AccountController> {
                         child: ElevatedButton(
                             onPressed: () async {
                               if (_loginForm.currentState!.validate()) {
-                                EasyLoading.show(status: "Đang đăng nhập...");
+                                EasyLoading.show(
+                                    status: 'login_on_progress'.tr);
                                 bool _isLogged = await controller.onLogin(
                                     context,
                                     _emailController.text,
                                     _pwdController.text);
                                 if (_isLogged) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    const SnackBar(
-                                        content: Text('Đăng nhập thành công!')),
+                                    SnackBar(
+                                      content: Text('login_success'.tr),
+                                      backgroundColor: primaryColor,
+                                    ),
                                   );
                                   EasyLoading.dismiss();
                                   Get.offNamed(Routes.HOME);
                                 }
                               }
                             },
-                            child: const Padding(
+                            child: Padding(
                               padding: EdgeInsets.all(15),
                               child: Text(
-                                'ĐĂNG NHẬP',
+                                'login_btn'.tr,
                                 style: TextStyle(color: Colors.white),
                               ),
                             )),
@@ -123,15 +127,15 @@ class LogInView extends GetView<AccountController> {
                     TextButton(
                       onPressed: () => Get.toNamed(Routes.REGISTER),
                       child: RichText(
-                        text: const TextSpan(children: [
+                        text: TextSpan(children: [
                           TextSpan(
-                            text: 'Bạn chưa có tài khoản? ',
+                            text: 'sign_up_question'.tr,
                             style: TextStyle(
                               color: Colors.black,
                             ),
                           ),
                           TextSpan(
-                            text: 'Đăng ký ngay',
+                            text: 'sign_up_now'.tr,
                             style: TextStyle(
                               color: primaryColor,
                               fontWeight: FontWeight.bold,

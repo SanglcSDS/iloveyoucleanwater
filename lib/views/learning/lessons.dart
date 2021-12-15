@@ -27,8 +27,8 @@ class LessonView extends StatelessWidget {
                   child: Row(
                     children: [
                       Container(
-                        child: const Text(
-                          'Tiến độ:',
+                        child: Text(
+                          'course_progress'.tr,
                           style: TextStyle(
                               fontWeight: FontWeight.w400, fontSize: 16),
                         ),
@@ -77,8 +77,8 @@ class LessonView extends StatelessWidget {
                                   primaryColor),
                             ),
                             onPressed: () => Get.toNamed(Routes.QUESTIONS),
-                            child: const Text(
-                              'Kiểm tra kiến thức',
+                            child: Text(
+                              'course_quiz'.tr,
                               style: TextStyle(
                                 color: Colors.white,
                               ),
@@ -97,8 +97,8 @@ class LessonView extends StatelessWidget {
                                   primaryColor),
                             ),
                             onPressed: () => Get.toNamed(Routes.QUESTIONS),
-                            child: const Text(
-                              'Đánh giá khóa học',
+                            child: Text(
+                              'course_rate'.tr,
                               style: TextStyle(
                                 color: Colors.white,
                               ),

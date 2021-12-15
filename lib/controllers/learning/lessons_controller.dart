@@ -23,16 +23,14 @@ class LessonController extends GetxController {
   @override
   void onInit() {
     percent = 0.0.obs;
-    percentStr = '0% Hoàn thành'.obs;
+    percentStr = ('0% ' + 'course_percent'.tr).obs;
     super.onInit();
   }
 
   void onInitLesson(int courseId) async {
-    debugPrint("course id ==== " + courseId.toString());
     _courseId = courseId;
     Response<dynamic> response =
         await _learningService.getLessonByCoureseId(courseId);
-    debugPrint("response code " + response.statusCode.toString());
     if (response.statusCode == 200) {
       Map<String, dynamic> body = response.body;
       List<Lesson> list = [];
@@ -55,7 +53,8 @@ class LessonController extends GetxController {
         if (countUnlockLesson == list.length) isComplete = true.obs;
         currentUrl = currentLesson!.value.url.obs;
         percent = (countUnlockLesson / list.length).obs;
-        percentStr = '${(percent! * 100).floor()} % Hoàn thành'.obs;
+        percentStr =
+            ('${(percent! * 100).floor()} % ' + 'course_percent'.tr).obs;
 
         videoController = YoutubePlayerController(
           initialVideoId: YoutubePlayer.convertUrlToId(currentUrl!.value)!,
@@ -75,7 +74,7 @@ class LessonController extends GetxController {
 
   void changeLesson(Lesson lesson, int index) {
     if (lesson.statusWork) {
-      EasyLoading.show(status: "Đang tải bài học....");
+      EasyLoading.show(status: "lesson_loading".tr);
       currentLesson = lesson.obs;
       currentUrl = lesson.url.obs;
       activeIndex = index.obs;
@@ -108,11 +107,8 @@ class LessonController extends GetxController {
     } else {
       isComplete = true.obs;
       update();
-      MsgDialog.showMsgDialogs(
-          context,
-          'Chúc mừng!',
-          'Bạn đã hoàn thành khóa học!\nLàm bài kiểm tra ngay?',
-          () => Get.toNamed(Routes.QUESTIONS));
+      MsgDialog.showMsgDialogs(context, 'course_complete_title'.tr,
+          'course_complete_content'.tr, () => Get.toNamed(Routes.QUESTIONS));
     }
   }
 }

@@ -21,7 +21,7 @@ class SignUpView extends GetView<RegisterController> {
       init: RegisterController(),
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: const Text('Đăng ký'),
+          title: Text('signup'.tr),
           backgroundColor: primaryColor,
           elevation: 0.0,
         ),
@@ -41,34 +41,28 @@ class SignUpView extends GetView<RegisterController> {
                       )),
                 ),
               ),
-              // const SizedBox(
-              //   height: 40,
-              // ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Form(
                   key: _signUpForm,
                   child: Column(
                     children: [
-                      // const SizedBox(
-                      //   height: 40,
-                      // ),
                       Theme(
                         data: ThemeData(primarySwatch: kPrimaryMaterial),
                         child: TextFormField(
                           controller: _emailController,
                           keyboardType: TextInputType.emailAddress,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.email,
                                 color: primaryColor,
                               ),
-                              hintText: "Email *"),
+                              hintText: "signup_email".tr),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Bạn chưa nhập email.';
+                              return 'validate_email_empty'.tr;
                             } else if (!value.isEmail) {
-                              return 'Email chưa đúng định dạng.';
+                              return 'validate_email_invalid'.tr;
                             }
                             return null;
                           },
@@ -83,17 +77,17 @@ class SignUpView extends GetView<RegisterController> {
                             keyboardType: TextInputType.text,
                             obscureText: true,
                             controller: _pwdController,
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 prefixIcon: Icon(
                                   Icons.lock,
                                   color: primaryColor,
                                 ),
-                                hintText: 'Mật khẩu *'),
+                                hintText: 'signup_password'.tr),
                             validator: (value) {
                               if (value == null || value.isEmpty) {
-                                return 'Vui lòng nhập mật khẩu.';
+                                return 'validate_password_empty'.tr;
                               } else if (value.length < 8) {
-                                return 'Mật khẩu cần có ít nhất 8 ký tự Ví dụ: Mizuiku123';
+                                return 'validate_password_invalid'.tr;
                               }
                               return null;
                             }),
@@ -106,15 +100,15 @@ class SignUpView extends GetView<RegisterController> {
                         child: TextFormField(
                           keyboardType: TextInputType.text,
                           controller: _nameController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.person,
                                 color: primaryColor,
                               ),
-                              hintText: 'Họ và tên *'),
+                              hintText: 'signup_name'.tr),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return 'Vui lòng nhập tên (ghi tiếng Việt có dấu).';
+                              return 'validate_name_empty'.tr;
                             }
                             return null;
                           },
@@ -128,12 +122,12 @@ class SignUpView extends GetView<RegisterController> {
                         child: TextFormField(
                           keyboardType: TextInputType.text,
                           controller: _phoneController,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                               prefixIcon: Icon(
                                 Icons.phone,
                                 color: primaryColor,
                               ),
-                              hintText: 'Số điện thoại'),
+                              hintText: 'signup_phone'.tr),
                         ),
                       ),
                       const SizedBox(
@@ -144,12 +138,12 @@ class SignUpView extends GetView<RegisterController> {
                         child: TextFormField(
                           controller: _workplaceController,
                           keyboardType: TextInputType.text,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             prefixIcon: Icon(
                               Icons.work,
                               color: primaryColor,
                             ),
-                            hintText: 'Nơi công tác',
+                            hintText: 'signup_workplace'.tr,
                           ),
                           validator: (value) {
                             return null;
@@ -163,11 +157,8 @@ class SignUpView extends GetView<RegisterController> {
                         data: ThemeData(primarySwatch: kPrimaryMaterial),
                         child: CustomDropdown(
                           items: controller.genders,
-                          selectedItem: const {
-                            "id": -1,
-                            "value": "Giới tính *"
-                          },
-                          label: "Giới tính *",
+                          selectedItem: {"id": -1, "value": "signup_gender".tr},
+                          label: "signup_gender".tr,
                           itemAsString: (Map<String, dynamic> item) =>
                               item['value'],
                           onChange: (Map<String, dynamic>? newValue) {
@@ -176,7 +167,7 @@ class SignUpView extends GetView<RegisterController> {
                           showSearchBox: true,
                           validation: (value) {
                             if (value == null || value["id"] < 0) {
-                              return 'Vui lòng chọn giới tính.';
+                              return 'validate_gender_empty'.tr;
                             }
                             return null;
                           },
@@ -190,7 +181,7 @@ class SignUpView extends GetView<RegisterController> {
                         child: CustomDropdown(
                           items: controller.jobs,
                           selectedItem: controller.jobs[0],
-                          label: "Bạn là",
+                          label: "signup_you_are".tr,
                           itemAsString: (Map<String, dynamic> item) =>
                               item['value'],
                           onChange: (Map<String, dynamic>? newValue) {
@@ -252,22 +243,22 @@ class SignUpView extends GetView<RegisterController> {
                           ),
                           Expanded(
                             child: RichText(
-                              text: const TextSpan(
-                                text: 'Bạn có đồng ý với ',
+                              text: TextSpan(
+                                text: 'sign_up_policy_1'.tr,
                                 style: TextStyle(color: kBlack),
                                 children: [
                                   TextSpan(
-                                      text: 'Điều khoản sử dụng ',
+                                      text: 'sign_up_policy_2'.tr,
                                       style: TextStyle(color: primaryColor)),
                                   TextSpan(
-                                    text: 'và ',
+                                    text: 'sign_up_policy_3'.tr,
                                     style: TextStyle(color: kBlack),
                                   ),
                                   TextSpan(
-                                      text: 'Chính sách bảo mật ',
+                                      text: 'sign_up_policy_4'.tr,
                                       style: TextStyle(color: primaryColor)),
                                   TextSpan(
-                                    text: 'của hệ thống trực tuyến này?',
+                                    text: 'sign_up_policy_5'.tr,
                                     style: TextStyle(color: kBlack),
                                   ),
                                 ],
@@ -276,7 +267,6 @@ class SignUpView extends GetView<RegisterController> {
                           ),
                         ]),
                       ),
-
                       const SizedBox(
                         height: 32,
                       ),
@@ -287,7 +277,6 @@ class SignUpView extends GetView<RegisterController> {
                           child: ElevatedButton(
                               onPressed: () async {
                                 if (_signUpForm.currentState!.validate()) {
-                                  debugPrint("validated");
                                   bool isRegisted = await controller.onRegister(
                                       context,
                                       _emailController.text,
@@ -297,23 +286,26 @@ class SignUpView extends GetView<RegisterController> {
                                       _workplaceController.text);
                                   if (isRegisted == true) {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content: Text('Đăng ký thành công!')),
+                                      SnackBar(
+                                        content: Text('sign_up_success'.tr),
+                                        backgroundColor: primaryColor,
+                                      ),
                                     );
                                     Get.offNamed(Routes.LOGIN);
                                   } else {
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                          content:
-                                              Text('Đăng ký không thành công')),
+                                      SnackBar(
+                                        content: Text('sign_up_unsuccess'.tr),
+                                        backgroundColor: primaryColor,
+                                      ),
                                     );
                                   }
                                 }
                               },
-                              child: const Padding(
+                              child: Padding(
                                 padding: EdgeInsets.all(15),
                                 child: Text(
-                                  'ĐĂNG KÝ',
+                                  'signup_btn'.tr,
                                   style: TextStyle(color: Colors.white),
                                 ),
                               )),
@@ -322,15 +314,15 @@ class SignUpView extends GetView<RegisterController> {
                       TextButton(
                         onPressed: () => Get.offNamed(Routes.LOGIN),
                         child: RichText(
-                          text: const TextSpan(children: [
+                          text: TextSpan(children: [
                             TextSpan(
-                              text: 'Bạn đã có tài khoản. ',
+                              text: 'log_in_question'.tr,
                               style: TextStyle(
                                 color: Colors.black,
                               ),
                             ),
                             TextSpan(
-                              text: 'Đăng nhập',
+                              text: 'login'.tr,
                               style: TextStyle(
                                 color: primaryColor,
                                 fontWeight: FontWeight.bold,

@@ -93,7 +93,7 @@ class CustomDrawer extends StatelessWidget {
             Icon(Icons.exit_to_app),
             'Đăn nhập',
             () => {
-              Get.offNamed(Routes.LOGIN),
+              Get.toNamed(Routes.LOGIN),
               //  box.remove('token'),
             },
           ),

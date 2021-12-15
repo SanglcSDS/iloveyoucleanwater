@@ -16,7 +16,7 @@ class DocumentController extends GetxController {
   late int _courseId;
   RxBool downloading = false.obs;
   RxList<Map<String, dynamic>> downloadValues = <Map<String, dynamic>>[].obs;
-  RxList documents = <Document>[].obs;
+  RxList<Document>? documents;
   final GetStorage _box = GetStorage();
   final LearningService _learningService = Get.put(LearningService());
 
@@ -85,14 +85,15 @@ class DocumentController extends GetxController {
           var percent = rec / total;
           downloadValues[index]['percent'] = percent;
           downloadValues[index]['percentStr'] =
-              'Downloading... ${(percent * 100).floor()} %';
+              'document_progressing'.tr + ' ${(percent * 100).floor()} %';
           update();
         },
       );
       downloadValues[index]['localPath'] = localPath;
     } catch (e) {
       debugPrint(e.toString());
-      MsgDialog.showWarningDialogs(context, "Lỗi", "Tải file thất bại!");
+      MsgDialog.showWarningDialogs(
+          context, "error".tr, "document_download_fail".tr);
     }
 
     downloadValues[index]['isDownloading'] = false;

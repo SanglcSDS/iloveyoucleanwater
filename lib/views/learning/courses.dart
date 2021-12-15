@@ -56,8 +56,8 @@ class CourseView extends StatelessWidget {
                         elevation: 5.0,
                       ),
                       onPressed: () => Get.toNamed(Routes.LOGIN),
-                      child: const Text(
-                        "ĐĂNG NHẬP",
+                      child: Text(
+                        "login_btn".tr,
                         style: TextStyle(
                           color: Colors.white,
                           letterSpacing: 1.5,
@@ -71,7 +71,7 @@ class CourseView extends StatelessWidget {
             Container(
               padding: const EdgeInsets.symmetric(vertical: 20),
               child: Text(
-                'Bạn phải đăng nhập để tham gia các khóa học.',
+                'login_require'.tr,
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: MediaQuery.of(context).size.height / 45,
@@ -141,7 +141,8 @@ class CourseView extends StatelessWidget {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 15, horizontal: 15),
                                   child: Text(
-                                    _lessonCount.toString() + ' bài học',
+                                    '${_lessonCount.toString()} ' +
+                                        'lesson_lower_case'.tr,
                                     style: const TextStyle(
                                         color: kBlack,
                                         fontWeight: FontWeight.w300),

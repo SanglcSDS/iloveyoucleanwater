@@ -26,7 +26,7 @@ class CommentView extends StatelessWidget {
                 keyboardType: TextInputType.multiline,
                 textInputAction: TextInputAction.newline,
                 decoration: InputDecoration(
-                  hintText: "Type a messages...",
+                  hintText: "comment_input".tr,
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(4),
                   ),

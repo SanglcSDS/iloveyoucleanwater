@@ -29,8 +29,8 @@ class HomeTabView extends StatelessWidget {
             ),
             actions: <Widget>[
               IconButton(
-                icon: const Icon(Icons.login, color: kGrey1),
-                onPressed: () => Get.offNamed(Routes.LOGIN),
+                icon: const Icon(Icons.login, color: primaryColor),
+                onPressed: () => Get.toNamed(Routes.LOGIN),
               ),
             ],
             leading: IconButton(
