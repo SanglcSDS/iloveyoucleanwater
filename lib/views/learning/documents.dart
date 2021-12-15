@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/learning/document_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/document.dart';
+import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class DocumentView extends StatelessWidget {
   DocumentView({Key? key}) : super(key: key);
@@ -13,11 +14,11 @@ class DocumentView extends StatelessWidget {
     return (_controller.documents != null && _controller.documents.isNotEmpty)
         ? GetBuilder(
             init: DocumentController(),
-            initState: (_) => _controller.loadDocuments(),
             builder: (_) => ListView.builder(
                 itemCount: _controller.documents.length,
                 itemBuilder: (context, index) {
-                  return _fileItem(_controller.documents[index], index);
+                  return _fileItem(
+                      context, _controller.documents![index], index);
                 }),
           )
         : const Center(
@@ -25,7 +26,7 @@ class DocumentView extends StatelessWidget {
           );
   }
 
-  Widget _fileItem(Document document, int index) {
+  Widget _fileItem(BuildContext context, Document document, int index) {
     return Container(
       margin: index == 0
           ? const EdgeInsets.only(bottom: 2, left: 5, right: 5)
@@ -39,7 +40,7 @@ class DocumentView extends StatelessWidget {
               ),
               title: Container(
                   padding: const EdgeInsets.only(top: 5),
-                  child: Text(document.title)),
+                  child: Text(document.fileName!)),
               subtitle: Container(
                 padding: const EdgeInsets.symmetric(vertical: 3),
                 alignment: Alignment.bottomLeft,
@@ -49,16 +50,22 @@ class DocumentView extends StatelessWidget {
                             ? TextButton(
                                 onPressed: () {
                                   // controller.downloadFile(document);
-                                  _controller.downloadFile(
+                                  _controller.downloadFile(context,
                                       document: document, index: index);
                                 },
-                                child: const Text('Tải xuống'),
+                                child: const Text(
+                                  'Tải xuống',
+                                  style: TextStyle(color: primaryColor),
+                                ),
                               )
                             : TextButton(
                                 onPressed: () => _controller.openFile(
                                     localPath: _controller.downloadValues[index]
                                         ["localPath"]),
-                                child: const Text('Mở file'),
+                                child: const Text(
+                                  'Mở file',
+                                  style: TextStyle(color: primaryColor),
+                                ),
                               )
                         : Column(
                             children: [
@@ -68,6 +75,7 @@ class DocumentView extends StatelessWidget {
                               ),
                               SizedBox(
                                 child: LinearProgressIndicator(
+                                  color: primaryColor,
                                   value: _controller.downloadValues[index]
                                       ["percent"],
                                 ),
@@ -76,21 +84,6 @@ class DocumentView extends StatelessWidget {
                           )),
               ),
             ),
-            // Obx(() => _controller.downloadValues[index]["isDownloading"] == true
-            //     ? Column(
-            //         children: [
-            //           SizedBox(
-            //             child: Text(
-            //                 _controller.downloadValues[index]["percentStr"]),
-            //           ),
-            //           SizedBox(
-            //             child: LinearProgressIndicator(
-            //               value: _controller.downloadValues[index]["percent"],
-            //             ),
-            //           ),
-            //         ],
-            //       )
-            //     : const SizedBox()),
           ],
         ),
       ),

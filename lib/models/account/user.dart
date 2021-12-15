@@ -7,7 +7,6 @@ class User {
   String? mobile;
   int? gender;
   int? job;
-  District? district;
   String? workplace;
   String? birthday; //format dd/MM/yyyy
   bool? isLock;
@@ -23,12 +22,13 @@ class User {
     this.mobile,
     this.gender,
     this.job,
-    this.district,
     this.workplace,
     this.birthday,
     this.isLock,
     this.status,
     this.avatar,
+    this.provinceId,
+    this.districtId,
   });
 
   User.fromJson(Map<String, dynamic> json)
@@ -47,19 +47,18 @@ class User {
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> data = new Map<String, dynamic>();
+    data['name'] = name;
     data['email'] = email;
     data['password'] = password;
-    data['name'] = name;
-    data['username'] = null;
     data['mobile'] = mobile;
-    data['gender'] = gender;
-    data['status'] = null;
-    data['is_lock'] = null;
-    data['province_id'] = district!.provinceId;
-    data['district_id'] = district!.id;
-    data['job'] = job;
     data['workplace'] = workplace;
-    data['avatar'] = avatar;
+    data['birthday'] = null;
+
+    // < 0 is placeholder
+    data['province_id'] = provinceId! > 0 ? provinceId! : null;
+    data['district_id'] = districtId! > 0 ? districtId! : null;
+    data['gender'] = gender! >= 0 ? gender! : null;
+    data['job'] = job! >= 0 ? job! : null;
     return data;
   }
 }

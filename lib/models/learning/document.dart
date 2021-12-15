@@ -1,43 +1,23 @@
 class Document {
-  late int id;
-  late String type;
-  late String title;
-  late String url;
-  late String fileName;
+  late String link;
+  String? fileName;
   String? localPath;
-  // bool? isLoading;
-  // double? percent;
-  // String? percentStr;
 
   Document({
-    required this.id,
-    required this.type,
-    required this.title,
-    required this.url,
-    required this.fileName,
+    required this.link,
   });
 
   Document.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    type = json["type"];
-    title = json["title"];
-    url = json["url"];
-    fileName = json["fileName"];
+    link = json["link"];
+    int _titleIndex = link.lastIndexOf('/') + 1;
+    fileName = link.substring(_titleIndex, link.length);
+  }
+
+  set setFileName(String value) {
+    fileName = value;
   }
 
   set setLocalPath(String value) {
     localPath = value;
   }
-
-  // set setIsLoading(bool value) {
-  //   isLoading = value;
-  // }
-
-  // set setPercent(double value) {
-  //   percent = value;
-  // }
-
-  // set setPercentStr(String value) {
-  //   percentStr = value;
-  // }
 }

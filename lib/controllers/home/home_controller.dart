@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';

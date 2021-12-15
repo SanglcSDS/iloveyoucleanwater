@@ -12,4 +12,7 @@ const Map<String, String> en = {
   'environmentalNews': 'Environmental news',
   'introduceProgram': 'Mizuiku - I love clean water & program',
   'introducePartner': 'Co-organizing Board',
+
+  // learning
+  'courses': 'Danh sách khóa học'
 };

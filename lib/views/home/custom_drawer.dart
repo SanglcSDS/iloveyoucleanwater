@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/views/account/forgot_password.dart';
-import 'package:iloveyoucleanwater/views/account/register.dart';
+import 'package:iloveyoucleanwater/views/account/sign_up.dart';
 import 'package:iloveyoucleanwater/views/home/home_tab_view.dart';
 
 class CustomDrawer extends StatelessWidget {
@@ -87,7 +87,7 @@ class CustomDrawer extends StatelessWidget {
           _buildDrawerOption(
             Icon(Icons.lock),
             'Đổi mật khẩu',
-            () => Get.to(RegisterScreen()),
+            () => Get.to(SignUpView()),
           ),
           _buildDrawerOption(
             Icon(Icons.exit_to_app),

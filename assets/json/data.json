@@ -1,6 +1,7 @@
 {
     "courses": [
         {
+            "id": 1,
             "title": "Giới thiệu chung về khóa học E-learning",
             "comments": [
                 {"comment": "Bổ ích", "time": "2021-12-01 10:49:04"}
@@ -41,25 +42,26 @@
                     "type": "pdf",
                     "title": "Tài liệu Hướng dẫn dạy và học về tiết kiệm và bảo vệ nước",
                     "url": "https://mizuiku-emyeunuocsach.vn/storage/library/2020/01/JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf",
-                    "fileName": "JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf"
+                    "fileName": "document_1.pdf"
                 },
                 {
                     "id": 2,
                     "type": "pdf",
                     "title": "Tài liệu Hướng dẫn dạy và học về tiết kiệm và bảo vệ nước",
                     "url": "https://mizuiku-emyeunuocsach.vn/storage/library/2020/01/JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf",
-                    "fileName": "JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf"
+                    "fileName": "document_2.pdf"
                 },
                 {
                     "id": 3,
                     "type": "pdf",
                     "title": "Tài liệu Hướng dẫn dạy và học về tiết kiệm và bảo vệ nước",
                     "url": "https://mizuiku-emyeunuocsach.vn/storage/library/2020/01/JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf",
-                    "fileName": "JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf"
+                    "fileName": "document_3.pdf"
                 }
             ]
         },
         {
+            "id": 2,
             "title": "Chủ đề 1: Nước bị làm sao thế?",
             "comments": [
                 {"comment": "Bổ ích", "time": "2021-12-01 10:49:04"}
@@ -100,11 +102,12 @@
                     "type": "pdf",
                     "title": "Tài liệu Hướng dẫn dạy và học về tiết kiệm và bảo vệ nước",
                     "url": "https://mizuiku-emyeunuocsach.vn/storage/library/2020/01/JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf",
-                    "fileName": "JhhRxYETLSZ1ozq5dhmGuezgP524HSBsLbIMqfOE.pdf"
+                    "fileName": "document_4.pdf"
                 }
             ]
         },
         {
+            "id": 3,
             "title": "Chủ đề 2: Chúng ta có thể làm gì?",
             "comments": [
                 {"comment": "Bổ ích", "time": "2021-12-01 10:49:04"}

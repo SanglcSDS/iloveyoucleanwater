@@ -5,54 +5,66 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/models/learning/document.dart';
+import 'package:iloveyoucleanwater/service/learning_service.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/msg_dialog.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:get/get_connect/http/src/response/response.dart'
+    as getx_response;
 
 class DocumentController extends GetxController {
+  late int _courseId;
   RxBool downloading = false.obs;
   RxList<Map<String, dynamic>> downloadValues = <Map<String, dynamic>>[].obs;
   RxList documents = <Document>[].obs;
   final GetStorage _box = GetStorage();
+  final LearningService _learningService = Get.put(LearningService());
 
   @override
   void onInit() {
-    loadDocuments();
     super.onInit();
   }
 
-  void loadDocuments() async {
-    // List<Document> _listDocs = <Document>[];
-    // if (_box.hasData("documents")) {
-    //   var _docJson = _box.read("documents");
-    //   String _dir = (await getApplicationDocumentsDirectory()).path;
+  void loadDocuments(int courseId) async {
+    // fetch api
+    _courseId = courseId;
+    getx_response.Response<dynamic> response =
+        await _learningService.getDocumentByCouresId(courseId);
+    if (response.statusCode == 200) {
+      Map<String, dynamic> body = response.body;
+      List<Document> list = [];
+      if (body.containsKey("data")) {
+        for (var docJson in (body["data"] as List)) {
+          list.add(Document.fromJson(docJson));
+        }
+      }
+      documents = list.obs;
 
-    //   _docJson.forEach((e) async {
-    //     Document item = Document.fromJson(e);
-    //     String filePath = '$_dir/${item.fileName}';
-    //     if (await File(filePath).exists()) {
-    //       item.setLocalPath = filePath;
-    //     }
-    //     _listDocs.add(Document.fromJson(e));
-
-    //   });
-    // }
-    List<Map<String, dynamic>> _values = <Map<String, dynamic>>[].obs;
-    if (documents.length > 0) {
-      documents.forEach((element) {
-        _values.add({
-          "isDownloading": false,
-          "percentStr": "",
-          "percent": 0.0,
-          "localPath": ""
+      var dir = await getApplicationDocumentsDirectory();
+      List<Map<String, dynamic>> _values = <Map<String, dynamic>>[].obs;
+      if (documents != null && documents!.isNotEmpty) {
+        documents!.forEach((element) {
+          String localPath = checkDocumentInStorage(element, dir.path);
+          _values.add({
+            "isDownloading": false,
+            "percentStr": "",
+            "percent": 0.0,
+            "localPath": localPath,
+          });
         });
-      });
+      }
+      downloadValues = _values.obs;
     }
-
-    downloadValues = _values.obs;
     update();
   }
 
-  Future<void> downloadFile(
+  String checkDocumentInStorage(Document document, String dirPath) {
+    String localPath = "$dirPath/$_courseId/${document.fileName}";
+    if (File(localPath).existsSync()) return localPath;
+    return "";
+  }
+
+  Future<void> downloadFile(BuildContext context,
       {required Document document, required int index}) async {
     downloadValues[index]['isDownloading'] = true;
     update();
@@ -61,10 +73,14 @@ class DocumentController extends GetxController {
 
     try {
       var dir = await getApplicationDocumentsDirectory();
-      localPath = "${dir.path}/${document.fileName}";
+      bool directoryExists = await Directory(dir.path).exists();
+      if (!directoryExists) {
+        Directory(dir.path).create();
+      }
+      localPath = "${dir.path}/$_courseId/${document.fileName}";
       await dio.download(
-        document.url,
-        "${dir.path}/${document.fileName}",
+        document.link,
+        "${dir.path}/$_courseId/${document.fileName}",
         onReceiveProgress: (rec, total) {
           var percent = rec / total;
           downloadValues[index]['percent'] = percent;
@@ -73,24 +89,15 @@ class DocumentController extends GetxController {
           update();
         },
       );
+      downloadValues[index]['localPath'] = localPath;
     } catch (e) {
       debugPrint(e.toString());
+      MsgDialog.showWarningDialogs(context, "Lỗi", "Tải file thất bại!");
     }
 
-    downloadValues[index]['localPath'] = localPath;
     downloadValues[index]['isDownloading'] = false;
     update();
   }
-
-  // Future openFile({required Document document, required int index}) async {
-  //   downloadValues[index]['isDownloading'] = true;
-  //   update();
-  //   await downloadFile(document);
-  //   var dir = await getApplicationDocumentsDirectory();
-  //   if (file == null) return;
-
-  //   OpenFile.open('${dir.path}/${document.fileName}');
-  // }
 
   Future openFile({required String localPath}) async {
     OpenFile.open(localPath);
