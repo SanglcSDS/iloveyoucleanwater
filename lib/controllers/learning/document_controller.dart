@@ -16,7 +16,7 @@ class DocumentController extends GetxController {
   late int _courseId;
   RxBool downloading = false.obs;
   RxList<Map<String, dynamic>> downloadValues = <Map<String, dynamic>>[].obs;
-  RxList<Document>? documents;
+  RxList? documents;
   final GetStorage _box = GetStorage();
   final LearningService _learningService = Get.put(LearningService());
 
