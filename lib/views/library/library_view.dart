@@ -3,8 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
+import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:iloveyoucleanwater/views/library/library_photo_view.dart';
+import 'package:iloveyoucleanwater/views/library/library_video_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
+import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 
 class LibraryView extends GetView<LibraryController> {
   final HomeController homeController = Get.put(HomeController());
@@ -55,38 +59,14 @@ class LibraryView extends GetView<LibraryController> {
                   controller: _tabx.controller,
 
                   children: _tabx.myTabs.map((Tab tab) {
-                    final String label = tab.text!.toLowerCase();
-                    return Center(
-                      child: Text(
-                        "sssss",
-                        style: const TextStyle(fontSize: 36),
-                      ),
-                    );
+                    if (tab.key == const Key('library1')) {
+                      return LibraryPhotoView(tag: "library1");
+                    } else {
+                      return LibraryVideoView(tag: "library2");
+                    }
                   }).toList(),
                   //   children: [
 
-                  //   Container(
-                  //     child: ListView.builder(
-                  //       itemCount: recentList.length,
-                  //       scrollDirection: Axis.vertical,
-                  //       shrinkWrap: true,
-                  //       physics: const ScrollPhysics(),
-                  //       itemBuilder: (context, index) {
-                  //         var recent = recentList[index];
-                  //         return InkWell(
-                  //           onTap: () =>
-                  //               Get.to(() => ReadNewsView(news: recent)),
-                  //           child: Container(
-                  //             width: double.infinity,
-                  //             height: 135.0,
-                  //             margin: const EdgeInsets.symmetric(
-                  //                 horizontal: 18.0),
-                  //             child: SecondaryCard(news: recent),
-                  //           ),
-                  //         );
-                  //       },
-                  //     ),
-                  //   ),
                   // ]
                 ),
               ),
