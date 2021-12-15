@@ -26,9 +26,7 @@ class IntroducePartnerNew extends StatelessWidget {
                   SingleChildScrollView(
                     child: Wrap(
                       children: [
-                        Html(
-                          data: item[index].content,
-                        ),
+                        Html(data: item[index].content),
                       ],
                     ),
                   ),

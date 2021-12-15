@@ -11,11 +11,11 @@ class DocumentView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return (_controller.documents != null && _controller.documents.isNotEmpty)
+    return (_controller.documents != null && _controller.documents!.isNotEmpty)
         ? GetBuilder(
             init: DocumentController(),
             builder: (_) => ListView.builder(
-                itemCount: _controller.documents.length,
+                itemCount: _controller.documents!.length,
                 itemBuilder: (context, index) {
                   return _fileItem(
                       context, _controller.documents![index], index);

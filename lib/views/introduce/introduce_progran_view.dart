@@ -33,7 +33,7 @@ class IntroduceProgramNew extends StatelessWidget {
                         "p": Style(textAlign: TextAlign.justify),
                         "img": Style(width: MediaQuery.of(context).size.width)
                       },
-                      data: item[index].content,
+                      data: item[index],
                     ),
                   ),
                   const SizedBox(height: 25.0)
