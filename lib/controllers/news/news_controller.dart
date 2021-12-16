@@ -16,7 +16,7 @@ class NewsController extends GetxController
   @override
   void onInit() {
     getCategory();
-    controller = TabController(length: listCategory.length, vsync: this);
+    //  controller = TabController(length: listCategory.length, vsync: this);
     super.onInit();
   }
 

@@ -16,6 +16,11 @@ const Map<String, String> vi = {
   'minute': ' Phút trước',
   'hour': ' Giời trước',
   'day': ' Ngày trước',
+  'locales': "vi",
+  'language': "Ngôn ngữ",
+  'Login': "Đăng nhập",
+  'logout': "Đăng xuất",
+  'changePassword': "Đổi mật khẩu",
 
   // learning
   'courses': 'Danh sách khóa học',

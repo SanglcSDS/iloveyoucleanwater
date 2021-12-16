@@ -12,6 +12,7 @@ class Constants {
 }
 
 const primaryColor = Color(0xFF51c5da);
+const defaultLanguage = 'vi';
 
 MaterialColor kPrimaryMaterial = const MaterialColor(0xFF51c5da, {
   50: Color(0xFF51c5da),
@@ -91,10 +92,22 @@ var descriptionStyle = GoogleFonts.roboto(
 
 // String a = calculateTimeDifferenceBetween(
 //     startDate: tempDate, endDate: DateTime.now());
-pigLatin(String words) => words.replaceAllMapped(
-      RegExp(r'<img [^>]*src=[""]([^""]+)[^>]*', caseSensitive: false),
-      (match) => "<img ${match.group(1)} /",
+pigLatinheight(String words) => words.replaceAllMapped(
+      RegExp(r'(<img[^>]+)(height=\"[^"]*")', caseSensitive: false),
+      (match) => "${match.group(1)}",
     );
+pigLatinwidth(String words) => words.replaceAllMapped(
+      RegExp(r'(<img[^>]+)(width=\"[^"]*")', caseSensitive: false),
+      (match) => "${match.group(1)}",
+    );
+td(String words) => words.replaceAllMapped(
+      RegExp(r'(<td[^>]+)(style=\"[^"]*")', caseSensitive: false),
+      (match) => "${match.group(1)}",
+    );
+// pigLatin(String words) => words.replaceAllMapped(
+//       RegExp(r'<img [^>]*src=[""]([^""]+)[^>]*', caseSensitive: false),
+//       (match) => "<img ${match.group(1)} /",
+//     );
 String calculateTimeDifferenceBetween({required String stringTime}) {
   DateTime startDate = DateTime.parse(stringTime);
   DateTime endDate = DateTime.now();

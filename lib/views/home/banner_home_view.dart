@@ -22,6 +22,7 @@ class BannerHomeView extends StatelessWidget {
               ),
             ),
             child: ListView.builder(
+                shrinkWrap: false,
                 itemCount: _Controller.listIntroduce.length,
                 itemBuilder: (context, index) {
                   var item = _Controller.listIntroduce[index];

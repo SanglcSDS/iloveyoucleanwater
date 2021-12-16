@@ -3,7 +3,7 @@ const Map<String, String> en = {
   'introduce': 'About us',
   'library': 'Gallery',
   'learning': 'E-Learning',
-  'news': 'E-learning',
+  'news': 'News',
   'detail': 'Details',
   'all': 'All',
   'album': 'Album',
@@ -12,7 +12,11 @@ const Map<String, String> en = {
   'environmentalNews': 'Environmental news',
   'introduceProgram': 'Mizuiku - I love clean water & program',
   'introducePartner': 'Co-organizing Board',
-
+  'locales': "en",
+  'language': "language",
+  'Login': "Login",
+  'logout': "Logout",
+  'changePassword': "Change Password",
   // learning
   'courses': 'Danh sách khóa học'
 };

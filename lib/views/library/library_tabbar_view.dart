@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
-import 'package:iloveyoucleanwater/views/library/library_photo_view.dart';
-import 'package:iloveyoucleanwater/views/library/library_video_view.dart';
+
 import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 
 class LibraryTabBarView extends StatefulWidget {
@@ -23,8 +22,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
   @override
   void initState() {
     super.initState();
-    _controller.getPhoto(isLoadingP: true);
-    _controller.getVideo(isLoadingV: true);
+
     controller = TabController(length: 2, vsync: this);
   }
 

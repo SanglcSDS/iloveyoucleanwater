@@ -13,7 +13,9 @@ class IntroducePartnerNew extends StatelessWidget {
       itemCount: _Controller.introducePartner.length,
       itemBuilder: (context, index) {
         var item = _Controller.introducePartner;
-
+        print(pigLatinheight(pigLatinwidth(item[index].content.toString())));
+        print("----------------------------------");
+        print(item[index].content);
         return Obx(
           () => Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
@@ -24,7 +26,13 @@ class IntroducePartnerNew extends StatelessWidget {
                       style: kTitleCard.copyWith(fontSize: 18.0)),
                   const SizedBox(height: 15.0),
                   const SizedBox(height: 15.0),
-                  SingleChildScrollView(child: item[index].content),
+                  // SingleChildScrollView(
+                  //   child: Html(data: item[index].content
+
+                  //       // td(pigLatinheight(
+                  //       //     pigLatinwidth(item[index].content.toString()))),
+                  //       ),
+                  // ),
                   const SizedBox(height: 25.0)
                 ],
               )),

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/introduce/introduce_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/models/home/banner_model.dart';
@@ -20,6 +21,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 final controllerNews = Get.put(NewsController());
 final controllerLibrary = Get.put(LibraryController());
+final controllerIntroduce = Get.put(IntroduceController());
 
 class HomeController extends GetxController {
   NewsService providerNewsService = NewsService();
@@ -64,6 +66,7 @@ class HomeController extends GetxController {
   }
 
   Future<bool> onRefreshHome({bool isRefresh = false}) async {
+    listPopular.clear();
     listCategoryNewsModel.clear();
     listCategory.clear();
     isloadingHome(true);
@@ -76,6 +79,10 @@ class HomeController extends GetxController {
     getPopular();
     getPhotoHome();
     getVideoHome();
+    controllerNews.getCategory();
+    controllerLibrary.isLoadingLibrary();
+    controllerIntroduce.isloadingIntroduce();
+
     isloadingHome(false);
     update();
     return true;
@@ -125,7 +132,7 @@ class HomeController extends GetxController {
           list.add(IntroduceModel.fromJson(e));
         });
         list.forEach((e) {
-          if (e.id == 1) {
+          if (e.id == 1 || e.id == 2) {
             listIntroduce.add(e);
           }
         });
@@ -248,6 +255,7 @@ class HomeController extends GetxController {
       var jsonString = _data.body['data'];
       if (jsonString != null) {
         detail = NewsDetailsModel.fromJson(jsonString);
+        print(detail.content);
         Get.to(
             () => HomeDetailNewsView(news: detail, title: news.categoryTitle));
       }

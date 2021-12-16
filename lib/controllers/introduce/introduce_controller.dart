@@ -32,6 +32,12 @@ class IntroduceController extends GetxController
         TabController(vsync: this, length: myTabs.length, initialIndex: 0);
   }
 
+  Future<void> isloadingIntroduce() async {
+    introduceProgram.clear;
+    introducePartner.clear;
+    GetDetialProgram(1);
+    GetDetialPartner(3);
+  }
 //   Future<void> GetIntroduces() async {
 //     Response _data = await service.GetIntroduces();
 //     if (_data.statusCode == 200) {

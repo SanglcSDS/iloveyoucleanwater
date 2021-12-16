@@ -2,13 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_binding.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
+import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:iloveyoucleanwater/utils/language/Localization_Service.dart';
 import 'package:iloveyoucleanwater/views/account/forgot_password.dart';
 import 'package:iloveyoucleanwater/views/account/sign_up.dart';
-import 'package:iloveyoucleanwater/views/home/home_tab_view.dart';
+import 'package:flutter_switch/flutter_switch.dart';
+import 'package:iloveyoucleanwater/views/home/home_tabbar_view.dart';
 
-class CustomDrawer extends StatelessWidget {
+class CustomDrawer extends StatefulWidget {
+  @override
+  _CustomDrawerState createState() => _CustomDrawerState();
+}
+
+class _CustomDrawerState extends State<CustomDrawer> {
   final box = GetStorage();
+  final _Controller = Get.put(HomeController());
+  bool _selectedLang = LocalizationService.islangs;
 
   _buildDrawerOption(Icon icon, String title, onTap) {
     return ListTile(
@@ -30,25 +42,6 @@ class CustomDrawer extends StatelessWidget {
         children: <Widget>[
           Stack(
             children: <Widget>[
-              // Image(
-              //   height: 50.0,
-              //   width: double.infinity,
-              //   image: AssetImage("assets/images/login_background.jpg"
-              //       // currentUser.backgroundImageUrl,
-              //       ),
-              //   fit: BoxFit.cover,
-              // ),
-              // Padding(
-              //   padding: const EdgeInsets.fromLTRB(0, 20, 0, 10),
-              //   child: Text(
-              //     "Lê Công Sang",
-              //     style: TextStyle(
-              //       color: Colors.black,
-              //       fontSize: 24.0,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              // ),
               Padding(
                 padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
                 child: Center(
@@ -71,38 +64,61 @@ class CustomDrawer extends StatelessWidget {
               ),
             ],
           ),
-          _buildDrawerOption(
-            Icon(FontAwesomeIcons.language),
-            'Ngôn ngữ',
-            () => {
-              Navigator.pushReplacement(
-                context,
-                MaterialPageRoute(
-                  builder: (_) => HomeTabView(),
-                ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: <Widget>[
+              Container(
+                  width: 200,
+                  child: ListTile(
+                    leading: Icon(FontAwesomeIcons.language),
+                    title: Text(
+                      'language'.tr,
+                      textAlign: TextAlign.justify,
+                      style: TextStyle(
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  )),
+              FlutterSwitch(
+                activeText: "VI",
+                inactiveText: "EN",
+                activeColor: primaryColor,
+                inactiveColor: primaryColor,
+                width: 60.0,
+                height: 25.0,
+                valueFontSize: 16.0,
+                toggleSize: 25.0,
+                value: _selectedLang,
+                borderRadius: 30.0,
+                // padding: 8.0,
+                showOnOff: true,
+                onToggle: (val) {
+                  setState(() => _selectedLang = val);
+                  // if (GetStorage().hasData("language"))
+                  //   GetStorage().remove("language");
+                  // GetStorage().write("language", val ? 'vi' : 'en');
+
+                  LocalizationService.islangs = val;
+                  LocalizationService().changeLocale(val);
+                  _Controller.onRefreshHome();
+                },
               ),
-            },
+            ],
           ),
-          _buildDrawerOption(Icon(Icons.settings), 'Cài đặt', () {}),
+          // DropdownLanguage(),
+
           _buildDrawerOption(
             Icon(Icons.lock),
-            'Đổi mật khẩu',
+            'changePassword'.tr,
             () => Get.to(SignUpView()),
           ),
-          _buildDrawerOption(
-            Icon(Icons.exit_to_app),
-            'Đăn nhập',
-            () => {
-              Get.offNamed(Routes.LOGIN),
-              //  box.remove('token'),
-            },
-          ),
+
           Expanded(
             child: Align(
               alignment: FractionalOffset.bottomCenter,
               child: _buildDrawerOption(
                 Icon(Icons.exit_to_app),
-                'Đăng Xuất',
+                'logout'.tr,
                 () => {
                   Navigator.pushReplacement(
                     context,

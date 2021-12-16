@@ -132,12 +132,7 @@ class HomeDetailNewsView extends StatelessWidget {
             const SizedBox(height: 15.0),
             SingleChildScrollView(
               child: Html(
-                style: {
-                  "p": Style(textAlign: TextAlign.justify),
-                  "img": Style(width: 200, height: 300),
-                },
-                shrinkWrap: true,
-                data: news.content,
+                data: pigLatinwidth(pigLatinheight(news.content.toString())),
               ),
             ),
             const SizedBox(height: 25.0)

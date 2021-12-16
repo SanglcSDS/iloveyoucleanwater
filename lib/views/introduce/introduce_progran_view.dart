@@ -27,15 +27,16 @@ class IntroduceProgramNew extends StatelessWidget {
                       style: kTitleCard.copyWith(fontSize: 15.0)),
                   const SizedBox(height: 15.0),
                   const SizedBox(height: 15.0),
-                  SingleChildScrollView(
-                    child: Html(
-                      style: {
-                        "p": Style(textAlign: TextAlign.justify),
-                        "img": Style(width: MediaQuery.of(context).size.width)
-                      },
-                      data: item[index].content,
-                    ),
-                  ),
+                  // SingleChildScrollView(
+                  //   child: Html(
+                  //     style: {
+                  //       "p": Style(textAlign: TextAlign.justify),
+                  //       "img": Style(width: MediaQuery.of(context).size.width)
+                  //     },
+                  //     data: pigLatinheight(
+                  //         pigLatinwidth(item[index].content.toString())),
+                  //   ),
+                  // ),
                   const SizedBox(height: 25.0)
                 ],
               )),
