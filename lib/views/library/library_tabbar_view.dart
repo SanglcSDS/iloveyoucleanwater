@@ -120,7 +120,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                               tag: "photo$index",
                               child: InkWell(
                                 onTap: () {
-                                  _homecontroller.getDetailVideo(recent);
+                                  _homecontroller.getDetailPhotoHome(recent);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(top: 15.0),

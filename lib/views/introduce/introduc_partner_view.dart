@@ -9,15 +9,15 @@ class IntroducePartnerNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _Controller.introducePartner.length,
-      itemBuilder: (context, index) {
-        var item = _Controller.introducePartner;
-        print(pigLatinheight(pigLatinwidth(item[index].content.toString())));
-        print("----------------------------------");
-        print(item[index].content);
-        return Obx(
-          () => Container(
+    return Obx(
+      () => ListView.builder(
+        itemCount: _Controller.introducePartner.length,
+        itemBuilder: (context, index) {
+          var item = _Controller.introducePartner;
+          // print(pigLatinheight(pigLatinwidth(item[index].content.toString())));
+          // print("----------------------------------");
+          // print(item[index].content);
+          return Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
@@ -35,9 +35,9 @@ class IntroducePartnerNew extends StatelessWidget {
                   // ),
                   const SizedBox(height: 25.0)
                 ],
-              )),
-        );
-      },
+              ));
+        },
+      ),
     );
   }
 }

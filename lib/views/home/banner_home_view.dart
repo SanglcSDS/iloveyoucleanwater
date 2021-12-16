@@ -21,56 +21,49 @@ class BannerHomeView extends StatelessWidget {
                 fit: BoxFit.cover,
               ),
             ),
-            child: ListView.builder(
-                shrinkWrap: false,
-                itemCount: _Controller.listIntroduce.length,
-                itemBuilder: (context, index) {
-                  var item = _Controller.listIntroduce[index];
-
-                  return Stack(
+            child: Stack(
+              alignment: Alignment.topCenter,
+              children: <Widget>[
+                Positioned(
+                  child: Container(
                     alignment: Alignment.topCenter,
-                    children: <Widget>[
-                      Positioned(
-                        child: Container(
-                          alignment: Alignment.topCenter,
-                          padding: const EdgeInsets.only(
-                              top: 10, right: 12, left: 12, bottom: 0),
-                          child: Text(
-                            item.description,
-                            textAlign: TextAlign.justify,
-                            style: const TextStyle(color: kGrey1),
-                            maxLines: 4,
-                            overflow: TextOverflow.ellipsis,
+                    padding: const EdgeInsets.only(
+                        top: 10, right: 12, left: 12, bottom: 0),
+                    child: Text(
+                      _Controller.listIntroduce[0].description,
+                      textAlign: TextAlign.justify,
+                      style: const TextStyle(color: kGrey1),
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ),
+                Positioned(
+                  child: Container(
+                      padding: const EdgeInsets.only(top: 20.0),
+                      alignment: Alignment.center,
+                      child: FlatButton(
+                        height: 20,
+                        color: Colors.blue[300],
+                        child: Text(
+                          'detail'.tr,
+                          textAlign: TextAlign.justify,
+                          style: const TextStyle(
+                            color: kGrey3,
+                            fontSize: 12.0,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
-                      ),
-                      Positioned(
-                        child: Container(
-                            padding: const EdgeInsets.only(top: 70.0),
-                            alignment: Alignment.center,
-                            child: FlatButton(
-                              height: 20,
-                              color: Colors.blue[300],
-                              child: Text(
-                                'detail'.tr,
-                                textAlign: TextAlign.justify,
-                                style: const TextStyle(
-                                  color: kGrey3,
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                              onPressed: () {
-                                _Controller.changeTabIndex(2);
-                              },
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(18.0),
-                                  side: BorderSide(color: Colors.blue[200]!)),
-                            )),
-                      ),
-                    ],
-                  );
-                })),
+                        onPressed: () {
+                          _Controller.changeTabIndex(2);
+                        },
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(18.0),
+                            side: BorderSide(color: Colors.blue[200]!)),
+                      )),
+                ),
+              ],
+            )),
       ),
     );
   }

@@ -13,7 +13,7 @@ class HomeService extends GetConnect {
 
   Future<Response> getNewDetail(int id) {
     return get(
-        "${Constants.SERVER_URL}/posts/show?language=${'locales'.tr}&id=1");
+        "${Constants.SERVER_URL}/posts/show?language=${'locales'.tr}&id=$id");
   }
 
   Future<Response> getVideoHome() {

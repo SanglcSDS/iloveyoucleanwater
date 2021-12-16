@@ -79,7 +79,7 @@ class HomeController extends GetxController {
     getPopular();
     getPhotoHome();
     getVideoHome();
-    controllerNews.getCategory();
+    controllerNews.isloadingNews();
     controllerLibrary.isLoadingLibrary();
     controllerIntroduce.isloadingIntroduce();
 
@@ -281,18 +281,6 @@ class HomeController extends GetxController {
   void oClickNews0() {
     tabIndex = 2;
     controllerNews.oClickTab0();
-    update();
-  }
-
-  void oClickLibrary1() {
-    tabIndex = 3;
-    controllerLibrary.oClickLibrary1();
-    update();
-  }
-
-  void oClickLibrary0() {
-    tabIndex = 3;
-    controllerLibrary.oClickLibrary0();
     update();
   }
 }

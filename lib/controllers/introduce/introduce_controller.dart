@@ -1,42 +1,34 @@
-import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/introduce/introduce_detail_model.dart';
 import 'package:iloveyoucleanwater/models/introduce/introduce_model.dart';
 import 'package:iloveyoucleanwater/service/introduce_service.dart';
 
-class IntroduceController extends GetxController
-    with GetSingleTickerProviderStateMixin {
+class IntroduceController extends GetxController {
   IntroduceService service = IntroduceService();
+
   late IntroduceModel introduceModel;
   RxList introduceProgram = <IntroduceDetialModel>[].obs;
   RxList introducePartner = <IntroduceDetialModel>[].obs;
 
-  final List<Tab> myTabs = <Tab>[
-    Tab(
-      text: 'introduceProgram'.tr,
-      key: const Key("Program"),
-    ),
-    Tab(
-      text: 'introducePartner'.tr,
-      key: const Key('Partner'),
-    ),
-  ];
   @override
   void onInit() {
     super.onInit();
     //  GetIntroduces();
-    GetDetialProgram(1);
-    GetDetialPartner(3);
-    controller =
-        TabController(vsync: this, length: myTabs.length, initialIndex: 0);
+    isloadingIntroduce();
   }
 
   Future<void> isloadingIntroduce() async {
-    introduceProgram.clear;
-    introducePartner.clear;
-    GetDetialProgram(1);
-    GetDetialPartner(3);
+    if ('locales'.tr == "vi") {
+      introduceProgram.clear();
+      introducePartner.clear();
+      GetDetialProgram(1);
+      GetDetialPartner(3);
+    } else {
+      introduceProgram.clear();
+      introducePartner.clear();
+      GetDetialProgram(2);
+      GetDetialPartner(4);
+    }
   }
 //   Future<void> GetIntroduces() async {
 //     Response _data = await service.GetIntroduces();
@@ -68,7 +60,7 @@ class IntroduceController extends GetxController
 
   Future<void> GetDetialPartner(int id) async {
     Response _data = await service.GetDetailIntroduces(id);
-    List<IntroduceDetialModel> listBanner = [];
+    //  List<IntroduceDetialModel> listBanner = [];
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data'];
       //  print(jsonString);
@@ -82,17 +74,13 @@ class IntroduceController extends GetxController
         introducePartner.add(IntroduceDetialModel.fromJson(jsonString));
 //pigLatin
 
-        listBanner.add(IntroduceDetialModel.fromJson(jsonString));
+        //listBanner.add(IntroduceDetialModel.fromJson(jsonString));
       }
     }
   }
 
-  late TabController controller;
-
   @override
   void onClose() {
-    controller.dispose();
-
     super.onClose();
   }
 }

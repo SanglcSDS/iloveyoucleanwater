@@ -12,12 +12,12 @@ class IntroduceProgramNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _Controller.introduceProgram.length,
-      itemBuilder: (context, index) {
-        var item = _Controller.introduceProgram;
-        return Obx(
-          () => Container(
+    return Obx(
+      () => ListView.builder(
+        itemCount: _Controller.introduceProgram.length,
+        itemBuilder: (context, index) {
+          var item = _Controller.introduceProgram;
+          return Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
@@ -39,9 +39,9 @@ class IntroduceProgramNew extends StatelessWidget {
                   // ),
                   const SizedBox(height: 25.0)
                 ],
-              )),
-        );
-      },
+              ));
+        },
+      ),
     );
   }
 }

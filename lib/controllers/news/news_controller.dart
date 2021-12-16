@@ -67,6 +67,13 @@ class NewsController extends GetxController
     return true;
   }
 
+  Future<void> isloadingNews() async {
+    await getCategory();
+    for (int i = 0; i < listCategory.length; i++) {
+      getLoadMoreRefresh(true, listCategory[i].id);
+    }
+  }
+
   Future<void> getCategory() async {
     Response _data = await provider.getCategoryNew();
     listCategory.clear();
