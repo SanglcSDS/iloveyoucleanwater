@@ -12,7 +12,8 @@ abstract class Routes {
   static const COMMENTS = _Paths.COMMENTS;
   static const DOCUMENTS = _Paths.DOCUMENTS;
   static const LESSON_DETAIL = _Paths.LESSON_DETAIL;
-  static const QUESTIONS = _Paths.QUESTIONS;
+  static const TESTS = _Paths.TESTS;
+  static const EVALUATIONS = _Paths.EVALUATIONS;
 
   static const USER_INFO = _Paths.USER_INFO;
   static const LOGIN = _Paths.LOGIN;
@@ -31,7 +32,8 @@ abstract class _Paths {
   static const COMMENTS = '/comments';
   static const DOCUMENTS = '/documents';
   static const LESSON_DETAIL = '/lesson-detail';
-  static const QUESTIONS = '/questions';
+  static const TESTS = '/tests';
+  static const EVALUATIONS = '/evaluations';
 
   static const USER_INFO = '/user-info';
   static const LOGIN = '/login';

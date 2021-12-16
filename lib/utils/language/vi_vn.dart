@@ -45,6 +45,15 @@ const Map<String, String> vi = {
   'document_progressing': 'Đang tải...',
   'document_download_fail': 'Tải file thất bại!',
 
+  // evaluation
+  'evaluation_other': 'Khác',
+  'evaluation_other_input': 'Các góp ý, nhận xét khác',
+  'evaluation_btn': 'Đánh giá',
+
+  // evaluation
+  'test_title': 'Khác',
+  'test_btn': 'Đánh giá',
+
   // log_in
   'login': 'Đăng nhập',
   'login_btn': 'ĐĂNG NHẬP',

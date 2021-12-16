@@ -76,7 +76,9 @@ class LessonView extends StatelessWidget {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   primaryColor),
                             ),
-                            onPressed: () => Get.toNamed(Routes.QUESTIONS),
+                            onPressed: () {
+                              controller.routeTest();
+                            },
                             child: Text(
                               'course_quiz'.tr,
                               style: TextStyle(
@@ -96,7 +98,7 @@ class LessonView extends StatelessWidget {
                               backgroundColor: MaterialStateProperty.all<Color>(
                                   primaryColor),
                             ),
-                            onPressed: () => Get.toNamed(Routes.QUESTIONS),
+                            onPressed: () => Get.toNamed(Routes.EVALUATIONS),
                             child: Text(
                               'course_rate'.tr,
                               style: TextStyle(

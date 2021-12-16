@@ -18,7 +18,7 @@ class CourseView extends StatelessWidget {
       initState: (_) => _controller.initData(),
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: Text('courses'.tr, style: TextStyle(color: kGrey1)),
+          title: Text('course'.tr, style: TextStyle(color: kGrey1)),
           centerTitle: true,
           backgroundColor: Colors.white,
         ),
@@ -47,20 +47,19 @@ class CourseView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
                 SizedBox(
-                  height: 1.4 * (MediaQuery.of(context).size.height / 20),
-                  width: 5 * (MediaQuery.of(context).size.width / 10),
+                  width: MediaQuery.of(context).size.width - 32,
                   child: Theme(
                     data: ThemeData(primarySwatch: kPrimaryMaterial),
                     child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 5.0,
-                      ),
+                      // style: ElevatedButton.styleFrom(
+                      //   elevation: 5.0,
+                      // ),
                       onPressed: () => Get.toNamed(Routes.LOGIN),
-                      child: Text(
-                        "login_btn".tr,
-                        style: TextStyle(
-                          color: Colors.white,
-                          letterSpacing: 1.5,
+                      child: Padding(
+                        padding: EdgeInsets.all(15),
+                        child: Text(
+                          'login_btn'.tr,
+                          style: TextStyle(color: Colors.white),
                         ),
                       ),
                     ),
@@ -69,13 +68,11 @@ class CourseView extends StatelessWidget {
               ],
             ),
             Container(
-              padding: const EdgeInsets.symmetric(vertical: 20),
+              padding: const EdgeInsets.symmetric(vertical: 16),
               child: Text(
                 'login_require'.tr,
                 style: TextStyle(
                   color: Colors.black,
-                  fontSize: MediaQuery.of(context).size.height / 45,
-                  fontWeight: FontWeight.w400,
                 ),
               ),
             ),

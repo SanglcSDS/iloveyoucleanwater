@@ -90,7 +90,7 @@ class LearningView extends GetView<LessonController> {
                                       const EdgeInsets.only(left: 5, top: 5),
                                   child: IconButton(
                                     icon: const Icon(Icons.arrow_back_ios,
-                                        color: kGrey2),
+                                        color: Colors.white),
                                     onPressed: () => Get.back(),
                                   ),
                                 ),

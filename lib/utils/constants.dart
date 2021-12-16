@@ -12,6 +12,7 @@ class Constants {
 }
 
 const primaryColor = Color(0xFF51c5da);
+const defaultLanguage = 'vi';
 
 MaterialColor kPrimaryMaterial = const MaterialColor(0xFF51c5da, {
   50: Color(0xFF51c5da),
