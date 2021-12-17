@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/learning/tests_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/lesson.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/service/learning_service.dart';
@@ -9,7 +9,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class LessonController extends GetxController {
   late String title;
-  late int _courseId;
+  late int courseId;
   RxBool isComplete = false.obs;
   RxDouble? percent;
   RxString? percentStr;
@@ -19,6 +19,7 @@ class LessonController extends GetxController {
   RxString? currentUrl;
   Rx<YoutubePlayerController>? videoController;
   final LearningService _learningService = Get.put(LearningService());
+  final TestController _testController = Get.put(TestController());
 
   @override
   void onInit() {
@@ -27,10 +28,10 @@ class LessonController extends GetxController {
     super.onInit();
   }
 
-  void onInitLesson(int courseId) async {
-    _courseId = courseId;
+  void onInitLesson(int course) async {
+    courseId = course;
     Response<dynamic> response =
-        await _learningService.getLessonByCoureseId(courseId);
+        await _learningService.getLessonByCoureseId(course);
     if (response.statusCode == 200) {
       Map<String, dynamic> body = response.body;
       List<Lesson> list = [];
@@ -108,7 +109,13 @@ class LessonController extends GetxController {
       isComplete = true.obs;
       update();
       MsgDialog.showMsgDialogs(context, 'course_complete_title'.tr,
-          'course_complete_content'.tr, () => Get.toNamed(Routes.QUESTIONS));
+          'course_complete_content'.tr, () => Get.toNamed(Routes.TESTS));
     }
+  }
+
+  void routeTest() {
+    _testController.loadTest(courseId);
+    update();
+    Get.toNamed(Routes.TESTS);
   }
 }

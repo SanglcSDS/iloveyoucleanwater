@@ -18,6 +18,24 @@ const Map<String, String> vi = {
   'day': ' Ngày trước',
   'error': 'Oop! Lỗi rồi...',
 
+  'locales': "vi",
+  'language': "Ngôn ngữ",
+  'Login': "Đăng nhập",
+  'logout': "Đăng xuất",
+  'changePassword': "Đổi mật khẩu",
+  //loading
+  'releaseText': 'Nhả ra để làm mới',
+  'refreshingText': "Làm mới...",
+  'completeText': "Làm mới hoàn tất",
+  'idleText': "Kéo xuống làm mới",
+  'infoText': "Cập nhật %T",
+  'refreshFailedText': "Làm mới không thành công",
+  'loadText': "load hoàn tất",
+  'noMoreText': "Không còn dữ liệu",
+  'loadReadyText': "Nhả ra để làm mới ",
+  'loadingText': "Đang tải..",
+  'loadFailedText': "Không còn dữ liệu",
+
   // course
   'course': 'Danh sách khóa học',
   'course_progress': 'Tiến độ:',
@@ -44,6 +62,17 @@ const Map<String, String> vi = {
   'document_open': 'Mở file',
   'document_progressing': 'Đang tải...',
   'document_download_fail': 'Tải file thất bại!',
+
+  // evaluation
+  'evaluation_other': 'Khác',
+  'evaluation_other_input': 'Các góp ý, nhận xét khác',
+  'evaluation_btn': 'Đánh giá',
+
+  // test
+  'test_title': 'Kiểm tra kiến thức',
+  'test_btn': 'Đánh giá',
+  'test_next_page': 'Câu tiếp theo',
+  'test_end_test': 'Nộp bài',
 
   // log_in
   'login': 'Đăng nhập',

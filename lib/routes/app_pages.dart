@@ -4,8 +4,9 @@ import 'package:iloveyoucleanwater/controllers/account/register_binding.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_binding.dart';
 import 'package:iloveyoucleanwater/controllers/introduce/introduce_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/course_binding.dart';
+import 'package:iloveyoucleanwater/controllers/learning/evaluations_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/lessons_binding.dart';
-import 'package:iloveyoucleanwater/controllers/learning/questions_binding.dart';
+import 'package:iloveyoucleanwater/controllers/learning/tests_binding.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_binding.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_binding.dart';
 import 'package:iloveyoucleanwater/views/account/log_in.dart';
@@ -14,7 +15,8 @@ import 'package:iloveyoucleanwater/views/account/user_info.dart';
 import 'package:iloveyoucleanwater/views/home/home_tabbar_view.dart';
 import 'package:iloveyoucleanwater/views/introduce/Introduce_view.dart';
 import 'package:iloveyoucleanwater/views/learning/courses.dart';
-import 'package:iloveyoucleanwater/views/learning/questions.dart';
+import 'package:iloveyoucleanwater/views/learning/evaluations.dart';
+import 'package:iloveyoucleanwater/views/learning/tests.dart';
 import 'package:iloveyoucleanwater/views/learning/tab_bar_lessons.dart';
 import 'package:iloveyoucleanwater/views/library/library_view.dart';
 import 'package:iloveyoucleanwater/views/news/news_view.dart';
@@ -62,9 +64,14 @@ class AppPages {
       binding: CourseBinding(),
     ),
     GetPage(
-      name: Routes.QUESTIONS,
-      page: () => QuestionView(),
-      binding: QuestionBinding(),
+      name: Routes.TESTS,
+      page: () => TestView(),
+      binding: TestBinding(),
+    ),
+    GetPage(
+      name: Routes.EVALUATIONS,
+      page: () => EvaluationView(),
+      binding: EvaluationBinding(),
     ),
 
     // Account

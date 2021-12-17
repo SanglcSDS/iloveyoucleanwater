@@ -9,12 +9,15 @@ class IntroducePartnerNew extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: _Controller.introducePartner.length,
-      itemBuilder: (context, index) {
-        var item = _Controller.introducePartner;
-        return Obx(
-          () => Container(
+    return Obx(
+      () => ListView.builder(
+        itemCount: _Controller.introducePartner.length,
+        itemBuilder: (context, index) {
+          var item = _Controller.introducePartner;
+          // print(pigLatinheight(pigLatinwidth(item[index].content.toString())));
+          // print("----------------------------------");
+          // print(item[index].content);
+          return Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
                 children: [
@@ -23,18 +26,18 @@ class IntroducePartnerNew extends StatelessWidget {
                       style: kTitleCard.copyWith(fontSize: 18.0)),
                   const SizedBox(height: 15.0),
                   const SizedBox(height: 15.0),
-                  SingleChildScrollView(
-                    child: Wrap(
-                      children: [
-                        Html(data: item[index].content),
-                      ],
-                    ),
-                  ),
+                  // SingleChildScrollView(
+                  //   child: Html(data: item[index].content
+
+                  //       // td(pigLatinheight(
+                  //       //     pigLatinwidth(item[index].content.toString()))),
+                  //       ),
+                  // ),
                   const SizedBox(height: 25.0)
                 ],
-              )),
-        );
-      },
+              ));
+        },
+      ),
     );
   }
 }

@@ -6,6 +6,7 @@ import 'package:iloveyoucleanwater/utils/language/vi_VN.dart';
 
 class LocalizationService extends Translations {
   final controller = Get.put(HomeController());
+  static bool islangs = true;
   // here we need to add our default language
   static final locale = Locale('vi', 'VN');
 
@@ -13,8 +14,8 @@ class LocalizationService extends Translations {
   static final fallbackLocale = Locale('tr', 'TR');
 
   static final langs = [
-    '🇻🇳',
-    '🇬🇧',
+    true,
+    false,
   ];
 
   static final locales = [
@@ -31,14 +32,14 @@ class LocalizationService extends Translations {
       };
 
   // Gets locale from language, and updates the locale
-  void changeLocale(String lang) {
+  void changeLocale(bool lang) {
     final locale = _getLocaleFromLanguage(lang);
     Get.updateLocale(locale);
     // controller.loadlanguage(lang);
   }
 
   // Finds language in `langs` list and returns it as Locale
-  Locale _getLocaleFromLanguage(String lang) {
+  Locale _getLocaleFromLanguage(bool lang) {
     for (int i = 0; i < langs.length; i++) {
       if (lang == langs[i]) return locales[i];
     }

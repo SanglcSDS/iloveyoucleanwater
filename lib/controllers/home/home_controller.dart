@@ -1,4 +1,6 @@
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/introduce/introduce_controller.dart';
+import 'package:iloveyoucleanwater/controllers/learning/course_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_controller.dart';
 import 'package:iloveyoucleanwater/models/home/banner_model.dart';
@@ -20,6 +22,8 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 final controllerNews = Get.put(NewsController());
 final controllerLibrary = Get.put(LibraryController());
+final controllerIntroduce = Get.put(IntroduceController());
+final courseController = Get.put(CourseController());
 
 class HomeController extends GetxController {
   NewsService providerNewsService = NewsService();
@@ -64,6 +68,7 @@ class HomeController extends GetxController {
   }
 
   Future<bool> onRefreshHome({bool isRefresh = false}) async {
+    listPopular.clear();
     listCategoryNewsModel.clear();
     listCategory.clear();
     isloadingHome(true);
@@ -76,6 +81,11 @@ class HomeController extends GetxController {
     getPopular();
     getPhotoHome();
     getVideoHome();
+    controllerNews.isloadingNews();
+    controllerLibrary.isLoadingLibrary();
+    controllerIntroduce.isloadingIntroduce();
+
+    courseController.initData();
     isloadingHome(false);
     update();
     return true;
@@ -114,6 +124,29 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> getDetailVideo1(LibraryModel news) async {
+    late LibraryVideoModel detail;
+    late YoutubePlayerController video;
+    Response _data = await homeService.getDetailVideoHome(news.id);
+
+    if (_data.statusCode == 200) {
+      var jsonString = _data.body['data'];
+      if (jsonString != null) {
+        detail = LibraryVideoModel.fromJson(jsonString);
+
+        video = YoutubePlayerController(
+          initialVideoId: YoutubePlayer.convertUrlToId(detail.linkVideo)!,
+          flags: const YoutubePlayerFlags(
+            controlsVisibleAtStart: true,
+            autoPlay: true,
+          ),
+        );
+        Get.to(() =>
+            ItemVideoWidgetView(LibraryVideo: detail, videoController: video));
+      }
+    }
+  }
+
   Future<void> GetIntroduces() async {
     List<IntroduceModel> list = [];
     Response _data = await service.GetIntroduces();
@@ -125,7 +158,7 @@ class HomeController extends GetxController {
           list.add(IntroduceModel.fromJson(e));
         });
         list.forEach((e) {
-          if (e.id == 1) {
+          if (e.id == 1 || e.id == 2) {
             listIntroduce.add(e);
           }
         });
@@ -248,6 +281,7 @@ class HomeController extends GetxController {
       var jsonString = _data.body['data'];
       if (jsonString != null) {
         detail = NewsDetailsModel.fromJson(jsonString);
+        print(detail.content);
         Get.to(
             () => HomeDetailNewsView(news: detail, title: news.categoryTitle));
       }
@@ -273,18 +307,6 @@ class HomeController extends GetxController {
   void oClickNews0() {
     tabIndex = 2;
     controllerNews.oClickTab0();
-    update();
-  }
-
-  void oClickLibrary1() {
-    tabIndex = 3;
-    controllerLibrary.oClickLibrary1();
-    update();
-  }
-
-  void oClickLibrary0() {
-    tabIndex = 3;
-    controllerLibrary.oClickLibrary0();
     update();
   }
 }

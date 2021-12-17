@@ -55,18 +55,18 @@ class LearningView extends GetView<LessonController> {
                                   Theme(
                                     data: ThemeData(
                                         primarySwatch: kPrimaryMaterial),
-                                    child: const TabBar(
+                                    child: TabBar(
                                       tabs: [
                                         Tab(
-                                          child: Text('Bài học',
+                                          child: Text('lesson'.tr,
                                               style: TextStyle(color: kBlack)),
                                         ),
                                         Tab(
-                                          child: Text('Thảo luận',
+                                          child: Text('comment'.tr,
                                               style: TextStyle(color: kBlack)),
                                         ),
                                         Tab(
-                                          child: Text('Tài liệu',
+                                          child: Text('document'.tr,
                                               style: TextStyle(color: kBlack)),
                                         ),
                                       ],
@@ -90,7 +90,7 @@ class LearningView extends GetView<LessonController> {
                                       const EdgeInsets.only(left: 5, top: 5),
                                   child: IconButton(
                                     icon: const Icon(Icons.arrow_back_ios,
-                                        color: kGrey2),
+                                        color: Colors.white),
                                     onPressed: () => Get.back(),
                                   ),
                                 ),
