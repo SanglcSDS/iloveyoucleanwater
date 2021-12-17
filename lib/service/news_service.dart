@@ -1,8 +1,9 @@
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class NewsService extends GetConnect {
   Future<Response> getNewAll(int page, int id) {
     return get(
-        "http://112.78.4.235/api/posts/list?pageLength=5&language=vi&page=$page&categoryId=$id");
+        "${Constants.SERVER_URL}/posts/list?pageLength=5&language=${'locales'.tr}&page=$page&categoryId=$id");
   }
 }

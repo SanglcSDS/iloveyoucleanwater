@@ -123,7 +123,10 @@ class TestView extends GetView<TestController> {
                   data: ThemeData(primarySwatch: kPrimaryMaterial),
                   child: ElevatedButton(
                     onPressed: () {},
-                    child: Text('End'),
+                    child: Text(
+                      'test_end_test'.tr,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 )
               : Theme(
@@ -133,7 +136,10 @@ class TestView extends GetView<TestController> {
                         .nextPage(
                             duration: Duration(seconds: 1),
                             curve: Curves.bounceInOut),
-                    child: Text('Next'),
+                    child: Text(
+                      'test_next_page'.tr,
+                      style: TextStyle(color: Colors.white),
+                    ),
                   ),
                 )
         ],

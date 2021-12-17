@@ -1,7 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:iloveyoucleanwater/models/library/library_model.dart';
-import 'package:iloveyoucleanwater/service/news.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:shimmer/shimmer.dart';
 
@@ -64,7 +63,6 @@ class PrimaryCard extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
             child: Row(
               children: [
-                const SizedBox(width: 5.0),
                 const Icon(
                   Icons.date_range,
                   color: kGrey1,

@@ -3,7 +3,8 @@ import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class IntroduceService extends GetConnect {
   Future<Response> GetIntroduces() {
-    return get("${Constants.SERVER_URL}/introduction/list?language=vi");
+    return get(
+        "${Constants.SERVER_URL}/introduction/list?language=${'locales'.tr}");
   }
 
   Future<Response> GetDetailIntroduces(int id) {

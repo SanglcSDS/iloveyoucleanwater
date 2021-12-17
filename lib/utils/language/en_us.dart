@@ -3,7 +3,7 @@ const Map<String, String> en = {
   'introduce': 'About us',
   'library': 'Gallery',
   'learning': 'E-Learning',
-  'news': 'E-learning',
+  'news': 'News',
   'detail': 'Details',
   'all': 'All',
   'album': 'Album',
@@ -13,42 +13,62 @@ const Map<String, String> en = {
   'introduceProgram': 'Mizuiku - I love clean water & program',
   'introducePartner': 'Co-organizing Board',
   'error': 'Oop! Lỗi rồi...',
+  'locales': "en",
+  'language': "language",
+  'Login': "Login",
+  'logout': "Logout",
+  'changePassword': "Change Password",
+  //loading
+  'releaseText': 'Release to refresh',
+  'refreshingText': "Refreshing ..",
+  'completeText': "Refresh complete",
+  'idleText': "Pull down refresh",
+  'infoText': "Update %T",
+  'refreshFailedText': "Refresh failed",
+
+  'loadText': "Loading complete",
+  'noMoreText': " No more data",
+  'loadReadyText': "No more data",
+  'loadingText': "Loading..",
+  'loadFailedText': " No more data",
 
   // course
-  // 'course': '',
-  // 'course_progress': '',
-  // 'course_percent': 'Complete',
-  // 'course_quiz': 'TEST YOUR KNOWLEDGE',
-  // 'course_rate': '',
-  // 'course_student': 'student',
-  // 'course_complete_title': 'Chúc mừng!',
-  // 'course_complete_content':
-  //     'Bạn đã hoàn thành khóa học!\nLàm bài kiểm tra ngay?',
+  'course': 'Your courses',
+  'course_progress': 'progress',
+  'course_percent': 'Complete',
+  'course_quiz': 'TEST',
+  'course_rate': 'RATING',
+  'course_student': 'student',
+  'course_complete_title': 'Congratulations!',
+  'course_complete_content':
+      'Bạn đã hoàn thành khóa học!\nLàm bài kiểm tra ngay?',
 
   // lesson
-  // 'lesson': 'Bài học',
-  // 'lesson_lower_case': 'bài học',
-  // 'lesson_loading': 'Đang tải bài học....',
+  'lesson': 'Lesson',
+  'lesson_lower_case': 'lesson',
+  'lesson_loading': 'Lesson loading....',
 
   // comment
-  // 'comment': 'Thảo luận',
-  // 'comment_input': 'Viết bình luận...',
+  'comment': 'Discuss',
+  'comment_input': 'Type a message...',
 
   // document
-  // 'document': 'Tài liệu',
-  // 'document_download': 'Tải xuống',
-  // 'document_open': 'Mở file',
-  // 'document_progressing': 'Đang tải...',
-  // 'document_download_fail': 'Tải file thất bại!',
+  'document': 'Document',
+  'document_download': 'Download',
+  'document_open': 'Open file',
+  'document_progressing': 'Downloading...',
+  'document_download_fail': 'Download failed!',
 
   // evaluation
-  // 'evaluation_other': 'Khác',
-  // 'evaluation_other_input': 'Các góp ý, nhận xét khác',
-  // 'evaluation_btn': 'Đánh giá',
+  'evaluation_other': 'Other',
+  'evaluation_other_input': 'Other comments and suggestions',
+  'evaluation_btn': 'Send',
 
   // test
-  // 'test_title': 'Kiểm tra kiến thức',
+  'test_title': 'Test your knowledge',
   // 'test_btn': 'Đánh giá',
+  'test_next_page': 'Next question',
+  'test_end_test': 'Complete the test',
 
   // log_in
   'login': 'Login',

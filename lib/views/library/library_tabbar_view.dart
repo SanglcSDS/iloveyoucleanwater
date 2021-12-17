@@ -4,8 +4,7 @@ import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_controller.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
-import 'package:iloveyoucleanwater/views/library/library_photo_view.dart';
-import 'package:iloveyoucleanwater/views/library/library_video_view.dart';
+
 import 'package:iloveyoucleanwater/views/shared/widgets/primary_card.dart';
 
 class LibraryTabBarView extends StatefulWidget {
@@ -23,8 +22,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
   @override
   void initState() {
     super.initState();
-    _controller.getPhoto(isLoadingP: true);
-    _controller.getVideo(isLoadingV: true);
+
     controller = TabController(length: 2, vsync: this);
   }
 
@@ -81,19 +79,19 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                     EasyRefresh.custom(
                       controller: easyRefreshController,
                       header: ClassicalHeader(
-                        refreshText: 'Kéo xuống làm mới',
-                        refreshingText: "Làm mới...",
-                        refreshedText: "Làm mới hoàn tất",
-                        refreshFailedText: "Làm mới không thành công",
-                        infoText: "Cập nhật %T",
-                        refreshReadyText: "nhả ra để làm mới",
+                        refreshText: 'idleText'.tr,
+                        refreshingText: 'refreshingText'.tr,
+                        refreshedText: 'completeText'.tr,
+                        refreshFailedText: 'refreshFailedText'.tr,
+                        infoText: 'infoText'.tr,
+                        refreshReadyText: 'releaseText'.tr,
                       ),
                       footer: ClassicalFooter(
-                        loadText: "load hoàn tất",
-                        noMoreText: "Không còn dữ liệu",
-                        loadReadyText: "Nhả ra để làm mới ",
-                        loadingText: "Đang tải..",
-                        loadFailedText: "Không còn dữ liệu",
+                        loadText: 'loadText'.tr,
+                        noMoreText: 'noMoreText'.tr,
+                        loadReadyText: 'loadReadyText'.tr,
+                        loadingText: 'loadingText'.tr,
+                        loadFailedText: 'loadFailedText'.tr,
                         showInfo: false,
                       ),
                       onRefresh: () async {
@@ -122,7 +120,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                               tag: "photo$index",
                               child: InkWell(
                                 onTap: () {
-                                  _homecontroller.getDetailVideo(recent);
+                                  _homecontroller.getDetailPhotoHome(recent);
                                 },
                                 child: Container(
                                   padding: EdgeInsets.only(top: 15.0),
@@ -139,21 +137,26 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                       ],
                     ),
                     EasyRefresh.custom(
+                      //                       'releaseText': 'Nhả ra để làm mới',
+                      // 'refreshingText': "Làm mới...",
+                      // 'completeText': "Làm mới hoàn tất",
+                      // 'idleText': "Kéo xuống làm mới",
+
                       controller: easyRefreshControllervideo,
                       header: ClassicalHeader(
-                        refreshText: 'Kéo xuống làm mới',
-                        refreshingText: "Làm mới...",
-                        refreshedText: "Làm mới hoàn tất",
-                        refreshFailedText: "Làm mới không thành công",
-                        infoText: "Cập nhật %T",
-                        refreshReadyText: "nhả ra để làm mới",
+                        refreshText: 'idleText'.tr,
+                        refreshingText: 'refreshingText'.tr,
+                        refreshedText: 'completeText'.tr,
+                        refreshFailedText: 'refreshFailedText'.tr,
+                        infoText: 'infoText'.tr,
+                        refreshReadyText: 'releaseText'.tr,
                       ),
                       footer: ClassicalFooter(
-                        loadText: "load hoàn tất",
-                        noMoreText: "Không còn dữ liệu",
-                        loadReadyText: "Nhả ra để làm mới ",
-                        loadingText: "Đang tải..",
-                        loadFailedText: "Không còn dữ liệu",
+                        loadText: 'loadText'.tr,
+                        noMoreText: 'noMoreText'.tr,
+                        loadReadyText: 'loadReadyText'.tr,
+                        loadingText: 'loadingText'.tr,
+                        loadFailedText: 'loadFailedText'.tr,
                         showInfo: false,
                       ),
                       onRefresh: () async {

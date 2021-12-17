@@ -18,7 +18,7 @@ class CourseView extends StatelessWidget {
       initState: (_) => _controller.initData(),
       builder: (_) => Scaffold(
         appBar: AppBar(
-          title: Text('course'.tr, style: TextStyle(color: kGrey1)),
+          title: Text('course'.tr, style: TextStyle(color: primaryColor)),
           centerTitle: true,
           backgroundColor: Colors.white,
         ),

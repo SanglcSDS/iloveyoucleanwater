@@ -7,15 +7,8 @@ import 'package:dio/src/response.dart' as dio_resp;
 import 'package:dio/src/form_data.dart' as dio_fd;
 
 class LearningService extends GetConnect {
-  String _getLanguage() {
-    String _language = defaultLanguage;
-    if (GetStorage().hasData("language"))
-      _language = GetStorage().read("language");
-    return _language;
-  }
-
   Future<getx_resp.Response> getCourses() {
-    return get("${Constants.SERVER_URL}/courses?language=${_getLanguage()}",
+    return get("${Constants.SERVER_URL}/courses?language=${'locales'.tr}",
         headers: {
           'Content-Type': 'application/json',
           'Accept': 'application/json',
@@ -42,7 +35,7 @@ class LearningService extends GetConnect {
   Future<getx_resp.Response> nextLesson(String nextLessonId) {
     Map<String, String> data = {
       "next_lesson_id": nextLessonId,
-      "language": _getLanguage()
+      "language": 'locales'.tr
     };
     return post("${Constants.SERVER_URL}/auth/courses/next-lesson", data,
         headers: {
@@ -55,7 +48,7 @@ class LearningService extends GetConnect {
   Future<getx_resp.Response> getTest(int courseId) {
     Map<String, String> data = {
       "course_id": courseId.toString(),
-      "language": _getLanguage()
+      "language": 'locales'.tr
     };
     return post("${Constants.SERVER_URL}/auth/courses/get-test", data,
         headers: {
@@ -66,7 +59,7 @@ class LearningService extends GetConnect {
   }
 
   Future<getx_resp.Response> getEvaluation() {
-    Map<String, String> data = {"language": _getLanguage()};
+    Map<String, String> data = {"language": 'locales'.tr};
     return post("${Constants.SERVER_URL}/auth/evaluations/get", data, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',

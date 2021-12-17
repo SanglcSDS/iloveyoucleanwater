@@ -16,7 +16,7 @@ class NewsController extends GetxController
   @override
   void onInit() {
     getCategory();
-    controller = TabController(length: listCategory.length, vsync: this);
+    //  controller = TabController(length: listCategory.length, vsync: this);
     super.onInit();
   }
 
@@ -67,6 +67,13 @@ class NewsController extends GetxController
     return true;
   }
 
+  Future<void> isloadingNews() async {
+    await getCategory();
+    for (int i = 0; i < listCategory.length; i++) {
+      getLoadMoreRefresh(true, listCategory[i].id);
+    }
+  }
+
   Future<void> getCategory() async {
     Response _data = await provider.getCategoryNew();
     listCategory.clear();
@@ -91,7 +98,7 @@ class NewsController extends GetxController
 
   @override
   void onClose() {
-    controller.dispose();
+    // controller.dispose();
     super.onClose();
   }
 }

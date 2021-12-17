@@ -71,7 +71,7 @@ class HomeItemNewsWidgetView extends StatelessWidget {
           ),
           Container(
             padding:
-                EdgeInsets.only(top: 5.0, bottom: 10.0, left: 9.0, right: 9.0),
+                EdgeInsets.only(top: 5.0, bottom: 10.0, left: 5.0, right: 5.0),
             // padding:const EdgeInsets.symmetric(horizontal: 9.0, vertical: 15.0),
             child: Row(
               children: [
