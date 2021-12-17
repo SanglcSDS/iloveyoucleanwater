@@ -18,6 +18,7 @@ abstract class Routes {
   static const USER_INFO = _Paths.USER_INFO;
   static const LOGIN = _Paths.LOGIN;
   static const REGISTER = _Paths.REGISTER;
+  static const CHANGE_PWD = _Paths.CHANGE_PWD;
 }
 
 abstract class _Paths {
@@ -38,4 +39,5 @@ abstract class _Paths {
   static const USER_INFO = '/user-info';
   static const LOGIN = '/login';
   static const REGISTER = '/register';
+  static const CHANGE_PWD = '/change-pwd';
 }

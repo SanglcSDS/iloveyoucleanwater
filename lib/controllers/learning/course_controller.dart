@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:iloveyoucleanwater/controllers/learning/comments_controller.dart';
 import 'package:iloveyoucleanwater/controllers/learning/document_controller.dart';
 import 'package:iloveyoucleanwater/controllers/learning/lessons_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/course.dart';
@@ -17,6 +18,7 @@ class CourseController extends GetxController
   final LessonController _lessonController = Get.put(LessonController());
   final DocumentController _documentController = Get.put(DocumentController());
   final LearningService _learningService = Get.put(LearningService());
+  final CommentController _commentController = Get.put(CommentController());
 
   final List<String> dropletIcons = [
     "assets/images/giot-nuoc-1.png",
@@ -80,6 +82,7 @@ class CourseController extends GetxController
   void popToLessonViews(Course course) {
     _lessonController.onInitLesson(course.id);
     _documentController.loadDocuments(course.id);
+    _commentController.loadComments(course.id);
     update();
     Get.toNamed(Routes.LEARNING);
   }

@@ -2,15 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
-import 'package:iloveyoucleanwater/controllers/home/home_binding.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/utils/language/Localization_Service.dart';
-import 'package:iloveyoucleanwater/views/account/forgot_password.dart';
 import 'package:iloveyoucleanwater/views/account/sign_up.dart';
 import 'package:flutter_switch/flutter_switch.dart';
-import 'package:iloveyoucleanwater/views/home/home_tabbar_view.dart';
 
 class CustomDrawer extends StatefulWidget {
   @override
@@ -110,25 +107,32 @@ class _CustomDrawerState extends State<CustomDrawer> {
           _buildDrawerOption(
             Icon(Icons.lock),
             'changePassword'.tr,
-            () => Get.to(SignUpView()),
+            () => Get.toNamed(Routes.CHANGE_PWD),
           ),
           Expanded(
-            child: Align(
-              alignment: FractionalOffset.bottomCenter,
-              child: _buildDrawerOption(
-                Icon(Icons.exit_to_app),
-                'logout'.tr,
-                () => {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
+            child: GetStorage().hasData("token")
+                ? Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: _buildDrawerOption(
+                      Icon(Icons.logout_rounded),
+                      'logout'.tr,
+                      () => {
+                        Get.toNamed(Routes.LOGIN),
+                        box.remove('token'),
+                        box.remove('expiresAt'),
+                      },
+                    ),
+                  )
+                : Align(
+                    alignment: FractionalOffset.bottomCenter,
+                    child: _buildDrawerOption(
+                      Icon(Icons.login_rounded),
+                      'login'.tr,
+                      () => {
+                        Get.toNamed(Routes.LOGIN),
+                      },
                     ),
                   ),
-                  box.remove('token'),
-                },
-              ),
-            ),
           ),
         ],
       ),

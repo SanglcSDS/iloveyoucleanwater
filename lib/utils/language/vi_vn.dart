@@ -70,9 +70,11 @@ const Map<String, String> vi = {
 
   // test
   'test_title': 'Kiểm tra kiến thức',
-  'test_btn': 'Đánh giá',
-  'test_next_page': 'Câu tiếp theo',
-  'test_end_test': 'Nộp bài',
+  'test_btn': 'Nộp bài',
+  'test_send_loading': 'Đang chấm điểm...',
+  'test_total_point': 'Điểm của bạn: ',
+  'test_show_answer': 'Đáp án đúng:',
+  'test_submitted': 'Bài kiểm tra của bạn đã được gửi!',
 
   // log_in
   'login': 'Đăng nhập',
@@ -118,4 +120,11 @@ const Map<String, String> vi = {
       'Mật khẩu cần có ít nhất 8 ký tự Ví dụ: Mizuiku123',
   'validate_name_empty': 'Vui lòng nhập tên (ghi tiếng Việt có dấu).',
   'validate_gender_empty': 'Vui lòng chọn giới tính.',
+
+  // change pwd
+  'change_pwd_title': 'Đổi mật khẩu',
+  'change_pwd_old': 'Nhập mật khẩu hiện tại',
+  'change_pwd_new': 'Nhập mật khẩu mới',
+  'change_pwd_confirm': 'Nhập lại mật khẩu',
+  'change_pwd_btn': 'THAY ĐỔI',
 };

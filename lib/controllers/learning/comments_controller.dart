@@ -1,20 +1,37 @@
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/learning/comment.dart';
-import 'package:intl/intl.dart';
+import 'package:iloveyoucleanwater/service/learning_service.dart';
 
 class CommentController extends GetxController {
-  late List<Comment> comments;
+  RxList<Comment>? comments = <Comment>[].obs;
+  final LearningService _learningService = LearningService();
+  late int courseId;
 
   @override
   void onInit() {
-    comments = [Comment(comment: 'Bổ ích', time: '2021-12-01 10:49:04')];
     super.onInit();
   }
 
-  writeComment(value) {
-    comments.add(Comment(
-        comment: value,
-        time: DateFormat('yyyy-MM-dd – kk:mm:ss').format(DateTime.now())));
-    update();
+  void loadComments(int _courseId) async {
+    courseId = _courseId;
+    Response response = await _learningService.getCommentByCourseId(_courseId);
+    if (response.statusCode == 200 && !response.body["error"]) {
+      List<Comment> list = [];
+      var data = response.body["data"] as List;
+      for (Map<String, dynamic> item in data) {
+        list.add(Comment.fromJson(item));
+      }
+
+      comments = list.obs;
+      update();
+    }
+  }
+
+  void writeComment(String value) async {
+    if (value.length > 0) {
+      await _learningService.postComment(courseId, value);
+      loadComments(courseId);
+      update();
+    }
   }
 }

@@ -45,6 +45,25 @@ class LearningService extends GetConnect {
         });
   }
 
+  Future<getx_resp.Response> getCommentByCourseId(int courseId) {
+    return get("${Constants.SERVER_URL}/auth/comments/get?course_id=$courseId",
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': '${GetStorage().read('token')}',
+        });
+  }
+
+  Future<getx_resp.Response> postComment(int courseId, String comment) {
+    Map<String, dynamic> data = {"course_id": courseId, "comment": comment};
+    return post("${Constants.SERVER_URL}/auth/comments/post-comments", data,
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': 'application/json',
+          'Authorization': '${GetStorage().read('token')}',
+        });
+  }
+
   Future<getx_resp.Response> getTest(int courseId) {
     Map<String, String> data = {
       "course_id": courseId.toString(),
@@ -67,7 +86,7 @@ class LearningService extends GetConnect {
     });
   }
 
-  Future<dio_resp.Response> postTest(Map<String, String> body) {
+  Future<dio_resp.Response> postTest(Map<String, dynamic> body) {
     dio_fd.FormData data = dio_fd.FormData.fromMap(body);
     return Dio().post("${Constants.SERVER_URL}/auth/courses/post-test",
         data: data,

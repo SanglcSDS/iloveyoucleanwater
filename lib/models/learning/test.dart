@@ -82,7 +82,8 @@ class Answer {
   late int type;
   late String content;
   int? status;
-  bool? isChoose;
+  int? isChoose;
+  int? questionId;
 
   Answer({
     required this.id,
@@ -90,6 +91,7 @@ class Answer {
     required this.content,
     this.status,
     this.isChoose,
+    this.questionId,
   });
 
   Answer.fromJson(Map<String, dynamic> json) {
@@ -98,5 +100,9 @@ class Answer {
     content = json["content"];
     status = json.containsKey("status") ? json['status'] : null;
     isChoose = json.containsKey("is_choose") ? json['is_choose'] : null;
+  }
+
+  set setQuestionId(int _questionId) {
+    questionId = _questionId;
   }
 }

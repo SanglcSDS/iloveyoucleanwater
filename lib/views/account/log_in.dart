@@ -19,6 +19,7 @@ class LogInView extends GetView<AccountController> {
         backgroundColor: primaryColor,
         elevation: 0.0,
       ),
+      backgroundColor: Colors.white,
       body: SingleChildScrollView(
         child: Column(
           children: [

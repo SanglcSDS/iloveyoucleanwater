@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/account/account_binding.dart';
+import 'package:iloveyoucleanwater/controllers/account/change_password_binding.dart';
 import 'package:iloveyoucleanwater/controllers/account/register_binding.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_binding.dart';
 import 'package:iloveyoucleanwater/controllers/introduce/introduce_binding.dart';
@@ -9,6 +10,7 @@ import 'package:iloveyoucleanwater/controllers/learning/lessons_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/tests_binding.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_binding.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_binding.dart';
+import 'package:iloveyoucleanwater/views/account/forgot_password.dart';
 import 'package:iloveyoucleanwater/views/account/log_in.dart';
 import 'package:iloveyoucleanwater/views/account/sign_up.dart';
 import 'package:iloveyoucleanwater/views/account/user_info.dart';
@@ -89,6 +91,11 @@ class AppPages {
       name: Routes.USER_INFO,
       page: () => UserInfoScreen(),
       binding: AccountBinding(),
+    ),
+    GetPage(
+      name: Routes.CHANGE_PWD,
+      page: () => ChangePasswordView(),
+      binding: ChangePasswordBinding(),
     ),
   ];
 }
