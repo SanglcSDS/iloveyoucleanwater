@@ -2,18 +2,19 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
-import 'package:iloveyoucleanwater/models/news/news_%20details_model.dart';
+import 'package:iloveyoucleanwater/models/library/library_detail_photo_model.dart';
 
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 import 'package:shimmer/shimmer.dart';
 
-class HomeDetailNewsView extends StatelessWidget {
-  final NewsDetailsModel news;
+class LibraryDetailPhotoView extends StatelessWidget {
+  final LibraryDetailPhotoModel news;
   final String title;
-  HomeDetailNewsView({required this.news, required this.title});
+  final String datetime;
+  LibraryDetailPhotoView(
+      {required this.news, required this.title, required this.datetime});
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -71,6 +72,13 @@ class HomeDetailNewsView extends StatelessWidget {
                   fit: BoxFit.cover,
                 ),
               ),
+
+              // DecorationImage(
+              //   image: (news.image.contains(Constants.URL_IMAGE)
+              //       ? news.image
+              //       : Constants.URL_IMAGE + news.image),
+              //   fit: BoxFit.cover,
+              // ),
             ),
             const SizedBox(height: 15.0),
             Row(
@@ -111,7 +119,7 @@ class HomeDetailNewsView extends StatelessWidget {
               style: kTitleCard,
               textAlign: TextAlign.justify,
             ),
-            const SizedBox(height: 5.0),
+            const SizedBox(height: 15.0),
             Row(
               children: [
                 const Icon(
@@ -121,21 +129,55 @@ class HomeDetailNewsView extends StatelessWidget {
                 const SizedBox(width: 5.0),
                 Expanded(
                     child: Text(
-                        calculateTimeDifferenceBetween(
-                            stringTime: news.createdAt),
+                        calculateTimeDifferenceBetween(stringTime: datetime),
                         style: kDetailContent,
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1))
               ],
             ),
-            //  const SizedBox(height: 5.0),
-            SingleChildScrollView(
-              child: Html(
-                data: pigLatinwidth(pigLatinheight(news.content.toString())),
-                style: {
-                  "p": Style(textAlign: TextAlign.justify),
-                },
-              ),
+            const SizedBox(height: 5.0),
+            Html(
+              data: news.content,
+              style: {
+                "p": Style(
+                  textAlign: TextAlign.justify,
+                ),
+                "img": Style(
+                    width: MediaQuery.of(context).size.width * 0.7,
+                    height: MediaQuery.of(context).size.height * 0.7)
+              },
+            ),
+            const SizedBox(height: 15.0),
+            Column(
+              children: List.generate(news.listImages.length, (index) {
+                var image = news.listImages[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: Container(
+                    height: 220.0,
+                    child: CachedNetworkImage(
+                      imageUrl: (image.link.contains(Constants.URL_IMAGE)
+                          ? image.link
+                          : Constants.URL_IMAGE + image.link),
+                      errorWidget: (context, url, error) =>
+                          const Icon(Icons.error),
+                      progressIndicatorBuilder:
+                          (context, url, downloadProgress) => Center(
+                        child: Shimmer.fromColors(
+                          baseColor: Colors.grey[400]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            width: double.infinity,
+                            height: double.infinity,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                );
+              }),
             ),
             const SizedBox(height: 25.0)
           ],

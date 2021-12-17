@@ -63,7 +63,6 @@ class PrimaryCard extends StatelessWidget {
                 const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
             child: Row(
               children: [
-                const SizedBox(width: 5.0),
                 const Icon(
                   Icons.date_range,
                   color: kGrey1,

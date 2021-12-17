@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_html/flutter_html.dart';
+
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
@@ -50,11 +50,11 @@ class HomeView extends StatelessWidget {
     return Obx(
       () => Center(
         child: SmartRefresher(
-          header: const ClassicHeader(
-            releaseText: 'Nhả ra để làm mới',
-            refreshingText: "Làm mới...",
-            completeText: "Làm mới hoàn tất",
-            idleText: "Kéo xuống làm mới",
+          header: ClassicHeader(
+            releaseText: 'releaseText'.tr,
+            refreshingText: 'refreshingText'.tr,
+            completeText: 'completeText'.tr,
+            idleText: 'idleText'.tr,
           ),
           controller: refreshHomeController,
           onRefresh: () async {

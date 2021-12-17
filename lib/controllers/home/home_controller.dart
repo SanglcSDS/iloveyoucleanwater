@@ -121,6 +121,29 @@ class HomeController extends GetxController {
     }
   }
 
+  Future<void> getDetailVideo1(LibraryModel news) async {
+    late LibraryVideoModel detail;
+    late YoutubePlayerController video;
+    Response _data = await homeService.getDetailVideoHome(news.id);
+
+    if (_data.statusCode == 200) {
+      var jsonString = _data.body['data'];
+      if (jsonString != null) {
+        detail = LibraryVideoModel.fromJson(jsonString);
+
+        video = YoutubePlayerController(
+          initialVideoId: YoutubePlayer.convertUrlToId(detail.linkVideo)!,
+          flags: const YoutubePlayerFlags(
+            controlsVisibleAtStart: true,
+            autoPlay: true,
+          ),
+        );
+        Get.to(() =>
+            ItemVideoWidgetView(LibraryVideo: detail, videoController: video));
+      }
+    }
+  }
+
   Future<void> GetIntroduces() async {
     List<IntroduceModel> list = [];
     Response _data = await service.GetIntroduces();

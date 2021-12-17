@@ -51,6 +51,7 @@ class TitleWidgetNextView extends StatelessWidget {
                   const Expanded(
                       flex: 1,
                       child: IconButton(
+                        padding: EdgeInsets.only(left: 5),
                         onPressed: null,
                         alignment: Alignment.centerRight,
                         icon: Icon(
@@ -123,6 +124,7 @@ class TitleWidgetNextPhotoVideo extends StatelessWidget {
                       flex: 1,
                       child: IconButton(
                         onPressed: null,
+                        padding: EdgeInsets.only(left: 5),
                         alignment: Alignment.centerRight,
                         icon: Icon(
                           Icons.arrow_forward_ios,

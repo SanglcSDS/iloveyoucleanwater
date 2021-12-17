@@ -98,7 +98,7 @@ class NewsController extends GetxController
 
   @override
   void onClose() {
-    controller.dispose();
+    // controller.dispose();
     super.onClose();
   }
 }

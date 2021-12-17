@@ -16,11 +16,15 @@ class LibraryVideoView extends StatelessWidget {
     return Container(
       child: Obx(
         () => SmartRefresher(
-          header: const ClassicHeader(
-            releaseText: 'Nhả ra để làm mới',
-            refreshingText: "Làm mới...",
-            completeText: "Làm mới hoàn tất",
-            idleText: "Kéo xuống làm mới",
+          header: ClassicHeader(
+            releaseText: 'releaseText'.tr,
+            refreshingText: 'refreshingText'.tr,
+            completeText: 'completeText'.tr,
+            idleText: 'idleText'.tr,
+          ),
+          footer: ClassicFooter(
+            loadingText: 'loadText'.tr,
+            failedText: 'noMoreText'.tr,
           ),
           controller: _controller.refreshControllerVideo,
           enablePullUp: true,

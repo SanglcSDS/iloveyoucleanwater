@@ -17,6 +17,20 @@ const Map<String, String> en = {
   'Login': "Login",
   'logout': "Logout",
   'changePassword': "Change Password",
+  //loading
+  'releaseText': 'Release to refresh',
+  'refreshingText': "Refreshing ..",
+  'completeText': "Refresh complete",
+  'idleText': "Pull down refresh",
+  'infoText': "Update %T",
+  'refreshFailedText': "Refresh failed",
+
+  'loadText': "Loading complete",
+  'noMoreText': " No more data",
+  'loadReadyText': "No more data",
+  'loadingText': "Loading..",
+  'loadFailedText': " No more data",
+
   // learning
   'courses': 'Danh sách khóa học'
 };

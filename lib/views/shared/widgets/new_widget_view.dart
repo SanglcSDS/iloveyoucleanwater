@@ -72,7 +72,6 @@ class NewWidgetView extends StatelessWidget {
                   const Spacer(),
                   Row(
                     children: [
-                      const SizedBox(width: 5.0),
                       const Icon(
                         Icons.date_range,
                         color: kGrey1,
