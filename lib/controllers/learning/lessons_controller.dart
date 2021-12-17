@@ -29,6 +29,7 @@ class LessonController extends GetxController {
   }
 
   void onInitLesson(int course) async {
+    EasyLoading.show(status: 'loadingText'.tr);
     courseId = course;
     Response<dynamic> response =
         await _learningService.getLessonByCoureseId(course);
@@ -51,7 +52,10 @@ class LessonController extends GetxController {
             countUnlockLesson++;
           }
         }
-        if (countUnlockLesson == list.length) isComplete = true.obs;
+        if (countUnlockLesson == list.length)
+          isComplete = true.obs;
+        else
+          isComplete = false.obs;
         currentUrl = currentLesson!.value.url.obs;
         percent = (countUnlockLesson / list.length).obs;
         percentStr =
@@ -71,19 +75,20 @@ class LessonController extends GetxController {
     } else {
       Get.offNamed(Routes.LOGIN);
     }
+    EasyLoading.dismiss();
   }
 
   void changeLesson(Lesson lesson, int index) {
+    EasyLoading.show(status: "lesson_loading".tr);
     if (lesson.statusWork) {
-      EasyLoading.show(status: "lesson_loading".tr);
       currentLesson = lesson.obs;
       currentUrl = lesson.url.obs;
       activeIndex = index.obs;
       videoController!.value
           .load(YoutubePlayer.convertUrlToId(currentUrl!.value)!);
       update();
-      EasyLoading.dismiss();
     }
+    EasyLoading.dismiss();
   }
 
   void videoEnded(context) async {
@@ -117,5 +122,11 @@ class LessonController extends GetxController {
     _testController.loadTest(courseId);
     update();
     Get.toNamed(Routes.TESTS);
+  }
+
+  @override
+  void onClose() {
+    isComplete = false.obs;
+    super.onClose();
   }
 }

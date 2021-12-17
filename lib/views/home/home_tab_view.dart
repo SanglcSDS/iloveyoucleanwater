@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 import 'package:iloveyoucleanwater/views/home/custom_drawer.dart';
@@ -28,10 +29,17 @@ class HomeTabView extends StatelessWidget {
               ),
             ),
             actions: <Widget>[
-              IconButton(
-                icon: const Icon(Icons.login, color: primaryColor),
-                onPressed: () => Get.toNamed(Routes.LOGIN),
-              ),
+              GetStorage().hasData("token")
+                  ? IconButton(
+                      icon:
+                          const Icon(Icons.logout_rounded, color: primaryColor),
+                      onPressed: () => {
+                        Get.toNamed(Routes.LOGIN),
+                        GetStorage().remove('token'),
+                        GetStorage().remove('expiresAt'),
+                      },
+                    )
+                  : SizedBox()
             ],
             leading: IconButton(
               icon: const Icon(FontAwesomeIcons.bars, color: kGrey1),

@@ -21,21 +21,16 @@ class RegisterController extends GetxController {
 
   @override
   void onInit() {
-    debugPrint("oninit ?????");
     genders = <Map<String, dynamic>>[
-      {"id": 0, "value": "Nam"},
-      {"id": 1, "value": "Nữ"},
-      {"id": 2, "value": "Khác"},
+      {"id": 0, "value": "signup_gender_male".tr},
+      {"id": 1, "value": "signup_gender_female".tr},
+      {"id": 2, "value": "signup_gender_other".tr},
     ];
     jobs = <Map<String, dynamic>>[
-      {"id": -1, "value": "Bạn là"},
-      {"id": 0, "value": "Giáo viên"},
-      {"id": 1, "value": "Học sinh"},
-      {"id": 2, "value": "Khác"},
+      {"id": 0, "value": "signup_you_are_teacher".tr},
+      {"id": 1, "value": "signup_you_are_student".tr},
+      {"id": 2, "value": "signup_you_are_other".tr},
     ];
-    // provinces.add(Province(id: 0, name: 'Chọn tỉnh/Thành phố'));
-    // districts
-    //     .add(District(id: 0, name: 'Chọn Quận/Huyện/Thị xã', provinceId: 0));
     loadDataProvince();
     super.onInit();
   }
@@ -45,17 +40,11 @@ class RegisterController extends GetxController {
     Response<dynamic> res = await _accountProvider.getDataProvinces();
     var jsonProvince = res.body['provinces'];
     if (jsonProvince != null) {
-      debugPrint("json Provinces");
       for (var item in jsonProvince) {
         provinces.add(Province.fromJson(item));
       }
     }
     rxProvinces = provinces.obs;
-
-    debugPrint("Provinces: " +
-        rxProvinces.length.toString() +
-        "  /  " +
-        rxProvinces[1].name);
 
     var jsonDistrict = res.body['districts'];
     if (jsonDistrict != null) {
@@ -63,11 +52,6 @@ class RegisterController extends GetxController {
         districts.add(District.fromJson(item));
       }
       rxDistricts = districts.obs;
-
-      debugPrint("rxDistricts: " +
-          rxDistricts.length.toString() +
-          "  /  " +
-          rxDistricts[1].name);
     }
     update();
     EasyLoading.dismiss();
@@ -112,14 +96,16 @@ class RegisterController extends GetxController {
       password: pwd,
       mobile: phone,
       workplace: workplace,
-      gender: _gender.value,
-      job: _job.value,
-      provinceId: _province.value,
-      districtId: _district.value,
+      gender: _gender.value < 0 ? genders[0]["id"] : _gender.value,
+      job: _job.value < 0 ? jobs[0]["id"] : _job.value,
+      provinceId: _province.value <= 0 ? rxProvinces[0].id : _province.value,
+      districtId: _district.value <= 0 ? rxDistricts[0].id : _district.value,
     );
     Response<dynamic> response = await _accountProvider.register(user);
     if (response.statusCode == 201) {
       return true;
+    } else {
+      debugPrint(response.bodyString);
     }
     // Map<String, dynamic> body = response.body;
     // if (!body.containsKey("error")) {

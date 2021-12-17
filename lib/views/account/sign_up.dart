@@ -25,6 +25,7 @@ class SignUpView extends GetView<RegisterController> {
           backgroundColor: primaryColor,
           elevation: 0.0,
         ),
+        backgroundColor: Colors.white,
         body: SingleChildScrollView(
           child: Column(
             children: [
@@ -120,7 +121,7 @@ class SignUpView extends GetView<RegisterController> {
                       Theme(
                         data: ThemeData(primarySwatch: kPrimaryMaterial),
                         child: TextFormField(
-                          keyboardType: TextInputType.text,
+                          keyboardType: TextInputType.phone,
                           controller: _phoneController,
                           decoration: InputDecoration(
                               prefixIcon: Icon(
@@ -157,12 +158,14 @@ class SignUpView extends GetView<RegisterController> {
                         data: ThemeData(primarySwatch: kPrimaryMaterial),
                         child: CustomDropdown(
                           items: controller.genders,
-                          selectedItem: {"id": -1, "value": "signup_gender".tr},
+                          // selectedItem: {"id": -1, "value": "signup_gender".tr},
+                          selectedItem: controller.genders[0],
                           label: "signup_gender".tr,
                           itemAsString: (Map<String, dynamic> item) =>
                               item['value'],
                           onChange: (Map<String, dynamic>? newValue) {
                             controller.onChangeGender(newValue!);
+                            controller.update();
                           },
                           showSearchBox: true,
                           validation: (value) {

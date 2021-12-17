@@ -41,7 +41,7 @@ const Map<String, String> en = {
   'course_student': 'student',
   'course_complete_title': 'Congratulations!',
   'course_complete_content':
-      'Bạn đã hoàn thành khóa học!\nLàm bài kiểm tra ngay?',
+      'You have completed the course!\nTake the test now?',
 
   // lesson
   'lesson': 'Lesson',
@@ -66,9 +66,11 @@ const Map<String, String> en = {
 
   // test
   'test_title': 'Test your knowledge',
-  // 'test_btn': 'Đánh giá',
-  'test_next_page': 'Next question',
-  'test_end_test': 'Complete the test',
+  'test_btn': 'Submit',
+  'test_send_loading': 'Submitting...',
+  'test_total_point': 'Your score: ',
+  'test_show_answer': 'Correct answer:',
+  'test_submitted': 'Your test has been submitted!',
 
   // log_in
   'login': 'Login',
@@ -114,4 +116,11 @@ const Map<String, String> en = {
       'Password needs to be at least 8 characters For example: Mizuiku123',
   'validate_name_empty': 'Please enter accented Vietnamese',
   'validate_gender_empty': 'Please choose your sex.',
+
+  // change pwd
+  'change_pwd_title': 'Change password',
+  'change_pwd_old': 'Input old password',
+  'change_pwd_new': 'Input new password',
+  'change_pwd_confirm': 'Confirm new password',
+  'change_pwd_btn': 'CHANGE',
 };

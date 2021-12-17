@@ -35,14 +35,17 @@ class EvaluationView extends GetView<EvaluationController> {
               const SizedBox(
                 height: 16,
               ),
-              Column(
-                children:
-                    List.generate(controller.evaluations!.length, (index) {
-                  if (controller.evaluations![index].type == 2) ansIndex++;
-                  return _buildEvalution(
-                      controller.evaluations![index], ansIndex);
-                }),
-              ),
+              controller.evaluations != null
+                  ? Column(
+                      children: List.generate(controller.evaluations!.length,
+                          (index) {
+                        if (controller.evaluations![index].type == 2)
+                          ansIndex++;
+                        return _buildEvalution(
+                            controller.evaluations![index], ansIndex);
+                      }),
+                    )
+                  : SizedBox(),
               SizedBox(
                 height: 8,
               ),

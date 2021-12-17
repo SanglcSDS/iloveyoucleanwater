@@ -1,13 +1,13 @@
 class Comment {
-  String comment;
-  String time;
+  String name;
+  String content;
 
   Comment({
-    required this.comment,
-    required this.time,
+    required this.name,
+    required this.content,
   });
 
   Comment.fromJson(Map<String, dynamic> json)
-      : comment = json["comment"],
-        time = json["time"];
+      : name = json["name"],
+        content = json["content"];
 }
