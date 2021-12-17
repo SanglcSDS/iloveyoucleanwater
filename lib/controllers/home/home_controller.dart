@@ -16,6 +16,7 @@ import 'package:iloveyoucleanwater/service/introduce_service.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
 import 'package:iloveyoucleanwater/views/home/home_detail_new_view.dart';
 import 'package:iloveyoucleanwater/views/library/library_detail_photo_view.dart';
+import 'package:iloveyoucleanwater/views/library/library_details_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/hom_item_video_widget_view.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
@@ -41,7 +42,8 @@ class HomeController extends GetxController {
   RxList listPhoto = <LibraryModel>[].obs;
   RxList listVideo = <LibraryModel>[].obs;
   var listIntroduce = <IntroduceModel>[].obs;
-
+  late YoutubePlayerController video;
+  late LibraryVideoModel detail;
   Rx<LibraryDetailPhotoModel>? detailPhoto;
   var listPopular = List<BannerModel>.empty(growable: true).obs;
   var isDataProcessing = false.obs;
@@ -99,8 +101,6 @@ class HomeController extends GetxController {
   // }
 
   Future<void> getDetailVideo(LibraryModel news) async {
-    late LibraryVideoModel detail;
-    late YoutubePlayerController video;
     Response _data = await homeService.getDetailVideoHome(news.id);
 
     if (_data.statusCode == 200) {
@@ -115,34 +115,46 @@ class HomeController extends GetxController {
             autoPlay: true,
           ),
         );
-        Get.to(() =>
-            ItemVideoWidgetView(LibraryVideo: detail, videoController: video));
+        update();
+        Get.to(() => ItemVideoWidgetView());
       }
     }
   }
 
-  Future<void> getDetailVideo1(LibraryModel news) async {
-    late LibraryVideoModel detail;
-    late YoutubePlayerController video;
+  void changeVideo(LibraryModel news) async {
     Response _data = await homeService.getDetailVideoHome(news.id);
-
     if (_data.statusCode == 200) {
       var jsonString = _data.body['data'];
       if (jsonString != null) {
         detail = LibraryVideoModel.fromJson(jsonString);
 
-        video = YoutubePlayerController(
-          initialVideoId: YoutubePlayer.convertUrlToId(detail.linkVideo)!,
-          flags: const YoutubePlayerFlags(
-            controlsVisibleAtStart: true,
-            autoPlay: true,
-          ),
-        );
-        Get.to(() =>
-            ItemVideoWidgetView(LibraryVideo: detail, videoController: video));
+        video.load(YoutubePlayer.convertUrlToId(detail.linkVideo)!);
+        update();
       }
     }
   }
+  // Future<void> getDetailVideo1(LibraryModel news) async {
+  //   late LibraryVideoModel detail;
+  //   late YoutubePlayerController video;
+  //   Response _data = await homeService.getDetailVideoHome(news.id);
+
+  //   if (_data.statusCode == 200) {
+  //     var jsonString = _data.body['data'];
+  //     if (jsonString != null) {
+  //       detail = LibraryVideoModel.fromJson(jsonString);
+
+  //       video = YoutubePlayerController(
+  //         initialVideoId: YoutubePlayer.convertUrlToId(detail.linkVideo)!,
+  //         flags: const YoutubePlayerFlags(
+  //           controlsVisibleAtStart: true,
+  //           autoPlay: true,
+  //         ),
+  //       );
+  //       Get.to(
+  //           () => ItemVideoView(LibraryVideo: detail, videoController: video));
+  //     }
+  //   }
+  // }
 
   Future<void> GetIntroduces() async {
     List<IntroduceModel> list = [];

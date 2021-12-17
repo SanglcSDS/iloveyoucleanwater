@@ -39,7 +39,9 @@ const Map<String, String> vi = {
   'comments': 'Thảo luận',
   'comment_input': 'Viết bình luận',
   'documents': 'Tài liệu',
+  'partner': 'Đơn vị đối tác',
 
+  'educationalPartner': 'Đơn vị đồng hành',
   // log_in
   'login': 'Đăng nhập',
   'login_btn': 'ĐĂNG NHẬP',

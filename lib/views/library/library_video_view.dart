@@ -52,7 +52,7 @@ class LibraryVideoView extends StatelessWidget {
                 tag: "$tag$index",
                 child: InkWell(
                   onTap: () {
-                    _homecontroller.getDetailVideo(recent);
+                    _homecontroller.changeVideo(recent);
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 15.0),
