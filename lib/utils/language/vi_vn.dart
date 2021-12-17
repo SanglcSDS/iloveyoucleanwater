@@ -50,8 +50,8 @@ const Map<String, String> vi = {
   'evaluation_other_input': 'Các góp ý, nhận xét khác',
   'evaluation_btn': 'Đánh giá',
 
-  // evaluation
-  'test_title': 'Khác',
+  // test
+  'test_title': 'Kiểm tra kiến thức',
   'test_btn': 'Đánh giá',
 
   // log_in
