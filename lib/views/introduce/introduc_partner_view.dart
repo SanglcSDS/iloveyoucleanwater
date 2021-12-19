@@ -14,7 +14,7 @@ class IntroducePartnerNew extends StatelessWidget {
         child: Column(
           children: [
             const SizedBox(height: 12.0),
-            Text('partner'.tr, style: kTitleCard.copyWith(fontSize: 18.0)),
+            Text('partner'.tr, style: kTitleCard.copyWith(fontSize: 16.0)),
             const SizedBox(height: 15.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -51,7 +51,7 @@ class IntroducePartnerNew extends StatelessWidget {
             ),
             const SizedBox(height: 20.0),
             Text('educationalPartner'.tr,
-                style: kTitleCard.copyWith(fontSize: 18.0)),
+                style: kTitleCard.copyWith(fontSize: 16.0)),
             const SizedBox(height: 10.0),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,

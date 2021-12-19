@@ -35,8 +35,10 @@ class IntroduceProgramNew extends StatelessWidget {
                         "p": Style(textAlign: TextAlign.justify),
                         "li": Style(textAlign: TextAlign.justify)
                       },
-                      data: pigLatinheight(
-                          pigLatinwidth(item[index].content.toString())),
+                      data: item[index].content,
+
+                      // pigLatinheight(
+                      //     pigLatinwidth(item[index].content.toString())),
                     ),
                   ),
                   const SizedBox(height: 25.0)

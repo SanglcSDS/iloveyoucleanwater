@@ -4,16 +4,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/models/news/news_%20details_model.dart';
 
 import 'package:iloveyoucleanwater/utils/constants.dart';
+import 'package:iloveyoucleanwater/views/home/home_tabbar_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 import 'package:shimmer/shimmer.dart';
 
 class HomeDetailNewsView extends StatelessWidget {
   final NewsDetailsModel news;
   final String title;
-  HomeDetailNewsView({required this.news, required this.title});
+  final int index;
+  HomeDetailNewsView(
+      {required this.news, required this.title, required this.index});
+  final _Controller = Get.put(HomeController());
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -84,18 +89,23 @@ class HomeDetailNewsView extends StatelessWidget {
                     border: Border.all(color: kGrey3, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
-                  child: Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 5.0,
-                        backgroundColor: kGrey3,
-                      ),
-                      const SizedBox(width: 6.0),
-                      Text(
-                        title,
-                        style: kCategoryTitle,
-                      ),
-                    ],
+                  child: InkWell(
+                    onTap: () {
+                      _Controller.changeTabNewsDetail(index);
+                    },
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 5.0,
+                          backgroundColor: kGrey3,
+                        ),
+                        const SizedBox(width: 6.0),
+                        Text(
+                          title,
+                          style: kCategoryTitle,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -128,7 +138,6 @@ class HomeDetailNewsView extends StatelessWidget {
                         maxLines: 1))
               ],
             ),
-            //  const SizedBox(height: 5.0),
             SingleChildScrollView(
               child: Html(
                 data: pigLatinheight(pigLatinwidth(news.content.toString())),

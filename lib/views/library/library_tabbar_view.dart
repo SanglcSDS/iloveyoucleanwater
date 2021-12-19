@@ -16,21 +16,21 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
     with SingleTickerProviderStateMixin {
   EasyRefreshController easyRefreshController = EasyRefreshController();
   EasyRefreshController easyRefreshControllervideo = EasyRefreshController();
-  late TabController controller;
+
   final _controller = Get.put(LibraryController());
   final _homecontroller = Get.put(HomeController());
   @override
   void initState() {
     super.initState();
 
-    controller = TabController(length: 2, vsync: this);
+    _controller.controller = TabController(length: 2, vsync: this);
   }
 
   @override
   void dispose() {
     easyRefreshController.dispose();
     easyRefreshControllervideo.dispose();
-    controller.dispose();
+    _controller.controller.dispose();
     super.dispose();
   }
 
@@ -64,7 +64,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
                 indicatorColor: primaryColor,
                 labelColor: primaryColor,
                 unselectedLabelColor: kGrey1,
-                controller: controller,
+                controller: _controller.controller,
                 tabs: <Widget>[
                   Tab(text: 'album'.tr),
                   Tab(text: 'video'.tr),
@@ -74,7 +74,7 @@ class _LibraryTabBarViewState extends State<LibraryTabBarView>
             Expanded(
               child: Container(
                 child: TabBarView(
-                  controller: controller,
+                  controller: _controller.controller,
                   children: <Widget>[
                     EasyRefresh.custom(
                       controller: easyRefreshController,

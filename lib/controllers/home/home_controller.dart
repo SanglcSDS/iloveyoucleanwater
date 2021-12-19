@@ -15,6 +15,7 @@ import 'package:iloveyoucleanwater/service/home_Service.dart';
 import 'package:iloveyoucleanwater/service/introduce_service.dart';
 import 'package:iloveyoucleanwater/service/news_service.dart';
 import 'package:iloveyoucleanwater/views/home/home_detail_new_view.dart';
+import 'package:iloveyoucleanwater/views/home/home_tabbar_view.dart';
 import 'package:iloveyoucleanwater/views/library/library_detail_photo_view.dart';
 import 'package:iloveyoucleanwater/views/library/library_details_view.dart';
 import 'package:iloveyoucleanwater/views/shared/widgets/hom_item_video_widget_view.dart';
@@ -283,7 +284,7 @@ class HomeController extends GetxController {
     }
   }
 
-  Future<void> getNewsDetailsModel(NewModel news) async {
+  Future<void> getNewsDetailsModel(NewModel news, int index) async {
     Response _data = await homeService.getNewDetail(news.id);
     late NewsDetailsModel detail;
     if (_data.statusCode == 200) {
@@ -291,8 +292,11 @@ class HomeController extends GetxController {
       if (jsonString != null) {
         detail = NewsDetailsModel.fromJson(jsonString);
         print(detail.content);
-        Get.to(
-            () => HomeDetailNewsView(news: detail, title: news.categoryTitle));
+        Get.to(() => HomeDetailNewsView(
+              news: detail,
+              title: news.categoryTitle,
+              index: index,
+            ));
       }
     }
   }
@@ -302,20 +306,42 @@ class HomeController extends GetxController {
     update();
   }
 
+  void changeTabLibrary(int index, int index1) {
+    tabIndex = index;
+    controllerLibrary.changeTabLibrary(index1);
+    update();
+  }
+
+  void changeTabLibraryDetail(int index, int index1) {
+    Get.back();
+    tabIndex = index;
+    controllerLibrary.changeTabLibrary(index1);
+    update();
+  }
+
+  void changeTabIntroduce(int index, int index1) {
+    tabIndex = index;
+    controllerIntroduce.changeTabintroduce(index1);
+    update();
+  }
+
+  void changeTabNews(int index, int index1) {
+    tabIndex = index;
+    controllerNews.changeTabNews(index1);
+    update();
+  }
+
+  void changeTabNewsDetail(
+    int index,
+  ) {
+    Get.back();
+    tabIndex = 1;
+    controllerNews.changeTabNews(index);
+    update();
+  }
+
   void changeTabHome() {
     tabIndex = 0;
-    update();
-  }
-
-  void oClickNews1() {
-    tabIndex = 2;
-    controllerNews.oClickTab1();
-    update();
-  }
-
-  void oClickNews0() {
-    tabIndex = 2;
-    controllerNews.oClickTab0();
     update();
   }
 }

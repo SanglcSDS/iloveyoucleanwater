@@ -25,6 +25,7 @@ class LibraryVideoView extends StatelessWidget {
           footer: ClassicFooter(
             loadingText: 'loadText'.tr,
             failedText: 'noMoreText'.tr,
+            noDataText: 'noMoreText'.tr,
           ),
           controller: _controller.refreshControllerVideo,
           enablePullUp: true,

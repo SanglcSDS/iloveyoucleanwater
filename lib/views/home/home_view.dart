@@ -87,7 +87,7 @@ class HomeView extends StatelessWidget {
                     ),
                     InkWell(
                       onTap: () {
-                        _Controller.changeTabIndex(2);
+                        _Controller.changeTabIntroduce(2, 0);
                       },
                       child: BannerHomeView(),
                     ),
@@ -99,13 +99,11 @@ class HomeView extends StatelessWidget {
                                 0
                             ? Hero(
                                 tag: 'trg$indexs',
-
                                 child: Column(
                                   children: <Widget>[
                                     TitleWidgetNextView(
-                                        title: _Controller
-                                            .listCategoryNewsModel[indexs]
-                                            .title,
+                                        news: _Controller
+                                            .listCategoryNewsModel[indexs],
                                         //  onPressed: animaTeto,
                                         index: 1),
                                     Column(
@@ -121,7 +119,7 @@ class HomeView extends StatelessWidget {
                                         return InkWell(
                                           onTap: () {
                                             _Controller.getNewsDetailsModel(
-                                                recent);
+                                                recent, indexs);
                                           },
                                           child: Container(
                                             width: double.infinity,
@@ -134,7 +132,11 @@ class HomeView extends StatelessWidget {
                                         return InkWell(
                                           onTap: () {
                                             _Controller.getNewsDetailsModel(
-                                                recent);
+                                                recent,
+                                                _Controller
+                                                    .listCategoryNewsModel[
+                                                        indexs]
+                                                    .item);
                                           },
                                           child: Container(
                                             width: double.infinity,
@@ -148,11 +150,6 @@ class HomeView extends StatelessWidget {
                                     })),
                                   ],
                                 ),
-
-                                //  historyNull(
-                                //     _Controller.listCategoryNewsModel[index].news,
-                                //     _Controller.listCategoryNewsModel[index].title,
-                                //     _Controller.listCategoryNewsModel[index].item),
                               )
                             : Container();
                       }),
@@ -161,6 +158,7 @@ class HomeView extends StatelessWidget {
                         ? TitleWidgetNextPhotoVideo(
                             title: 'album'.tr.toUpperCase(),
                             index: 3,
+                            index1: 0,
                           )
                         : Container(),
                     _Controller.listPhoto.length > 0
@@ -214,7 +212,10 @@ class HomeView extends StatelessWidget {
                     ),
                     _Controller.listVideo.length > 0
                         ? TitleWidgetNextPhotoVideo(
-                            title: 'video'.tr.toUpperCase(), index: 3)
+                            title: 'video'.tr.toUpperCase(),
+                            index: 3,
+                            index1: 1,
+                          )
                         : Container(),
                     _Controller.listVideo.length > 0
                         ? Container(
