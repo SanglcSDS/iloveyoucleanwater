@@ -11,7 +11,7 @@ class TestView extends GetView<TestController> {
   Widget build(BuildContext context) {
     return GetBuilder<TestController>(
       init: TestController(),
-      builder: (_) => Scaffold(
+      builder: (_) => controller.test != null ? Scaffold(
         appBar: AppBar(
           backgroundColor: Colors.white,
           leading: IconButton(
@@ -28,122 +28,126 @@ class TestView extends GetView<TestController> {
           centerTitle: true,
         ),
         backgroundColor: Colors.white,
-        body: SingleChildScrollView(
+        body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Expanded(
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    const SizedBox(
-                      height: 32,
-                    ),
-                    // Điểm thi
-                    controller.test!.value.totalPoint == null
-                        ? const SizedBox()
-                        : Column(
-                            children: [
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: SizedBox(
-                                      height: 80,
-                                      child: Image.asset(
-                                          "assets/images/tick-icon.png"))),
-                              const SizedBox(height: 16),
-                              Align(
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    'test_submitted'.tr,
-                                    style: TextStyle(fontSize: 14),
-                                  )),
-                              SizedBox(
-                                height: 80,
-                                child: Card(
-                                  elevation: 0.5,
-                                  child: Center(
-                                    child: RichText(
-                                      text: TextSpan(children: [
-                                        TextSpan(
-                                          text: 'test_total_point'.tr,
-                                          style: TextStyle(
-                                            fontSize: 20,
-                                            color: Colors.black,
+          child: Column(
+            children: [
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Expanded(
+                    child: Column(
+                      children: [
+                        Column(
+                          children: [
+                            const SizedBox(
+                              height: 32,
+                            ),
+                            // Điểm thi
+                            controller.test!.value.totalPoint == null
+                                ? const SizedBox()
+                                : Column(
+                                    children: [
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: SizedBox(
+                                              height: 80,
+                                              child: Image.asset(
+                                                  "assets/images/tick-icon.png"))),
+                                      const SizedBox(height: 16),
+                                      Align(
+                                          alignment: Alignment.center,
+                                          child: Text(
+                                            'test_submitted'.tr,
+                                            style: TextStyle(fontSize: 14),
+                                          )),
+                                      SizedBox(
+                                        height: 80,
+                                        child: Card(
+                                          elevation: 0.5,
+                                          child: Center(
+                                            child: RichText(
+                                              text: TextSpan(children: [
+                                                TextSpan(
+                                                  text: 'test_total_point'.tr,
+                                                  style: TextStyle(
+                                                    fontSize: 20,
+                                                    color: Colors.black,
+                                                  ),
+                                                ),
+                                                TextSpan(
+                                                  text:
+                                                      '${controller.test!.value.totalPoint}',
+                                                  style: TextStyle(
+                                                    color: primaryColor,
+                                                    fontSize: 20,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                )
+                                              ]),
+                                            ),
                                           ),
                                         ),
-                                        TextSpan(
-                                          text:
-                                              '${controller.test!.value.totalPoint}',
-                                          style: TextStyle(
-                                            color: primaryColor,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.bold,
-                                          ),
-                                        )
-                                      ]),
-                                    ),
+                                      ),
+                                      const SizedBox(
+                                        height: 16,
+                                      ),
+                                      Row(
+                                        children: [
+                                          Expanded(
+                                              child: Text(
+                                            'test_show_answer'.tr,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              color: Colors.black,
+                                            ),
+                                          )),
+                                        ],
+                                      ),
+                                    ],
                                   ),
-                                ),
-                              ),
-                              const SizedBox(
-                                height: 16,
-                              ),
-                              Row(
-                                children: [
-                                  Expanded(
-                                      child: Text(
-                                    'test_show_answer'.tr,
-                                    style: TextStyle(
-                                      fontSize: 16,
-                                      color: Colors.black,
-                                    ),
-                                  )),
-                                ],
-                              ),
-                            ],
-                          ),
-                    Column(
-                      children: List.generate(
-                          controller.test!.value.questions!.length, (index) {
-                        return _buildEvalution(
-                            controller.test!.value.questions![index], index);
-                      }),
-                    ),
-                    SizedBox(
-                      height: 8,
-                    ),
-                  ],
-                ),
-                controller.test!.value.totalPoint == null
-                    ? Row(
-                        children: [
-                          Expanded(child: const SizedBox()),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Theme(
-                              data: ThemeData(primarySwatch: kPrimaryMaterial),
-                              child: ElevatedButton.icon(
-                                icon: Icon(
-                                  Icons.send,
-                                  color: Colors.white,
-                                ),
-                                onPressed: () {
-                                  controller.sendTest();
-                                },
-                                label: Text(
-                                  'test_btn'.tr,
-                                  style: TextStyle(color: Colors.white),
-                                ),
-                              ),
+                            Column(
+                              children: List.generate(
+                                  controller.test!.value.questions!.length, (index) {
+                                return _buildEvalution(
+                                    controller.test!.value.questions![index], index);
+                              }),
                             ),
-                          )
-                        ],
-                      )
-                    : const SizedBox()
-              ],
-            ),
+                            SizedBox(
+                              height: 8,
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              controller.test!.value.totalPoint == null
+                ? SizedBox(
+                  width: double.infinity,
+                  child: Theme(
+                      data: ThemeData(primarySwatch: kPrimaryMaterial),
+                      child: ElevatedButton.icon(
+                        icon: Icon(
+                          Icons.send,
+                          color: Colors.white,
+                        ),
+                        onPressed: () {
+                          controller.sendTest();
+                        },
+                        label: Text(
+                          'test_btn'.tr,
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                    ),
+                )
+                : const SizedBox()
+            ],
           ),
         ),
-      ),
+        
+      ) : const SizedBox(),
     );
   }
 

@@ -179,7 +179,7 @@ class ListLesson extends StatelessWidget {
                                 Align(
                                   alignment: Alignment.bottomLeft,
                                   child: Text(
-                                    lessons![index].time.toString(),
+                                    lessons![index].timeStr,
                                     style: const TextStyle(fontSize: 14),
                                   ),
                                 ),

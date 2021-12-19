@@ -127,4 +127,12 @@ const Map<String, String> vi = {
   'change_pwd_new': 'Nhập mật khẩu mới',
   'change_pwd_confirm': 'Nhập lại mật khẩu',
   'change_pwd_btn': 'THAY ĐỔI',
+  'change_pwd_progress': 'Đang thay đổi...',
+  'change_pwd_success': 'Đổi mật khẩu thành công!',
+  'change_pwd_err_default': 'Đổi mật khẩu thất bại!',
+
+  // 
+  'back_btn': 'Quay lại',
+  'lessons.empty': 'Khóa học đang cập nhật...',
+  'evaluation_send_success': 'Cảm ơn những góp ý của bạn!',
 };

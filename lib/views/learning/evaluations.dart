@@ -28,48 +28,51 @@ class EvaluationView extends GetView<EvaluationController> {
           ),
           centerTitle: true,
         ),
-        body: SingleChildScrollView(
+        body: Container(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
             children: [
-              const SizedBox(
-                height: 16,
-              ),
-              controller.evaluations != null
-                  ? Column(
-                      children: List.generate(controller.evaluations!.length,
-                          (index) {
-                        if (controller.evaluations![index].type == 2)
-                          ansIndex++;
-                        return _buildEvalution(
-                            controller.evaluations![index], ansIndex);
-                      }),
-                    )
-                  : SizedBox(),
-              SizedBox(
-                height: 8,
-              ),
-              Row(
-                children: [
-                  Expanded(child: const SizedBox()),
-                  Align(
-                    alignment: Alignment.centerRight,
-                    child: Theme(
-                      data: ThemeData(primarySwatch: kPrimaryMaterial),
-                      child: ElevatedButton.icon(
-                        icon: Icon(
-                          Icons.send,
-                          color: Colors.white,
-                        ),
-                        onPressed: () {},
-                        label: Text(
-                          'evaluation_btn'.tr,
-                          style: TextStyle(color: Colors.white),
-                        ),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const SizedBox(
+                        height: 16,
                       ),
+                      controller.evaluations != null
+                          ? Column(
+                              children: List.generate(controller.evaluations!.length,
+                                  (index) {
+                                if (controller.evaluations![index].type == 2)
+                                  ansIndex++;
+                                return _buildEvalution(
+                                    controller.evaluations![index], index);
+                              }),
+                            )
+                          : SizedBox(),
+                      SizedBox(
+                        height: 8,
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: double.infinity,
+                child: Theme(
+                  data: ThemeData(primarySwatch: kPrimaryMaterial),
+                  child: ElevatedButton.icon(
+                    icon: Icon(
+                      Icons.send,
+                      color: Colors.white,
                     ),
-                  )
-                ],
+                    onPressed: () => controller.sendEvaluation(context),
+                    label: Text(
+                      'evaluation_btn'.tr,
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                ),
               )
             ],
           ),
@@ -99,6 +102,7 @@ class EvaluationView extends GetView<EvaluationController> {
                           onChanged: (bool? newValue) {
                             controller.values!
                                 .update(evaluation.id, (value) => newValue!);
+                            controller.chooseAnswer(ansIndex, evaluation.id, newValue!);
                             controller.update();
                           }),
                     ),
@@ -127,6 +131,7 @@ class EvaluationView extends GetView<EvaluationController> {
                               onChanged: (bool? newValue) {
                                 controller.values!.update(
                                     evaluation.id, (value) => newValue!);
+                                // controller.chooseOther(ansIndex, evaluation.id, newValue!, null);
                                 controller.update();
                               }),
                         ),
@@ -139,14 +144,21 @@ class EvaluationView extends GetView<EvaluationController> {
                   Container(
                     margin: const EdgeInsets.only(left: 16),
                     child: TextFormField(
-                      onChanged: (String? value) {
-                        if (value!.isBlank!) {
+                      initialValue: controller.otherVals![evaluation.id],
+                      onChanged: (String? newVal) {
+                        if (newVal!.isBlank!) {
+                          // controller.chooseOther(ansIndex, evaluation.id, null, null);
                           controller.values!
                               .update(evaluation.id, (value) => false);
+                          controller.otherVals!
+                              .update(evaluation.id, (value) => "");
                           controller.update();
                         } else {
+                          // controller.chooseOther(ansIndex, evaluation.id, null, value);
                           controller.values!
                               .update(evaluation.id, (value) => true);
+                          controller.otherVals!
+                              .update(evaluation.id, (value) => newVal);
                           controller.update();
                         }
                       },

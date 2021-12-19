@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/models/account/user.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
@@ -53,6 +54,7 @@ class AccountProvider extends GetConnect {
     return post("${Constants.SERVER_URL}/auth/change-password", info, headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Authorization': '${GetStorage().read('token')}',
     });
   }
 }

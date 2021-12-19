@@ -25,7 +25,6 @@ const Map<String, String> en = {
   'idleText': "Pull down refresh",
   'infoText': "Update %T",
   'refreshFailedText': "Refresh failed",
-
   'loadText': "Loading complete",
   'noMoreText': " No more data",
   'loadReadyText': "No more data",
@@ -123,4 +122,12 @@ const Map<String, String> en = {
   'change_pwd_new': 'Input new password',
   'change_pwd_confirm': 'Confirm new password',
   'change_pwd_btn': 'CHANGE',
+  'change_pwd_progress': 'Change password...',
+  'change_pwd_success': 'Change password success!',
+  'change_pwd_err_default': 'Change password failed!',
+  
+  //
+  'back_btn': 'Back',
+  'lessons.empty': 'Course is updating...',
+  'evaluation_send_success': 'Thanks for your reviews!',
 };
