@@ -44,12 +44,12 @@ class AccountController extends GetxController {
         debugPrint(e.toString());
       }
     } else if (statusCode == 401) {
-      MsgDialog.showWarningDialogs(context, "Login failed!",
-          "Mật khẩu hoặc tài khoản không đúng! Vui lòng đăng nhập lại.");
+      MsgDialog.showWarningDialogs(context, "login_msg_fail_title".tr,
+          "login_msg_fail_content".tr);
       EasyLoading.dismiss();
     } else {
-      MsgDialog.showWarningDialogs(context, "Login failed!",
-          "Đăng nhập không thành công! Vui lòng đăng nhập lại.");
+      MsgDialog.showWarningDialogs(context, "login_msg_fail_title".tr,
+          "login_msg_fail_content".tr);
       EasyLoading.dismiss();
     }
     return false;

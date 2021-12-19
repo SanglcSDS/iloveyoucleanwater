@@ -89,6 +89,8 @@ const Map<String, String> vi = {
   'login_success': 'Đăng nhập thành công!',
   'login_on_progress': 'Đang đăng nhập...',
   'login_require': 'Bạn phải đăng nhập để tham gia các khóa học.',
+  'login_msg_fail_title': 'Đăng nhập thất bại!',
+  'login_msg_fail_content': 'Mật khẩu hoặc tài khoản không đúng! Vui lòng đăng nhập lại.',
 
   // sign_up
   'signup': 'Đăng ký',

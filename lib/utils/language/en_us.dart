@@ -82,6 +82,8 @@ const Map<String, String> en = {
   'login_success': 'Login success!',
   'login_on_progress': 'Login...',
   'login_require': 'Please log in to your account.',
+  'login_msg_fail_title': 'Login failed!',
+  'login_msg_fail_content': 'Email or password invalid.',
 
   // sign_up
   'signup': 'Register',
