@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:get/get.dart';
+import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
 import 'package:iloveyoucleanwater/models/library/library_detail_photo_model.dart';
 
 import 'package:iloveyoucleanwater/utils/constants.dart';
@@ -10,6 +11,7 @@ import 'package:iloveyoucleanwater/views/shared/widgets/circle_button.dart';
 import 'package:shimmer/shimmer.dart';
 
 class LibraryDetailPhotoView extends StatelessWidget {
+  final _Controller = Get.put(HomeController());
   final LibraryDetailPhotoModel news;
   final String title;
   final String datetime;
@@ -92,18 +94,25 @@ class LibraryDetailPhotoView extends StatelessWidget {
                     border: Border.all(color: kGrey3, width: 1.0),
                     borderRadius: BorderRadius.circular(25.0),
                   ),
-                  child: Row(
-                    children: [
-                      const CircleAvatar(
-                        radius: 5.0,
-                        backgroundColor: kGrey3,
-                      ),
-                      const SizedBox(width: 6.0),
-                      Text(
-                        title,
-                        style: kCategoryTitle,
-                      ),
-                    ],
+
+                  // changeTabLibrary
+                  child: InkWell(
+                    onTap: () {
+                      _Controller.changeTabLibraryDetail(3, 0);
+                    },
+                    child: Row(
+                      children: [
+                        const CircleAvatar(
+                          radius: 5.0,
+                          backgroundColor: kGrey3,
+                        ),
+                        const SizedBox(width: 6.0),
+                        Text(
+                          title,
+                          style: kCategoryTitle,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
                 const Spacer(),
@@ -136,7 +145,6 @@ class LibraryDetailPhotoView extends StatelessWidget {
                         maxLines: 1))
               ],
             ),
-            const SizedBox(height: 15.0),
             Html(
               data: news.content,
               style: {

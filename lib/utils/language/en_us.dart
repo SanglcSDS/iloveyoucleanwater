@@ -18,6 +18,8 @@ const Map<String, String> en = {
   'Login': "Login",
   'logout': "Logout",
   'changePassword': "Change Password",
+  'partner': 'Co-organizing board',
+  'educationalPartner': 'Educational partners',
   //loading
   'releaseText': 'Release to refresh',
   'refreshingText': "Refreshing ..",

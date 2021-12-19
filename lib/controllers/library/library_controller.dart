@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:iloveyoucleanwater/models/library/library_detail_photo_model.dart';
@@ -7,6 +8,7 @@ import 'package:iloveyoucleanwater/service/library_service.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class LibraryController extends GetxController {
+  late TabController controller;
   final RefreshController refreshControllerPhoto =
       RefreshController(initialRefresh: true);
   final RefreshController refreshControllerVideo =
@@ -24,6 +26,10 @@ class LibraryController extends GetxController {
     super.onInit();
     // controller =
     //     TabController(vsync: this, length: myTabs.length, initialIndex: 0);
+  }
+
+  void changeTabLibrary(int index) {
+    controller.animateTo(index);
   }
 
   Future<void> isLoadingLibrary() async {

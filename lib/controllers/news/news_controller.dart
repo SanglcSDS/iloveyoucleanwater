@@ -10,13 +10,13 @@ class NewsController extends GetxController
     with GetSingleTickerProviderStateMixin {
   final HomeService provider = HomeService();
   final NewsService providerNewsService = NewsService();
-
+  late TabController controllernew;
   List<CategoryModel> listCategory = [];
 
   @override
   void onInit() {
     getCategory();
-    //  controller = TabController(length: listCategory.length, vsync: this);
+    controllernew = TabController(length: listCategory.length, vsync: this);
     super.onInit();
   }
 
@@ -85,20 +85,17 @@ class NewsController extends GetxController
         });
       }
     }
+    update();
   }
 
-  late TabController controller;
-  void oClickTab0() async {
-    controller.animateTo(0);
-  }
-
-  void oClickTab1() async {
-    controller.animateTo(1);
+  void changeTabNews(int index) {
+    controllernew.animateTo(index);
+    update();
   }
 
   @override
   void onClose() {
-    // controller.dispose();
+    controllernew.dispose();
     super.onClose();
   }
 }

@@ -75,7 +75,11 @@ const Map<String, String> vi = {
   'test_total_point': 'Điểm của bạn: ',
   'test_show_answer': 'Đáp án đúng:',
   'test_submitted': 'Bài kiểm tra của bạn đã được gửi!',
+  'comments': 'Thảo luận',
+  'documents': 'Tài liệu',
+  'partner': 'Đơn vị đối tác',
 
+  'educationalPartner': 'Đơn vị đồng hành',
   // log_in
   'login': 'Đăng nhập',
   'login_btn': 'ĐĂNG NHẬP',

@@ -30,7 +30,9 @@ class BannerHomeView extends StatelessWidget {
                     padding: const EdgeInsets.only(
                         top: 10, right: 12, left: 12, bottom: 0),
                     child: Text(
-                      _Controller.listIntroduce[0].description,
+                      _Controller.listIntroduce.length > 0
+                          ? _Controller.listIntroduce[0].description
+                          : "",
                       textAlign: TextAlign.justify,
                       style: const TextStyle(color: kGrey1),
                       maxLines: 4,

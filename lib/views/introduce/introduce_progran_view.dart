@@ -17,6 +17,9 @@ class IntroduceProgramNew extends StatelessWidget {
         itemCount: _Controller.introduceProgram.length,
         itemBuilder: (context, index) {
           var item = _Controller.introduceProgram;
+          // print(item[index].content.toString());
+          // print("--------------------------------------------------");
+          // print(pigLatinheight(pigLatinwidth(item[index].content.toString())));
           return Container(
               padding: const EdgeInsets.symmetric(horizontal: 16.0),
               child: Column(
@@ -26,17 +29,18 @@ class IntroduceProgramNew extends StatelessWidget {
                       textAlign: TextAlign.justify,
                       style: kTitleCard.copyWith(fontSize: 15.0)),
                   const SizedBox(height: 15.0),
-                  const SizedBox(height: 15.0),
-                  // SingleChildScrollView(
-                  //   child: Html(
-                  //     style: {
-                  //       "p": Style(textAlign: TextAlign.justify),
-                  //       "img": Style(width: MediaQuery.of(context).size.width)
-                  //     },
-                  //     data: pigLatinheight(
-                  //         pigLatinwidth(item[index].content.toString())),
-                  //   ),
-                  // ),
+                  SingleChildScrollView(
+                    child: Html(
+                      style: {
+                        "p": Style(textAlign: TextAlign.justify),
+                        "li": Style(textAlign: TextAlign.justify)
+                      },
+                      data: item[index].content,
+
+                      // pigLatinheight(
+                      //     pigLatinwidth(item[index].content.toString())),
+                    ),
+                  ),
                   const SizedBox(height: 25.0)
                 ],
               ));
