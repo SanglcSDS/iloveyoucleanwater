@@ -95,4 +95,15 @@ class LearningService extends GetConnect {
           'Authorization': '${GetStorage().read('token')}',
         }));
   }
+
+  Future<dio_resp.Response> postEvaluation(Map<String, dynamic> body) {
+    dio_fd.FormData data = dio_fd.FormData.fromMap(body);
+    return Dio().post("${Constants.SERVER_URL}/auth/evaluations/post-evaluations",
+        data: data,
+        options: Options(headers: {
+          'Content-Type': 'application/json',
+          'Authorization': '${GetStorage().read('token')}',
+        }));
+  }
+
 }

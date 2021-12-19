@@ -38,4 +38,16 @@ class EvaluationController extends GetxController {
     }
     EasyLoading.dismiss();
   }
+
+  void sendEvaluation() async {
+    EasyLoading.show(status: "test_send_loading".tr);
+    dio_resp.Response response = await _learningService.postTest(values!);
+    if (response.statusCode == 200 && !response.data['error']) {
+      debugPrint('success');
+
+      loadTest(courseId!);
+      update();
+    }
+    EasyLoading.dismiss();
+  }
 }
