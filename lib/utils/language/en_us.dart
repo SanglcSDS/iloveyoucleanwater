@@ -136,4 +136,5 @@ const Map<String, String> en = {
   'evaluation_send_loading': 'Sending...',
   'evaluation_send_success': 'Thanks for your reviews!',
   'welcome': 'Welcome, ',
+  'validate_password_confirm_invalid': 'Re-enter password does not match',
 };
