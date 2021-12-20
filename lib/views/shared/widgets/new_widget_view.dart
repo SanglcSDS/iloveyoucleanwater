@@ -68,7 +68,7 @@ class NewWidgetView extends StatelessWidget {
                     maxLines: 3,
                     style: kTitleCard,
                   ),
-                  const SizedBox(height: 4.0),
+                  // const SizedBox(height: 4.0),
                   const Spacer(),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.start,
