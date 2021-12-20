@@ -91,9 +91,6 @@ class _CustomDrawerState extends State<CustomDrawer> {
                 showOnOff: true,
                 onToggle: (val) {
                   setState(() => _selectedLang = val);
-                  // if (GetStorage().hasData("language"))
-                  //   GetStorage().remove("language");
-                  // GetStorage().write("language", val ? 'vi' : 'en');
 
                   LocalizationService.islangs = val;
                   LocalizationService().changeLocale(val);
@@ -104,11 +101,13 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           // DropdownLanguage(),
 
-          GetStorage().hasData("token") ? _buildDrawerOption(
-            Icon(Icons.lock),
-            'changePassword'.tr,
-            () => Get.toNamed(Routes.CHANGE_PWD),
-          ) : const SizedBox(),
+          GetStorage().hasData("token")
+              ? _buildDrawerOption(
+                  Icon(Icons.lock),
+                  'changePassword'.tr,
+                  () => Get.toNamed(Routes.CHANGE_PWD),
+                )
+              : const SizedBox(),
           Expanded(
             child: GetStorage().hasData("token")
                 ? Align(
