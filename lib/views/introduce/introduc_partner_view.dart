@@ -19,16 +19,20 @@ class IntroducePartnerNew extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                const Spacer(flex: 2),
                 Image.asset(
                   'assets/images/log-1.png',
                   fit: BoxFit.cover,
                 ),
+                const Spacer(flex: 1),
+                // const SizedBox(height: 50.0),
                 Image.asset(
                   'assets/images/log-2.png',
                   // width: 600.0,
                   // height: 240.0,
                   fit: BoxFit.cover,
                 ),
+                const Spacer(flex: 2),
               ],
             ),
             const SizedBox(height: 5.0),
