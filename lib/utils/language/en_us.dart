@@ -135,4 +135,5 @@ const Map<String, String> en = {
   'lessons.empty': 'Course is updating...',
   'evaluation_send_loading': 'Sending...',
   'evaluation_send_success': 'Thanks for your reviews!',
+  'welcome': 'Welcome, ',
 };

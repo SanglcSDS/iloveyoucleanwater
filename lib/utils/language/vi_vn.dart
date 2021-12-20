@@ -143,4 +143,5 @@ const Map<String, String> vi = {
   'lessons.empty': 'Khóa học đang cập nhật...',
   'evaluation_send_loading': 'Đang gửi đánh giá...',
   'evaluation_send_success': 'Cảm ơn những góp ý của bạn!',
+  'welcome': 'Xin chào, ',
 };

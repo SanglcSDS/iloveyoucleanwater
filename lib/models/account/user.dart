@@ -1,11 +1,11 @@
 import 'package:iloveyoucleanwater/models/account/city.dart';
 
 class User {
-  String email;
-  String? password;
   String name;
+  String email;
   String? mobile;
   int? gender;
+  String? password;
   int? job;
   String? workplace;
   String? birthday; //format dd/MM/yyyy
@@ -32,16 +32,16 @@ class User {
   });
 
   User.fromJson(Map<String, dynamic> json)
-      : email = json['email'],
-        name = json['name'],
+      : name = json['name'],
+        email = json['email'],
         mobile = json['mobile'],
         gender = json['gender'],
+        status = json['status'] == 1 ? true : false,
         birthday = json['birthday'],
-        status = json['status'],
-        isLock = json['is_lock'],
+        isLock = json['is_lock'] == 1 ? true : false,
         job = json['job'],
-        provinceId = json['province_id'],
-        districtId = json['district_id'],
+        provinceId = int.parse(json['province_id']),
+        districtId = int.parse(json['district_id']),
         workplace = json['workplace'],
         avatar = json['avatar'];
 
