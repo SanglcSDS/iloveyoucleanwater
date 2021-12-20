@@ -15,6 +15,7 @@ class AccountProvider extends GetConnect {
     return get("${Constants.SERVER_URL}/auth/user", headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Authorization': '${GetStorage().read('token')}',
     });
   }
 

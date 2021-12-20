@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
@@ -98,12 +99,13 @@ class LearningService extends GetConnect {
 
   Future<dio_resp.Response> postEvaluation(Map<String, dynamic> body) {
     dio_fd.FormData data = dio_fd.FormData.fromMap(body);
-    return Dio().post("${Constants.SERVER_URL}/auth/evaluations/post-evaluations",
-        data: data,
-        options: Options(headers: {
-          'Content-Type': 'application/json',
-          'Authorization': '${GetStorage().read('token')}',
-        }));
+    debugPrint("data" + data.fields.toString());
+    return Dio()
+        .post("${Constants.SERVER_URL}/auth/evaluations/post-evaluations",
+            data: data,
+            options: Options(headers: {
+              'Content-Type': 'application/json',
+              'Authorization': '${GetStorage().read('token')}',
+            }));
   }
-
 }

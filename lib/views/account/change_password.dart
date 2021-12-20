@@ -15,7 +15,10 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        leading: IconButton(icon: Icon(Icons.arrow_back_ios, color: Colors.white), onPressed: () => Get.back(),),
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios, color: Colors.white),
+          onPressed: () => Get.back(),
+        ),
         title: Text('change_pwd_title'.tr),
         backgroundColor: primaryColor,
         elevation: 0.0,
@@ -113,6 +116,8 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                         validator: (value) {
                           if (value == null || value.isEmpty) {
                             return 'validate_password_empty'.tr;
+                          } else if (_newPwdController.text != value) {
+                            return 'validate_password_confirm_invalid'.tr;
                           }
                           return null;
                         },

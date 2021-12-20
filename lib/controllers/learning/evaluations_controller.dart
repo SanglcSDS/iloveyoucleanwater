@@ -50,18 +50,25 @@ class EvaluationController extends GetxController {
       result.remove(index.toString());
     }
     if (newVal) {
-      result.putIfAbsent(index.toString(), () => {"id": id, "content": null});
+      result.putIfAbsent(index.toString(),
+          () => {"\"id\"": id, "\"content\"": null}.toString());
     }
     update();
   }
 
   void sendEvaluation(BuildContext context) async {
-    EasyLoading.show(status: "test_send_loading".tr);
+    EasyLoading.show(status: "evaluation_send_loading".tr);
     otherVals!.removeWhere((int id, String value) => value.isBlank!);
     for (var key in otherVals!.keys) {
-      result.addAll({key.toString(): {"id": key, "content": otherVals![key]}});
+      result.addAll({
+        key.toString(): {
+          "\"id\"": key,
+          "\"content\"": "\"" + otherVals![key].toString() + "\""
+        }.toString()
+      });
     }
-    dio_resp.Response response = await _learningService.postTest(result);
+    debugPrint("result ====> " + result.toString());
+    dio_resp.Response response = await _learningService.postEvaluation(result);
     if (response.statusCode == 200 && !response.data['error']) {
       debugPrint('success');
 
@@ -72,7 +79,10 @@ class EvaluationController extends GetxController {
         ),
       );
       Get.offNamed(Routes.COURSES);
+      EasyLoading.dismiss();
+    } else {
+      debugPrint(response.data.toString());
+      EasyLoading.dismiss();
     }
-    EasyLoading.dismiss();
   }
 }
