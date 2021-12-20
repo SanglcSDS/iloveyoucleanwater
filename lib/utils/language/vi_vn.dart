@@ -90,7 +90,8 @@ const Map<String, String> vi = {
   'login_on_progress': 'Đang đăng nhập...',
   'login_require': 'Bạn phải đăng nhập để tham gia các khóa học.',
   'login_msg_fail_title': 'Đăng nhập thất bại!',
-  'login_msg_fail_content': 'Mật khẩu hoặc tài khoản không đúng! Vui lòng đăng nhập lại.',
+  'login_msg_fail_content':
+      'Mật khẩu hoặc tài khoản không đúng! Vui lòng đăng nhập lại.',
 
   // sign_up
   'signup': 'Đăng ký',
@@ -137,8 +138,9 @@ const Map<String, String> vi = {
   'change_pwd_success': 'Đổi mật khẩu thành công!',
   'change_pwd_err_default': 'Đổi mật khẩu thất bại!',
 
-  // 
+  //
   'back_btn': 'Quay lại',
   'lessons.empty': 'Khóa học đang cập nhật...',
+  'evaluation_send_loading': 'Đang gửi đánh giá...',
   'evaluation_send_success': 'Cảm ơn những góp ý của bạn!',
 };

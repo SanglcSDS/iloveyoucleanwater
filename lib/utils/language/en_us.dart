@@ -129,9 +129,10 @@ const Map<String, String> en = {
   'change_pwd_progress': 'Change password...',
   'change_pwd_success': 'Change password success!',
   'change_pwd_err_default': 'Change password failed!',
-  
+
   //
   'back_btn': 'Back',
   'lessons.empty': 'Course is updating...',
+  'evaluation_send_loading': 'Sending...',
   'evaluation_send_success': 'Thanks for your reviews!',
 };
