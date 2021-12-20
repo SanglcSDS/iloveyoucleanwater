@@ -23,7 +23,7 @@ class MyApp extends StatelessWidget {
         locale: LocalizationService.locale,
         fallbackLocale: LocalizationService.fallbackLocale,
         translations: LocalizationService(),
-        title: 'I Love You Clear Water',
+        title: 'I Love Clear Water',
         initialRoute: AppPages.INITIAL,
         getPages: AppPages.routes,
         debugShowCheckedModeBanner: false,

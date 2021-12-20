@@ -8,28 +8,23 @@ import 'package:dio/src/response.dart' as dio_resp;
 
 class TestController extends GetxController {
   LearningService _learningService = Get.put(LearningService());
-  PageController? pageController;
   Rx<Test>? test;
   RxMap<String, dynamic>? values;
   int? courseId;
 
   @override
   void onInit() {
-    pageController = PageController(initialPage: 0);
     super.onInit();
   }
 
   void loadTest(int _courseId) async {
     EasyLoading.show(status: "loadingText".tr);
     courseId = _courseId;
-    debugPrint("Load test");
     Response response = await _learningService.getTest(_courseId);
-    debugPrint("response   " + response.bodyString!);
     if (response.statusCode == 200 && !response.body['error']) {
-      debugPrint("response.status   " + response.status.toString());
       Map<String, dynamic> data = response.body['data'];
       test = Test.fromJson(data).obs;
-      debugPrint("question length" + test!.value.questions!.length.toString());
+      update();
 
       Map<String, dynamic> result = {};
       for (int i = 0; i < test!.value.questions!.length; i++) {
@@ -61,7 +56,6 @@ class TestController extends GetxController {
 
   @override
   void onClose() {
-    pageController!.dispose();
     super.onClose();
   }
 }
