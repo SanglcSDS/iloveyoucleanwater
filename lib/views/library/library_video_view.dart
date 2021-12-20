@@ -25,6 +25,7 @@ class LibraryVideoView extends StatelessWidget {
           footer: ClassicFooter(
             loadingText: 'loadText'.tr,
             failedText: 'noMoreText'.tr,
+            noDataText: 'noMoreText'.tr,
           ),
           controller: _controller.refreshControllerVideo,
           enablePullUp: true,
@@ -52,7 +53,7 @@ class LibraryVideoView extends StatelessWidget {
                 tag: "$tag$index",
                 child: InkWell(
                   onTap: () {
-                    _homecontroller.getDetailVideo(recent);
+                    _homecontroller.changeVideo(recent);
                   },
                   child: Container(
                     padding: EdgeInsets.only(top: 15.0),

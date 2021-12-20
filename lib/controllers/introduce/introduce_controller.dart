@@ -1,18 +1,22 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/introduce/introduce_detail_model.dart';
 import 'package:iloveyoucleanwater/models/introduce/introduce_model.dart';
 import 'package:iloveyoucleanwater/service/introduce_service.dart';
 
-class IntroduceController extends GetxController {
+class IntroduceController extends GetxController
+    with GetSingleTickerProviderStateMixin {
   IntroduceService service = IntroduceService();
-
+  late TabController controller;
   late IntroduceModel introduceModel;
   RxList introduceProgram = <IntroduceDetialModel>[].obs;
   RxList introducePartner = <IntroduceDetialModel>[].obs;
-
+  RxInt indexTap = 0.obs;
   @override
   void onInit() {
     super.onInit();
+
     //  GetIntroduces();
     isloadingIntroduce();
   }
@@ -30,6 +34,11 @@ class IntroduceController extends GetxController {
       GetDetialPartner(4);
     }
   }
+
+  void changeTabintroduce(int index) {
+    controller.animateTo(index);
+  }
+
 //   Future<void> GetIntroduces() async {
 //     Response _data = await service.GetIntroduces();
 //     if (_data.statusCode == 200) {

@@ -18,6 +18,8 @@ const Map<String, String> en = {
   'Login': "Login",
   'logout': "Logout",
   'changePassword': "Change Password",
+  'partner': 'Co-organizing board',
+  'educationalPartner': 'Educational partners',
   //loading
   'releaseText': 'Release to refresh',
   'refreshingText': "Refreshing ..",
@@ -25,7 +27,6 @@ const Map<String, String> en = {
   'idleText': "Pull down refresh",
   'infoText': "Update %T",
   'refreshFailedText': "Refresh failed",
-
   'loadText': "Loading complete",
   'noMoreText': " No more data",
   'loadReadyText': "No more data",
@@ -81,6 +82,8 @@ const Map<String, String> en = {
   'login_success': 'Login success!',
   'login_on_progress': 'Login...',
   'login_require': 'Please log in to your account.',
+  'login_msg_fail_title': 'Login failed!',
+  'login_msg_fail_content': 'Email or password invalid.',
 
   // sign_up
   'signup': 'Register',
@@ -123,4 +126,12 @@ const Map<String, String> en = {
   'change_pwd_new': 'Input new password',
   'change_pwd_confirm': 'Confirm new password',
   'change_pwd_btn': 'CHANGE',
+  'change_pwd_progress': 'Change password...',
+  'change_pwd_success': 'Change password success!',
+  'change_pwd_err_default': 'Change password failed!',
+  
+  //
+  'back_btn': 'Back',
+  'lessons.empty': 'Course is updating...',
+  'evaluation_send_success': 'Thanks for your reviews!',
 };

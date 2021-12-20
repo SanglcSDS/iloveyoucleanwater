@@ -75,7 +75,11 @@ const Map<String, String> vi = {
   'test_total_point': 'Điểm của bạn: ',
   'test_show_answer': 'Đáp án đúng:',
   'test_submitted': 'Bài kiểm tra của bạn đã được gửi!',
+  'comments': 'Thảo luận',
+  'documents': 'Tài liệu',
+  'partner': 'Đơn vị đối tác',
 
+  'educationalPartner': 'Đơn vị đồng hành',
   // log_in
   'login': 'Đăng nhập',
   'login_btn': 'ĐĂNG NHẬP',
@@ -85,6 +89,8 @@ const Map<String, String> vi = {
   'login_success': 'Đăng nhập thành công!',
   'login_on_progress': 'Đang đăng nhập...',
   'login_require': 'Bạn phải đăng nhập để tham gia các khóa học.',
+  'login_msg_fail_title': 'Đăng nhập thất bại!',
+  'login_msg_fail_content': 'Mật khẩu hoặc tài khoản không đúng! Vui lòng đăng nhập lại.',
 
   // sign_up
   'signup': 'Đăng ký',
@@ -127,4 +133,12 @@ const Map<String, String> vi = {
   'change_pwd_new': 'Nhập mật khẩu mới',
   'change_pwd_confirm': 'Nhập lại mật khẩu',
   'change_pwd_btn': 'THAY ĐỔI',
+  'change_pwd_progress': 'Đang thay đổi...',
+  'change_pwd_success': 'Đổi mật khẩu thành công!',
+  'change_pwd_err_default': 'Đổi mật khẩu thất bại!',
+
+  // 
+  'back_btn': 'Quay lại',
+  'lessons.empty': 'Khóa học đang cập nhật...',
+  'evaluation_send_success': 'Cảm ơn những góp ý của bạn!',
 };

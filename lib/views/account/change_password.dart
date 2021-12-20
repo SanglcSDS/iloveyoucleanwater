@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/account/change_password_controller.dart';
-import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class ChangePasswordView extends GetView<ChangePasswordController> {
@@ -16,9 +15,11 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(icon: Icon(Icons.arrow_back_ios, color: Colors.white), onPressed: () => Get.back(),),
         title: Text('change_pwd_title'.tr),
         backgroundColor: primaryColor,
         elevation: 0.0,
+        centerTitle: true,
       ),
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
@@ -132,7 +133,8 @@ class ChangePasswordView extends GetView<ChangePasswordController> {
                                 controller.onChangePwd(
                                     context,
                                     _oldPwdController.text,
-                                    _newPwdController.text);
+                                    _newPwdController.text,
+                                    _confirmPwdController.text);
                               }
                             },
                             child: Padding(

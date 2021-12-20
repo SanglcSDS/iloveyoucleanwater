@@ -14,24 +14,23 @@ class NewsListView extends StatefulWidget {
 class _NewsListViewState extends State<NewsListView>
     with SingleTickerProviderStateMixin {
   EasyRefreshController easyRefreshController = new EasyRefreshController();
-  late TabController controller;
+
   final _controller = Get.put(NewsController());
   final _Homecontroller = Get.put(HomeController());
   bool _disposed = false;
   @override
   void initState() {
-    super.initState();
+    _controller.controllernew =
+        TabController(length: _controller.listCategory.length, vsync: this);
     for (int i = 0; i < _controller.listCategory.length; i++) {
       _controller.getLoadMoreRefresh(true, _controller.listCategory[i].id);
     }
-
-    controller =
-        TabController(length: _controller.listCategory.length, vsync: this);
+    super.initState();
   }
 
   @override
   void dispose() {
-    controller.dispose();
+    _controller.controllernew.dispose();
     _disposed = true;
     easyRefreshController.dispose();
     super.dispose();
@@ -69,7 +68,7 @@ class _NewsListViewState extends State<NewsListView>
                   labelColor: primaryColor,
                   unselectedLabelColor: kGrey1,
                   isScrollable: true,
-                  controller: controller,
+                  controller: newsController.controllernew,
                   tabs: newsController.listCategory.map((text) {
                     return Tab(
                       text: text.title,
@@ -80,7 +79,7 @@ class _NewsListViewState extends State<NewsListView>
               Expanded(
                 child: Container(
                   child: TabBarView(
-                      controller: controller,
+                      controller: newsController.controllernew,
                       children: List.generate(
                           newsController.listCategory.length, (indexs) {
                         var recent = newsController.listCategory[indexs];
@@ -135,7 +134,7 @@ class _NewsListViewState extends State<NewsListView>
                                   child: InkWell(
                                     onTap: () {
                                       _Homecontroller.getNewsDetailsModel(
-                                          recents);
+                                          recents, indexs);
                                     },
                                     child: Container(
                                       width: double.infinity,

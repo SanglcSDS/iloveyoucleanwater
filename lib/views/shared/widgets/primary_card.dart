@@ -60,7 +60,7 @@ class PrimaryCard extends StatelessWidget {
           const SizedBox(height: 5.0),
           Container(
             padding:
-                const EdgeInsets.symmetric(horizontal: 10.0, vertical: 15.0),
+                const EdgeInsets.symmetric(horizontal: 8.0, vertical: 15.0),
             child: Row(
               children: [
                 const Icon(

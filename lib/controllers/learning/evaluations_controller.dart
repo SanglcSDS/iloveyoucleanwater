@@ -1,14 +1,19 @@
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/learning/evaluation.dart';
+import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/service/learning_service.dart';
+import 'package:dio/src/response.dart' as dio_resp;
+import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class EvaluationController extends GetxController {
   RxList<Evaluation>? evaluations;
   LearningService _learningService = Get.put(LearningService());
   Map<int, bool>? values;
   Map<int, String>? otherVals;
-  // Map<String, dynamic>? result;
+  RxMap<String, dynamic> result = <String, dynamic>{}.obs;
   @override
   void onInit() {
     // result = {};
@@ -34,7 +39,39 @@ class EvaluationController extends GetxController {
 
       evaluations = list.obs;
       values = _item.obs;
+      otherVals = _otherItem;
       update();
+    }
+    EasyLoading.dismiss();
+  }
+
+  void chooseAnswer(int index, int id, bool newVal) {
+    if (result.containsKey(index.toString())) {
+      result.remove(index.toString());
+    }
+    if (newVal) {
+      result.putIfAbsent(index.toString(), () => {"id": id, "content": null});
+    }
+    update();
+  }
+
+  void sendEvaluation(BuildContext context) async {
+    EasyLoading.show(status: "test_send_loading".tr);
+    otherVals!.removeWhere((int id, String value) => value.isBlank!);
+    for (var key in otherVals!.keys) {
+      result.addAll({key.toString(): {"id": key, "content": otherVals![key]}});
+    }
+    dio_resp.Response response = await _learningService.postTest(result);
+    if (response.statusCode == 200 && !response.data['error']) {
+      debugPrint('success');
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('evaluation_send_success'.tr),
+          backgroundColor: primaryColor,
+        ),
+      );
+      Get.offNamed(Routes.COURSES);
     }
     EasyLoading.dismiss();
   }

@@ -104,11 +104,11 @@ class _CustomDrawerState extends State<CustomDrawer> {
           ),
           // DropdownLanguage(),
 
-          _buildDrawerOption(
+          GetStorage().hasData("token") ? _buildDrawerOption(
             Icon(Icons.lock),
             'changePassword'.tr,
             () => Get.toNamed(Routes.CHANGE_PWD),
-          ),
+          ) : const SizedBox(),
           Expanded(
             child: GetStorage().hasData("token")
                 ? Align(

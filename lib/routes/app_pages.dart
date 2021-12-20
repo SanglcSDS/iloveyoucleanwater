@@ -10,7 +10,7 @@ import 'package:iloveyoucleanwater/controllers/learning/lessons_binding.dart';
 import 'package:iloveyoucleanwater/controllers/learning/tests_binding.dart';
 import 'package:iloveyoucleanwater/controllers/library/library_binding.dart';
 import 'package:iloveyoucleanwater/controllers/news/news_binding.dart';
-import 'package:iloveyoucleanwater/views/account/forgot_password.dart';
+import 'package:iloveyoucleanwater/views/account/change_password.dart';
 import 'package:iloveyoucleanwater/views/account/log_in.dart';
 import 'package:iloveyoucleanwater/views/account/sign_up.dart';
 import 'package:iloveyoucleanwater/views/account/user_info.dart';

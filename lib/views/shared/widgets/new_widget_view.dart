@@ -71,6 +71,7 @@ class NewWidgetView extends StatelessWidget {
                   const SizedBox(height: 4.0),
                   const Spacer(),
                   Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       const Icon(
                         Icons.date_range,
@@ -78,12 +79,13 @@ class NewWidgetView extends StatelessWidget {
                       ),
                       const SizedBox(width: 5.0),
                       Expanded(
-                          child: Text(
-                              calculateTimeDifferenceBetween(
-                                  stringTime: news.createdAt),
-                              style: kDetailContent,
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 1))
+                        child: Text(
+                            calculateTimeDifferenceBetween(
+                                stringTime: news.createdAt),
+                            style: kDetailContent,
+                            overflow: TextOverflow.ellipsis,
+                            maxLines: 1),
+                      ),
                     ],
                   )
                 ],

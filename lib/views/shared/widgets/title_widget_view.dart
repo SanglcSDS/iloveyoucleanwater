@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/controllers/home/home_controller.dart';
+import 'package:iloveyoucleanwater/models/news/category_news_modell.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
 class TitleWidgetNextView extends StatelessWidget {
   final _Controller = Get.put(HomeController());
-  final String title;
+  final CategoryNewsModel news;
   final int index;
+
   // final TabController onPressed;
   TitleWidgetNextView(
-      {required this.title,
+      {required this.news,
 
       // required this.onPressed,
 
@@ -19,7 +21,7 @@ class TitleWidgetNextView extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        _Controller.changeTabIndex(index);
+        _Controller.changeTabNews(index, news.item);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -43,7 +45,7 @@ class TitleWidgetNextView extends StatelessWidget {
                   Expanded(
                     flex: 9,
                     child: Text(
-                      title.toUpperCase(),
+                      news.title.toUpperCase(),
                       style: kNonActiveTabStyles,
                       textAlign: TextAlign.start,
                     ),
@@ -85,13 +87,15 @@ class TitleWidgetNextPhotoVideo extends StatelessWidget {
   final _Controller = Get.put(HomeController());
   final String title;
   final int index;
-  TitleWidgetNextPhotoVideo({required this.title, required this.index});
+  final int index1;
+  TitleWidgetNextPhotoVideo(
+      {required this.title, required this.index, required this.index1});
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        _Controller.changeTabIndex(index);
+        _Controller.changeTabLibrary(index, index1);
       },
       child: Column(
         mainAxisSize: MainAxisSize.min,
