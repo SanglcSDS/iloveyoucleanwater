@@ -68,41 +68,56 @@ class LessonView extends StatelessWidget {
                     children: [
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 5),
-                          alignment: Alignment.center,
-                          child: OutlinedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  primaryColor),
-                            ),
-                            onPressed: () {
-                              controller.routeTest();
-                            },
-                            child: Text(
-                              'course_quiz'.tr,
-                              style: TextStyle(
-                                color: Colors.white,
+                          padding: const EdgeInsets.only(left: 16),
+                          width: double.infinity,
+                          // margin: const EdgeInsets.symmetric(
+                          //     horizontal: 15, vertical: 5),
+                          // alignment: Alignment.center,
+                          child: Theme(
+                            data: ThemeData(primarySwatch: kPrimaryMaterial),
+                            child: ElevatedButton(
+                              // style: ButtonStyle(
+                              //   backgroundColor:
+                              //       MaterialStateProperty.all<Color>(
+                              //           primaryColor),
+                              // ),
+                              onPressed: () {
+                                controller.routeTest();
+                              },
+                              child: Text(
+                                'course_quiz'.tr,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
                         ),
                       ),
+                      const SizedBox(
+                        width: 16,
+                      ),
                       Expanded(
                         child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 15, vertical: 5),
-                          alignment: Alignment.center,
-                          child: OutlinedButton(
-                            style: ButtonStyle(
-                              backgroundColor: MaterialStateProperty.all<Color>(
-                                  primaryColor),
-                            ),
-                            onPressed: () => Get.toNamed(Routes.EVALUATIONS),
-                            child: Text(
-                              'course_rate'.tr,
-                              style: TextStyle(
-                                color: Colors.white,
+                          padding: const EdgeInsets.only(right: 16),
+                          width: double.infinity,
+                          // margin: const EdgeInsets.symmetric(
+                          //     horizontal: 15, vertical: 5),
+                          // alignment: Alignment.center,
+                          child: Theme(
+                            data: ThemeData(primarySwatch: kPrimaryMaterial),
+                            child: ElevatedButton(
+                              // style: ButtonStyle(
+                              //   backgroundColor:
+                              //       MaterialStateProperty.all<Color>(
+                              //           primaryColor),
+                              // ),
+                              onPressed: () => Get.toNamed(Routes.EVALUATIONS),
+                              child: Text(
+                                'course_rate'.tr,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                ),
                               ),
                             ),
                           ),
