@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
@@ -22,8 +21,6 @@ class AccountController extends GetxController {
   Future<bool> onLogin(context, String email, String password) async {
     Response<dynamic> response = await _accountProvider.login(email, password);
     if (response.statusCode == 200) {
-      // MsgDia
-      debugPrint(response.body["access_token"]);
       Map<String, dynamic> json = response.body;
       try {
         String token = json['access_token'];
@@ -43,12 +40,10 @@ class AccountController extends GetxController {
         Response<dynamic> userRes = await _accountProvider.getUserInfo();
         if (userRes.statusCode == 200) {
           User user = User.fromJson(userRes.body);
-          debugPrint('user ====> ' + user.name);
           await box.write("username", user.name);
         }
         return true;
       } catch (e) {
-        debugPrint(e.toString());
         MsgDialog.showWarningDialogs(
             context, "login_msg_fail_title".tr, "login_msg_fail_content".tr);
         EasyLoading.dismiss();

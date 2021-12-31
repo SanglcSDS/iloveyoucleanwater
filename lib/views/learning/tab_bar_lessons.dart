@@ -91,7 +91,8 @@ class LearningView extends GetView<LessonController> {
                                   child: IconButton(
                                     icon: const Icon(Icons.arrow_back_ios,
                                         color: Colors.white),
-                                    onPressed: () => Get.back(),
+                                    onPressed: () =>
+                                        {Get.back(), controller.onClose()},
                                   ),
                                 ),
                               ),
@@ -111,24 +112,33 @@ class LearningView extends GetView<LessonController> {
                 ),
               )
             : Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('lessons.empty'.tr),
-                  const SizedBox(height: 8,),
-                  SizedBox(
-                    width: double.infinity,
-                    child: Theme(
-                      data: ThemeData(primarySwatch: kPrimaryMaterial),
-                      child: ElevatedButton(onPressed: () => Get.back(), child: Padding(
-                        padding: const EdgeInsets.all(15),
-                        child: Text('back_btn'.tr, style: TextStyle(color: Colors.white),),
-                      ),),),
-                  ),
-                ],
-              ),
-            )
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text('lessons.empty'.tr),
+                    const SizedBox(
+                      height: 8,
+                    ),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Theme(
+                        data: ThemeData(primarySwatch: kPrimaryMaterial),
+                        child: ElevatedButton(
+                          onPressed: () => Get.back(),
+                          child: Padding(
+                            padding: const EdgeInsets.all(15),
+                            child: Text(
+                              'back_btn'.tr,
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              )
         // ),
         );
   }

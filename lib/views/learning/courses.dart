@@ -5,17 +5,15 @@ import 'package:iloveyoucleanwater/controllers/learning/course_controller.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
-class CourseView extends StatelessWidget {
-  final _controller = Get.put(CourseController());
+class CourseView extends GetView<CourseController> {
   CourseView({Key? key}) : super(key: key);
   RxBool _isLogged = false.obs;
 
   @override
   Widget build(BuildContext context) {
-    _isLogged = _controller.isLogged.value.obs;
+    _isLogged = controller.isLogged.value.obs;
     return GetBuilder<CourseController>(
       init: CourseController(),
-      initState: (_) => _controller.initData(),
       builder: (_) => Scaffold(
         appBar: AppBar(
           title: Text('course'.tr, style: TextStyle(color: primaryColor)),
@@ -51,9 +49,6 @@ class CourseView extends StatelessWidget {
                   child: Theme(
                     data: ThemeData(primarySwatch: kPrimaryMaterial),
                     child: ElevatedButton(
-                      // style: ElevatedButton.styleFrom(
-                      //   elevation: 5.0,
-                      // ),
                       onPressed: () => Get.toNamed(Routes.LOGIN),
                       child: Padding(
                         padding: EdgeInsets.all(15),
@@ -89,9 +84,8 @@ class CourseView extends StatelessWidget {
         alignment: Alignment.topCenter,
         child: Wrap(
           children: List.generate(
-            _controller.courses.length,
+            controller.courses.length,
             (index) {
-              // int _lessonCount = _controller.courses[index].lessons!.length;
               int _lessonCount = 4;
               return Container(
                 margin: index <= 1
@@ -102,7 +96,7 @@ class CourseView extends StatelessWidget {
                 height: MediaQuery.of(context).size.height / 3,
                 child: GestureDetector(
                   onTap: () =>
-                      _controller.popToLessonViews(_controller.courses[index]),
+                      controller.popToLessonViews(controller.courses[index]),
                   child: Card(
                     elevation: 3,
                     shape: RoundedRectangleBorder(
@@ -113,7 +107,7 @@ class CourseView extends StatelessWidget {
                         Container(
                           alignment: Alignment.bottomRight,
                           child: Image.asset(
-                            _controller.getDropletIcon(index),
+                            controller.getDropletIcon(index),
                             width: 100,
                             height: 100,
                           ),
@@ -125,7 +119,7 @@ class CourseView extends StatelessWidget {
                                   vertical: 15, horizontal: 15),
                               alignment: Alignment.topLeft,
                               child: Text(
-                                _controller.courses[index].title,
+                                controller.courses[index].title,
                                 style: const TextStyle(
                                     color: kBlack,
                                     fontSize: 16,

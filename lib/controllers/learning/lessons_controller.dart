@@ -4,7 +4,6 @@ import 'package:iloveyoucleanwater/controllers/learning/tests_controller.dart';
 import 'package:iloveyoucleanwater/models/learning/lesson.dart';
 import 'package:iloveyoucleanwater/routes/app_pages.dart';
 import 'package:iloveyoucleanwater/service/learning_service.dart';
-import 'package:iloveyoucleanwater/views/shared/widgets/msg_dialog.dart';
 import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class LessonController extends GetxController {
@@ -61,15 +60,13 @@ class LessonController extends GetxController {
         percentStr =
             ('${(percent! * 100).floor()} % ' + 'course_percent'.tr).obs;
 
-        videoController = YoutubePlayerController(
+        videoController = new YoutubePlayerController(
           initialVideoId: YoutubePlayer.convertUrlToId(currentUrl!.value)!,
           flags: const YoutubePlayerFlags(
             controlsVisibleAtStart: true,
-            autoPlay: false,
+            autoPlay: true,
           ),
         ).obs;
-      } else {
-        // Không có bài học
       }
       update();
     } else {
@@ -113,8 +110,6 @@ class LessonController extends GetxController {
     } else {
       isComplete = true.obs;
       update();
-      MsgDialog.showMsgDialogs(context, 'course_complete_title'.tr,
-          'course_complete_content'.tr, () => Get.toNamed(Routes.TESTS));
     }
   }
 
@@ -127,6 +122,7 @@ class LessonController extends GetxController {
   @override
   void onClose() {
     isComplete = false.obs;
+    // videoController!.value.dispose();
     super.onClose();
   }
 }

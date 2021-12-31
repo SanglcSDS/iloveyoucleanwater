@@ -91,7 +91,6 @@ class DocumentController extends GetxController {
       );
       downloadValues[index]['localPath'] = localPath;
     } catch (e) {
-      debugPrint(e.toString());
       MsgDialog.showWarningDialogs(
           context, "error".tr, "document_download_fail".tr);
     }

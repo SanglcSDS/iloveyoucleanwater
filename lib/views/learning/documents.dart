@@ -5,20 +5,19 @@ import 'package:iloveyoucleanwater/controllers/learning/document_controller.dart
 import 'package:iloveyoucleanwater/models/learning/document.dart';
 import 'package:iloveyoucleanwater/utils/constants.dart';
 
-class DocumentView extends StatelessWidget {
+class DocumentView extends GetView<DocumentController> {
   DocumentView({Key? key}) : super(key: key);
-  final DocumentController _controller = Get.put(DocumentController());
 
   @override
   Widget build(BuildContext context) {
-    return (_controller.documents != null && _controller.documents!.isNotEmpty)
+    return (controller.documents != null && controller.documents!.isNotEmpty)
         ? GetBuilder(
             init: DocumentController(),
             builder: (_) => ListView.builder(
-                itemCount: _controller.documents!.length,
+                itemCount: controller.documents!.length,
                 itemBuilder: (context, index) {
                   return _fileItem(
-                      context, _controller.documents![index], index);
+                      context, controller.documents![index], index);
                 }),
           )
         : const Center(
@@ -28,15 +27,15 @@ class DocumentView extends StatelessWidget {
 
   Widget _fileItem(BuildContext context, Document document, int index) {
     return Container(
-      margin: index == 0
-          ? const EdgeInsets.only(bottom: 2, left: 5, right: 5)
-          : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+      // margin: index == 0
+      //     ? const EdgeInsets.only(bottom: 2, left: 5, right: 5)
+      //     : const EdgeInsets.symmetric(horizontal: 5, vertical: 2),
       child: Card(
         child: Column(
           children: [
             ListTile(
               leading: const Image(
-                image: AssetImage('assets/images/pdf_file_icon.png'),
+                image: AssetImage('assets/images/file_icon.jpg'),
               ),
               title: Container(
                   padding: const EdgeInsets.only(top: 5),
@@ -45,12 +44,12 @@ class DocumentView extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(vertical: 3),
                 alignment: Alignment.bottomLeft,
                 child: Obx(() =>
-                    _controller.downloadValues[index]["isDownloading"] == false
-                        ? _controller.downloadValues[index]["localPath"] == ""
+                    controller.downloadValues[index]["isDownloading"] == false
+                        ? controller.downloadValues[index]["localPath"] == ""
                             ? TextButton(
                                 onPressed: () {
                                   // controller.downloadFile(document);
-                                  _controller.downloadFile(context,
+                                  controller.downloadFile(context,
                                       document: document, index: index);
                                 },
                                 child: const Text(
@@ -59,8 +58,8 @@ class DocumentView extends StatelessWidget {
                                 ),
                               )
                             : TextButton(
-                                onPressed: () => _controller.openFile(
-                                    localPath: _controller.downloadValues[index]
+                                onPressed: () => controller.openFile(
+                                    localPath: controller.downloadValues[index]
                                         ["localPath"]),
                                 child: const Text(
                                   'Mở file',
@@ -70,13 +69,13 @@ class DocumentView extends StatelessWidget {
                         : Column(
                             children: [
                               SizedBox(
-                                child: Text(_controller.downloadValues[index]
+                                child: Text(controller.downloadValues[index]
                                     ["percentStr"]),
                               ),
                               SizedBox(
                                 child: LinearProgressIndicator(
                                   color: primaryColor,
-                                  value: _controller.downloadValues[index]
+                                  value: controller.downloadValues[index]
                                       ["percent"],
                                 ),
                               ),

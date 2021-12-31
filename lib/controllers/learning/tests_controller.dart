@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:get/get.dart';
 import 'package:iloveyoucleanwater/models/learning/test.dart';
@@ -46,8 +45,6 @@ class TestController extends GetxController {
     EasyLoading.show(status: "test_send_loading".tr);
     dio_resp.Response response = await _learningService.postTest(values!);
     if (response.statusCode == 200 && !response.data['error']) {
-      debugPrint('success');
-
       loadTest(courseId!);
       update();
     }

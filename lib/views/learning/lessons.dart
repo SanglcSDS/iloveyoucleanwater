@@ -36,7 +36,6 @@ class LessonView extends StatelessWidget {
                       ),
                       Expanded(
                         child: LinearPercentIndicator(
-                          // width: MediaQuery.of(context).size.width - 100,
                           animation: true,
                           lineHeight: 20.0,
                           animationDuration: 2000,
@@ -70,17 +69,9 @@ class LessonView extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.only(left: 16),
                           width: double.infinity,
-                          // margin: const EdgeInsets.symmetric(
-                          //     horizontal: 15, vertical: 5),
-                          // alignment: Alignment.center,
                           child: Theme(
                             data: ThemeData(primarySwatch: kPrimaryMaterial),
                             child: ElevatedButton(
-                              // style: ButtonStyle(
-                              //   backgroundColor:
-                              //       MaterialStateProperty.all<Color>(
-                              //           primaryColor),
-                              // ),
                               onPressed: () {
                                 controller.routeTest();
                               },
@@ -101,17 +92,9 @@ class LessonView extends StatelessWidget {
                         child: Container(
                           padding: const EdgeInsets.only(right: 16),
                           width: double.infinity,
-                          // margin: const EdgeInsets.symmetric(
-                          //     horizontal: 15, vertical: 5),
-                          // alignment: Alignment.center,
                           child: Theme(
                             data: ThemeData(primarySwatch: kPrimaryMaterial),
                             child: ElevatedButton(
-                              // style: ButtonStyle(
-                              //   backgroundColor:
-                              //       MaterialStateProperty.all<Color>(
-                              //           primaryColor),
-                              // ),
                               onPressed: () => Get.toNamed(Routes.EVALUATIONS),
                               child: Text(
                                 'course_rate'.tr,
@@ -201,27 +184,6 @@ class ListLesson extends StatelessWidget {
                               ],
                             ),
                           ),
-                          // Row(
-                          //   children: [
-                          //     const Align(
-                          //       child: Icon(
-                          //         Icons.person,
-                          //         size: 16,
-                          //       ),
-                          //     ),
-                          //     Container(
-                          //       alignment: Alignment.bottomCenter,
-                          //       margin:
-                          //           const EdgeInsets.only(left: 5, right: 10),
-                          //       child: Text(
-                          //         'Đã học: ' +
-                          //             lessons![index].totalStudent.toString() +
-                          //             ' học viên',
-                          //         style: const TextStyle(fontSize: 14),
-                          //       ),
-                          //     ),
-                          //   ],
-                          // ),
                           Row(
                             children: [
                               Align(
