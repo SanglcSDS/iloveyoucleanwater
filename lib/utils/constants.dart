@@ -7,8 +7,8 @@ class Constants {
   Constants._();
   static const double padding = 20;
   static const double avatarRadius = 45;
-  static const String SERVER_URL = 'http://112.78.4.235/api';
-  static const String URL_IMAGE = 'http://112.78.4.235';
+  static const String SERVER_URL = 'https://mizuiku.hoisinhvien.com.vn/api';
+  static const String URL_IMAGE = 'https://mizuiku.hoisinhvien.com.vn';
 }
 
 const primaryColor = Color(0xFF51c5da);
