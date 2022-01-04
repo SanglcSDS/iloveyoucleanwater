@@ -41,8 +41,8 @@ class EvaluationView extends GetView<EvaluationController> {
                       ),
                       controller.evaluations != null
                           ? Column(
-                              children: List.generate(controller.evaluations!.length,
-                                  (index) {
+                              children: List.generate(
+                                  controller.evaluations!.length, (index) {
                                 if (controller.evaluations![index].type == 2)
                                   ansIndex++;
                                 return _buildEvalution(
@@ -57,19 +57,21 @@ class EvaluationView extends GetView<EvaluationController> {
                   ),
                 ),
               ),
-              SizedBox(
-                width: double.infinity,
-                child: Theme(
-                  data: ThemeData(primarySwatch: kPrimaryMaterial),
-                  child: ElevatedButton.icon(
-                    icon: Icon(
-                      Icons.send,
-                      color: Colors.white,
-                    ),
-                    onPressed: () => controller.sendEvaluation(context),
-                    label: Text(
-                      'evaluation_btn'.tr,
-                      style: TextStyle(color: Colors.white),
+              SafeArea(
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Theme(
+                    data: ThemeData(primarySwatch: kPrimaryMaterial),
+                    child: ElevatedButton.icon(
+                      icon: Icon(
+                        Icons.send,
+                        color: Colors.white,
+                      ),
+                      onPressed: () => controller.sendEvaluation(context),
+                      label: Text(
+                        'evaluation_btn'.tr,
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                   ),
                 ),
@@ -102,7 +104,8 @@ class EvaluationView extends GetView<EvaluationController> {
                           onChanged: (bool? newValue) {
                             controller.values!
                                 .update(evaluation.id, (value) => newValue!);
-                            controller.chooseAnswer(ansIndex, evaluation.id, newValue!);
+                            controller.chooseAnswer(
+                                ansIndex, evaluation.id, newValue!);
                             controller.update();
                           }),
                     ),

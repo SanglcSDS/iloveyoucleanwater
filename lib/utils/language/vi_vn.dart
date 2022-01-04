@@ -145,4 +145,5 @@ const Map<String, String> vi = {
   'evaluation_send_success': 'Cảm ơn những góp ý của bạn!',
   'welcome': 'Xin chào, ',
   'validate_password_confirm_invalid': 'Mật khẩu mới không trùng khớp',
+  'user_lower_case': "học viên"
 };

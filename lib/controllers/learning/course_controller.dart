@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:iloveyoucleanwater/controllers/learning/comments_controller.dart';
@@ -35,7 +33,7 @@ class CourseController extends GetxController
   }
 
   Future<void> initData() async {
-    checkLogged();
+    await checkLogged();
     if (isLogged.value) {
       Response<dynamic> response = await _learningService.getCourses();
       if (response.statusCode == 200) {
@@ -45,9 +43,6 @@ class CourseController extends GetxController
           courses = courseJson.map((e) => Course.fromJson(e)).toList().obs;
         }
       }
-      // else {
-      //   Get.toNamed(Routes.LOGIN);
-      // }
     }
     update();
   }
@@ -60,7 +55,7 @@ class CourseController extends GetxController
     }
   }
 
-  void checkLogged() {
+  Future<void> checkLogged() async {
     try {
       if (box.hasData("token")) {
         String token = box.read("token");
@@ -73,10 +68,10 @@ class CourseController extends GetxController
         }
       }
     } catch (e) {
-      debugPrint(e.toString());
-    } finally {
-      update();
+      isLogged = false.obs;
     }
+
+    update();
   }
 
   void popToLessonViews(Course course) {

@@ -16,7 +16,6 @@ class EvaluationController extends GetxController {
   RxMap<String, dynamic> result = <String, dynamic>{}.obs;
   @override
   void onInit() {
-    // result = {};
     loadData();
     super.onInit();
   }
@@ -67,21 +66,17 @@ class EvaluationController extends GetxController {
         }.toString()
       });
     }
-    debugPrint("result ====> " + result.toString());
     dio_resp.Response response = await _learningService.postEvaluation(result);
     if (response.statusCode == 200 && !response.data['error']) {
-      debugPrint('success');
-
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text('evaluation_send_success'.tr),
           backgroundColor: primaryColor,
         ),
       );
-      Get.offNamed(Routes.COURSES);
+      Get.offNamed(Routes.HOME);
       EasyLoading.dismiss();
     } else {
-      debugPrint(response.data.toString());
       EasyLoading.dismiss();
     }
   }

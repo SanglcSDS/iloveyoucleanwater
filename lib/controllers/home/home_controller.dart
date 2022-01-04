@@ -294,7 +294,6 @@ class HomeController extends GetxController {
       var jsonString = _data.body['data'];
       if (jsonString != null) {
         detail = NewsDetailsModel.fromJson(jsonString);
-        print(detail.content);
         Get.to(() => HomeDetailNewsView(
               news: detail,
               title: news.categoryTitle,

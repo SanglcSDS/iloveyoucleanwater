@@ -24,8 +24,6 @@ class LibraryController extends GetxController {
     getPhoto(isLoadingP: true);
     getVideo(isLoadingV: true);
     super.onInit();
-    // controller =
-    //     TabController(vsync: this, length: myTabs.length, initialIndex: 0);
   }
 
   void changeTabLibrary(int index) {
