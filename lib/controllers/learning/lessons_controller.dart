@@ -8,7 +8,7 @@ import 'package:youtube_player_flutter/youtube_player_flutter.dart';
 
 class LessonController extends GetxController {
   late String title;
-  late int courseId;
+  late RxInt courseId;
   RxBool isComplete = false.obs;
   RxDouble? percent;
   RxString? percentStr;
@@ -29,7 +29,7 @@ class LessonController extends GetxController {
 
   void onInitLesson(int course) async {
     EasyLoading.show(status: 'loadingText'.tr);
-    courseId = course;
+    courseId = course.obs;
     Response<dynamic> response =
         await _learningService.getLessonByCoureseId(course);
     if (response.statusCode == 200) {
@@ -114,7 +114,7 @@ class LessonController extends GetxController {
   }
 
   void routeTest() {
-    _testController.loadTest(courseId);
+    _testController.loadTest(courseId.value);
     update();
     Get.toNamed(Routes.TESTS);
   }
@@ -122,7 +122,8 @@ class LessonController extends GetxController {
   @override
   void onClose() {
     isComplete = false.obs;
-    // videoController!.value.dispose();
+    videoController!.value.pause();
+    lessons = <Lesson>[].obs;
     super.onClose();
   }
 }
