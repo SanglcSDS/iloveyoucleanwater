@@ -111,32 +111,21 @@ class LearningView extends GetView<LessonController> {
                   ),
                 ),
               )
-            : Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text('lessons.empty'.tr),
-                    const SizedBox(
-                      height: 8,
-                    ),
-                    SizedBox(
-                      width: double.infinity,
-                      child: Theme(
-                        data: ThemeData(primarySwatch: kPrimaryMaterial),
-                        child: ElevatedButton(
-                          onPressed: () => Get.back(),
-                          child: Padding(
-                            padding: const EdgeInsets.all(15),
-                            child: Text(
-                              'back_btn'.tr,
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
+            : Scaffold(
+                appBar: AppBar(
+                  leading: Icon(
+                    Icons.arrow_back_ios,
+                    color: kPrimaryMaterial,
+                  ),
+                  bottomOpacity: 0.0,
+                  backgroundColor: Colors.white,
+                ),
+                body: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [Text('lessons.empty'.tr)],
+                  ),
                 ),
               )
         // ),

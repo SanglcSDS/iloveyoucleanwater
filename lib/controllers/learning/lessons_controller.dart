@@ -114,6 +114,8 @@ class LessonController extends GetxController {
   }
 
   void routeTest() {
+    videoController!.value.pause();
+    update();
     _testController.loadTest(courseId.value);
     update();
     Get.toNamed(Routes.TESTS);
@@ -122,7 +124,7 @@ class LessonController extends GetxController {
   @override
   void onClose() {
     isComplete = false.obs;
-    videoController!.value.pause();
+    videoController!.value.dispose();
     lessons = <Lesson>[].obs;
     super.onClose();
   }

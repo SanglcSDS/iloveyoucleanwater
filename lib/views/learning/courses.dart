@@ -86,7 +86,6 @@ class CourseView extends GetView<CourseController> {
           children: List.generate(
             controller.courses.length,
             (index) {
-              int _lessonCount = 4;
               return Container(
                 margin: index <= 1
                     ? const EdgeInsets.only(
@@ -132,8 +131,8 @@ class CourseView extends GetView<CourseController> {
                                   padding: const EdgeInsets.symmetric(
                                       vertical: 15, horizontal: 15),
                                   child: Text(
-                                    '${_lessonCount.toString()} ' +
-                                        'lesson_lower_case'.tr,
+                                    '${controller.courses[index].countUser.toString()} ' +
+                                        'user_lower_case'.tr,
                                     style: const TextStyle(
                                         color: kBlack,
                                         fontWeight: FontWeight.w300),

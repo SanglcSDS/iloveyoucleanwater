@@ -63,50 +63,55 @@ class LessonView extends StatelessWidget {
         Obx(
           () => Container(
             child: controller.isComplete.value
-                ? Row(
-                    children: [
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.only(left: 16),
-                          width: double.infinity,
-                          child: Theme(
-                            data: ThemeData(primarySwatch: kPrimaryMaterial),
-                            child: ElevatedButton(
-                              onPressed: () {
-                                controller.routeTest();
-                              },
-                              child: Text(
-                                'course_quiz'.tr,
-                                style: TextStyle(
-                                  color: Colors.white,
+                ? SafeArea(
+                    child: Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(left: 16),
+                            width: double.infinity,
+                            child: Theme(
+                              data: ThemeData(primarySwatch: kPrimaryMaterial),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  controller.routeTest();
+                                },
+                                child: Text(
+                                  'course_quiz'.tr,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                      const SizedBox(
-                        width: 16,
-                      ),
-                      Expanded(
-                        child: Container(
-                          padding: const EdgeInsets.only(right: 16),
-                          width: double.infinity,
-                          child: Theme(
-                            data: ThemeData(primarySwatch: kPrimaryMaterial),
-                            child: ElevatedButton(
-                              onPressed: () => Get.toNamed(Routes.EVALUATIONS),
-                              child: Text(
-                                'course_rate'.tr,
-                                style: TextStyle(
-                                  color: Colors.white,
+                        const SizedBox(
+                          width: 16,
+                        ),
+                        Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(right: 16),
+                            width: double.infinity,
+                            child: Theme(
+                              data: ThemeData(primarySwatch: kPrimaryMaterial),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  controller.videoController!.value.pause();
+                                  Get.toNamed(Routes.EVALUATIONS);
+                                },
+                                child: Text(
+                                  'course_rate'.tr,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   )
                 : const SizedBox(),
           ),

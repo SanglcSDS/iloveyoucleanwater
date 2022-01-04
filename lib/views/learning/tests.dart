@@ -133,22 +133,24 @@ class TestView extends GetView<TestController> {
                             ),
                           ),
                           controller.test!.value.totalPoint == null
-                              ? SizedBox(
-                                  width: double.infinity,
-                                  child: Theme(
-                                    data: ThemeData(
-                                        primarySwatch: kPrimaryMaterial),
-                                    child: ElevatedButton.icon(
-                                      icon: Icon(
-                                        Icons.send,
-                                        color: Colors.white,
-                                      ),
-                                      onPressed: () {
-                                        controller.sendTest();
-                                      },
-                                      label: Text(
-                                        'test_btn'.tr,
-                                        style: TextStyle(color: Colors.white),
+                              ? SafeArea(
+                                  child: SizedBox(
+                                    width: double.infinity,
+                                    child: Theme(
+                                      data: ThemeData(
+                                          primarySwatch: kPrimaryMaterial),
+                                      child: ElevatedButton.icon(
+                                        icon: Icon(
+                                          Icons.send,
+                                          color: Colors.white,
+                                        ),
+                                        onPressed: () {
+                                          controller.sendTest();
+                                        },
+                                        label: Text(
+                                          'test_btn'.tr,
+                                          style: TextStyle(color: Colors.white),
+                                        ),
                                       ),
                                     ),
                                   ),
