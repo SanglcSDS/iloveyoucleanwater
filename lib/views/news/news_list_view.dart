@@ -17,7 +17,7 @@ class _NewsListViewState extends State<NewsListView>
 
   final _controller = Get.put(NewsController());
   final _Homecontroller = Get.put(HomeController());
-  bool _disposed = false;
+
   @override
   void initState() {
     _controller.controllernew =
@@ -31,7 +31,6 @@ class _NewsListViewState extends State<NewsListView>
   @override
   void dispose() {
     _controller.controllernew.dispose();
-    _disposed = true;
     easyRefreshController.dispose();
     super.dispose();
   }
@@ -114,7 +113,6 @@ class _NewsListViewState extends State<NewsListView>
                             }
                           },
                           onLoad: () async {
-                            var check = newsController.listCategory[indexs];
                             final result = await newsController
                                 .getLoadMoreRefresh(false, recent.id);
                             if (result) {
