@@ -56,6 +56,7 @@ class HomeController extends GetxController {
   void onInit() async {
     isloadingHome(true);
     await Future.delayed(Duration(seconds: 2));
+    controllerNews.getCategory();
     await getCategory();
     await getListNewCategory();
 

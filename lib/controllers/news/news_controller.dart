@@ -14,8 +14,8 @@ class NewsController extends GetxController
   List<CategoryModel> listCategory = [];
 
   @override
-  void onInit() {
-    getCategory();
+  void onInit() async{
+   await getCategory();
     controllernew = TabController(length: listCategory.length, vsync: this);
     super.onInit();
   }
