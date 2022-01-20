@@ -108,9 +108,9 @@ class SignUpView extends GetView<RegisterController> {
                               ),
                               hintText: 'signup_name'.tr),
                           validator: (value) {
-                            if (value == null || value.isEmpty) {
-                              return 'validate_name_empty'.tr;
-                            }
+                            // if (value == null || value.isEmpty) {
+                            //   return 'validate_name_empty'.tr;
+                            // }
                             return null;
                           },
                         ),
@@ -169,9 +169,9 @@ class SignUpView extends GetView<RegisterController> {
                           },
                           showSearchBox: true,
                           validation: (value) {
-                            if (value == null || value["id"] < 0) {
-                              return 'validate_gender_empty'.tr;
-                            }
+                            // if (value == null || value["id"] < 0) {
+                            //   return 'validate_gender_empty'.tr;
+                            // }
                             return null;
                           },
                         ),

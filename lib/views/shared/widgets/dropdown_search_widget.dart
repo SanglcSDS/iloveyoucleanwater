@@ -33,7 +33,6 @@ class CustomDropdown<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    debugPrint("items " + items!.length.toString());
     return DropdownSearch<T>(
       showSelectedItems: true,
       items: items,
