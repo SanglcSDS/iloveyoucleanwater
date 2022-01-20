@@ -90,7 +90,7 @@ const Map<String, String> en = {
   'signup_btn': 'REGISTER',
   'signup_email': 'Email *',
   'signup_password': 'Password *',
-  'signup_name': 'Last name and first name',
+  'signup_name': 'Last name and first name *',
   'signup_phone': 'Phone Number',
   'signup_workplace': 'Work place',
   'signup_gender': 'Sex',

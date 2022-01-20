@@ -98,7 +98,7 @@ const Map<String, String> vi = {
   'signup_btn': 'ĐĂNG KÝ',
   'signup_email': 'Email *',
   'signup_password': 'Mật khẩu *',
-  'signup_name': 'Họ và tên',
+  'signup_name': 'Họ và tên *',
   'signup_phone': 'Số điện thoại',
   'signup_workplace': 'Nơi công tác',
   'signup_gender': 'Giới tính',

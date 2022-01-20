@@ -22,11 +22,13 @@ class RegisterController extends GetxController {
   @override
   void onInit() {
     genders = <Map<String, dynamic>>[
+      {"id": -1, "value": "signup_gender".tr},
       {"id": 0, "value": "signup_gender_male".tr},
       {"id": 1, "value": "signup_gender_female".tr},
       {"id": 2, "value": "signup_gender_other".tr},
     ];
     jobs = <Map<String, dynamic>>[
+      {"id": -1, "value": "signup_you_are".tr},
       {"id": 0, "value": "signup_you_are_teacher".tr},
       {"id": 1, "value": "signup_you_are_student".tr},
       {"id": 2, "value": "signup_you_are_other".tr},
@@ -97,8 +99,8 @@ class RegisterController extends GetxController {
       password: pwd,
       mobile: phone,
       workplace: workplace,
-      gender: _gender.value < 0 ? genders[0]["id"] : _gender.value,
-      job: _job.value < 0 ? jobs[0]["id"] : _job.value,
+      gender: _gender.value < 0 ? genders[1]["id"] : _gender.value,
+      job: _job.value < 0 ? jobs[1]["id"] : _job.value,
       provinceId: _province.value <= 0 ? rxProvinces[0].id : _province.value,
       districtId: _district.value <= 0 ? rxDistricts[0].id : _district.value,
     );
